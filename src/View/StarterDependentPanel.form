@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="View.StarterDependentPanel">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="1146" height="534"/>
+    </constraints>
+    <properties>
+      <foreground color="-3511323"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="44f7c" binding="normalPartyPanel" layout-manager="GridLayoutManager" row-count="13" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="1" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-4266561"/>
+          <foreground color="-7871093"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e9f2e" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="EVs"/>
+            </properties>
+          </component>
+          <component id="458ef" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="IVs"/>
+            </properties>
+          </component>
+          <component id="bb1da" class="javax.swing.JList" binding="movesList">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties>
+              <model>
+                <item value="TACKLE"/>
+                <item value="DOUBLE_EDGE"/>
+                <item value="LEER"/>
+                <item value="SCARY_FACE"/>
+              </model>
+            </properties>
+          </component>
+          <component id="c117f" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Moves"/>
+            </properties>
+          </component>
+          <component id="31c6a" class="javax.swing.JButton" binding="evButton">
+            <constraints>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit..."/>
+            </properties>
+          </component>
+          <component id="95f1a" class="javax.swing.JButton" binding="ivButton">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit..."/>
+            </properties>
+          </component>
+          <component id="b85ad" class="javax.swing.JComboBox" binding="speciesBox">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Plasmolyte"/>
+              </model>
+            </properties>
+          </component>
+          <component id="dff10" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="6ce8e"/>
+              <text value="Species"/>
+            </properties>
+          </component>
+          <component id="ca98c" class="javax.swing.JButton" binding="editMovesButton" default-binding="true">
+            <constraints>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit Moves"/>
+            </properties>
+          </component>
+          <component id="35b6" class="javax.swing.JTextField" binding="nickField">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="f2f16" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="481e2"/>
+              <text value="Nickname"/>
+            </properties>
+          </component>
+          <component id="7928f" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="d1f7e"/>
+              <text value="Level"/>
+            </properties>
+          </component>
+          <component id="fdef6" class="javax.swing.JSpinner" binding="levelSpinner">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
+                <maximum-size width="60" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="d87b6" class="javax.swing.JComboBox" binding="ballBox">
+            <constraints>
+              <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Master Ball"/>
+              </model>
+            </properties>
+          </component>
+          <component id="e7caf" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Ball"/>
+            </properties>
+          </component>
+          <component id="5623f" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="7cc55"/>
+              <text value="Held Item"/>
+            </properties>
+          </component>
+          <component id="e95bf" class="javax.swing.JComboBox" binding="itemBox">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Choice Specs"/>
+              </model>
+            </properties>
+          </component>
+          <component id="a6c90" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="177cd"/>
+              <text value="Nature"/>
+            </properties>
+          </component>
+          <component id="c909d" class="javax.swing.JComboBox" binding="natureBox">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Adamant"/>
+              </model>
+            </properties>
+          </component>
+          <component id="2f2b" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="653e3"/>
+              <text value="Ability"/>
+            </properties>
+          </component>
+          <component id="3469f" class="javax.swing.JComboBox" binding="abilBox">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Exploitative"/>
+              </model>
+            </properties>
+          </component>
+          <component id="6a432" class="javax.swing.JLabel" binding="evLabel">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Total: 0"/>
+            </properties>
+          </component>
+          <component id="4e35c" class="javax.swing.JLabel" binding="ivLabel">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Total: 0"/>
+            </properties>
+          </component>
+          <component id="1c9ec" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="e48e3"/>
+              <text value="Friendship"/>
+            </properties>
+          </component>
+          <component id="d4598" class="javax.swing.JSpinner" binding="friendshipSpinner">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="494d4" class="javax.swing.JCheckBox" binding="shinyBox">
+            <constraints>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Shiny"/>
+            </properties>
+          </component>
+          <component id="b95cd" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Gender"/>
+            </properties>
+          </component>
+          <component id="e5650" class="javax.swing.JRadioButton" binding="defaultRadioButton" default-binding="true">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Default"/>
+            </properties>
+          </component>
+          <component id="d5877" class="javax.swing.JRadioButton" binding="maleRadioButton" default-binding="true">
+            <constraints>
+              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-4466715"/>
+              <text value="Male"/>
+            </properties>
+          </component>
+          <component id="705ca" class="javax.swing.JRadioButton" binding="femaleRadioButton" default-binding="true">
+            <constraints>
+              <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Female"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="a7b21" layout-manager="GridLayoutManager" row-count="13" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="1" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1716803"/>
+          <foreground color="-1716803"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="7ca48" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="EVs"/>
+            </properties>
+          </component>
+          <component id="d678" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="IVs"/>
+            </properties>
+          </component>
+          <component id="ee396" class="javax.swing.JList" binding="mon2MovesList">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties>
+              <model>
+                <item value="TACKLE"/>
+                <item value="DOUBLE_EDGE"/>
+                <item value="LEER"/>
+                <item value="SCARY_FACE"/>
+              </model>
+            </properties>
+          </component>
+          <component id="f8f10" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Moves"/>
+            </properties>
+          </component>
+          <component id="741ed" class="javax.swing.JButton" binding="mon2EVButton">
+            <constraints>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit..."/>
+            </properties>
+          </component>
+          <component id="3b489" class="javax.swing.JButton" binding="mon2IVButton">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit..."/>
+            </properties>
+          </component>
+          <component id="501ac" class="javax.swing.JComboBox" binding="mon2SpeciesBox">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Plasmolyte"/>
+              </model>
+            </properties>
+          </component>
+          <component id="3d7fa" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="6ce8e"/>
+              <text value="Species"/>
+            </properties>
+          </component>
+          <component id="245ea" class="javax.swing.JButton" binding="mon2EditMovesButton">
+            <constraints>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit Moves"/>
+            </properties>
+          </component>
+          <component id="c1885" class="javax.swing.JTextField" binding="mon2NickField">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="1ce0e" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="481e2"/>
+              <text value="Nickname"/>
+            </properties>
+          </component>
+          <component id="e759a" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="d1f7e"/>
+              <text value="Level"/>
+            </properties>
+          </component>
+          <component id="c7b82" class="javax.swing.JSpinner" binding="mon2LevelBox">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
+                <maximum-size width="60" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="e93e5" class="javax.swing.JComboBox" binding="mon2BallBox">
+            <constraints>
+              <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Master Ball"/>
+              </model>
+            </properties>
+          </component>
+          <component id="4c237" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Ball"/>
+            </properties>
+          </component>
+          <component id="c94cc" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="7cc55"/>
+              <text value="Held Item"/>
+            </properties>
+          </component>
+          <component id="4535b" class="javax.swing.JComboBox" binding="mon2ItemBox">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Choice Specs"/>
+              </model>
+            </properties>
+          </component>
+          <component id="4bfd0" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="177cd"/>
+              <text value="Nature"/>
+            </properties>
+          </component>
+          <component id="fcc5d" class="javax.swing.JComboBox" binding="mon2NatureBox">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Adamant"/>
+              </model>
+            </properties>
+          </component>
+          <component id="80c82" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="653e3"/>
+              <text value="Ability"/>
+            </properties>
+          </component>
+          <component id="5f9b2" class="javax.swing.JComboBox" binding="mon2AbilBox">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Exploitative"/>
+              </model>
+            </properties>
+          </component>
+          <component id="6df93" class="javax.swing.JLabel" binding="mon2EVLabel">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Total: 0"/>
+            </properties>
+          </component>
+          <component id="eb005" class="javax.swing.JLabel" binding="mon2IVLabel">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Total: 0"/>
+            </properties>
+          </component>
+          <component id="6898c" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="e48e3"/>
+              <text value="Friendship"/>
+            </properties>
+          </component>
+          <component id="50448" class="javax.swing.JSpinner" binding="mon2FriendshipSpinner">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="28df9" class="javax.swing.JCheckBox" binding="mon2ShinyCheckBox">
+            <constraints>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Shiny"/>
+            </properties>
+          </component>
+          <component id="4a6d7" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Gender"/>
+            </properties>
+          </component>
+          <component id="bf24c" class="javax.swing.JRadioButton" binding="mon2DefaultButton">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Default"/>
+            </properties>
+          </component>
+          <component id="77c2c" class="javax.swing.JRadioButton" binding="mon2MaleButton">
+            <constraints>
+              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Male"/>
+            </properties>
+          </component>
+          <component id="690a7" class="javax.swing.JRadioButton" binding="mon2FemaleButton">
+            <constraints>
+              <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Female"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="2a1e1" layout-manager="GridLayoutManager" row-count="13" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="1" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-4466715"/>
+          <foreground color="-4466715"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="aaf7f" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="EVs"/>
+            </properties>
+          </component>
+          <component id="6857d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="IVs"/>
+            </properties>
+          </component>
+          <component id="8309b" class="javax.swing.JList" binding="mon3MovesList">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties>
+              <model>
+                <item value="TACKLE"/>
+                <item value="DOUBLE_EDGE"/>
+                <item value="LEER"/>
+                <item value="SCARY_FACE"/>
+              </model>
+            </properties>
+          </component>
+          <component id="86f60" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Moves"/>
+            </properties>
+          </component>
+          <component id="90b35" class="javax.swing.JButton" binding="mon3EVButton">
+            <constraints>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit..."/>
+            </properties>
+          </component>
+          <component id="30b42" class="javax.swing.JButton" binding="mon3IVButton">
+            <constraints>
+              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit..."/>
+            </properties>
+          </component>
+          <component id="73ae7" class="javax.swing.JComboBox" binding="mon3SpeciesBox">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Plasmolyte"/>
+              </model>
+            </properties>
+          </component>
+          <component id="b6d30" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="6ce8e"/>
+              <text value="Species"/>
+            </properties>
+          </component>
+          <component id="bdb1b" class="javax.swing.JButton" binding="mon3EditMovesButton">
+            <constraints>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Edit Moves"/>
+            </properties>
+          </component>
+          <component id="7797c" class="javax.swing.JTextField" binding="mon3NickField">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="b10cf" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="481e2"/>
+              <text value="Nickname"/>
+            </properties>
+          </component>
+          <component id="e540c" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="d1f7e"/>
+              <text value="Level"/>
+            </properties>
+          </component>
+          <component id="c2f38" class="javax.swing.JSpinner" binding="mon3LevelSpinner">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
+                <maximum-size width="60" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="ab395" class="javax.swing.JComboBox" binding="mon3BallBox">
+            <constraints>
+              <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Master Ball"/>
+              </model>
+            </properties>
+          </component>
+          <component id="cf268" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Ball"/>
+            </properties>
+          </component>
+          <component id="f0bae" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="7cc55"/>
+              <text value="Held Item"/>
+            </properties>
+          </component>
+          <component id="fc235" class="javax.swing.JComboBox" binding="mon3ItemBox">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Choice Specs"/>
+              </model>
+            </properties>
+          </component>
+          <component id="41946" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="177cd"/>
+              <text value="Nature"/>
+            </properties>
+          </component>
+          <component id="1f2db" class="javax.swing.JComboBox" binding="mon3NatureBox">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Adamant"/>
+              </model>
+            </properties>
+          </component>
+          <component id="15c01" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="653e3"/>
+              <text value="Ability"/>
+            </properties>
+          </component>
+          <component id="a6c5c" class="javax.swing.JComboBox" binding="mon3AbilBox">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Exploitative"/>
+              </model>
+            </properties>
+          </component>
+          <component id="c900e" class="javax.swing.JLabel" binding="mon3EVLabel">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Total: 0"/>
+            </properties>
+          </component>
+          <component id="9c963" class="javax.swing.JLabel" binding="mon3IVLabel">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Total: 0"/>
+            </properties>
+          </component>
+          <component id="7b373" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="e48e3"/>
+              <text value="Friendship"/>
+            </properties>
+          </component>
+          <component id="9de68" class="javax.swing.JSpinner" binding="mon3FriendshipSpinner">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="52b72" class="javax.swing.JCheckBox" binding="mon3ShinyCheckBox">
+            <constraints>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Shiny"/>
+            </properties>
+          </component>
+          <component id="ef632" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Gender"/>
+            </properties>
+          </component>
+          <component id="e1e97" class="javax.swing.JRadioButton" binding="mon3DefaultButton">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-4466715"/>
+              <text value="Default"/>
+            </properties>
+          </component>
+          <component id="46d3c" class="javax.swing.JRadioButton" binding="mon3MaleButton">
+            <constraints>
+              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-4466715"/>
+              <text value="Male"/>
+            </properties>
+          </component>
+          <component id="93207" class="javax.swing.JRadioButton" binding="mon3FemaleButton">
+            <constraints>
+              <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-4466715"/>
+              <text value="Female"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="mon2Gender">
+      <member id="77c2c"/>
+      <member id="690a7"/>
+      <member id="bf24c"/>
+    </group>
+    <group name="mon1Gender">
+      <member id="705ca"/>
+      <member id="d5877"/>
+      <member id="e5650"/>
+    </group>
+    <group name="mon3Gender">
+      <member id="46d3c"/>
+      <member id="93207"/>
+      <member id="e1e97"/>
+    </group>
+  </buttonGroups>
+</form>
