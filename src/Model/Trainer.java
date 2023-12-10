@@ -81,15 +81,22 @@ public class Trainer {
         int starterNum, setNum;
 
         try {
+            // Array assignment
             trainerOutput.write("\t[TRAINER_" + id + "] =\n\t{\n");
-            trainerOutput.write("\t.name = _(\"" + name + "\"),\n");
-            trainerOutput.write("\t.trainerClass = TRAINER_CLASS_" + trainerClass + ",\n");
-            trainerOutput.write("\t.trainerPic = TRAINER_PIC_" + pic + ",\n");
-            trainerOutput.write("\t.encounterMusic_gender = ");
+            // Name
+            trainerOutput.write("\t\t.name = _(\"" + name + "\"),\n");
+            // Trainer Class
+            trainerOutput.write("\t\t.trainerClass = TRAINER_CLASS_" + trainerClass + ",\n");
+            // Trainer pic
+            trainerOutput.write("\t\t.trainerPic = TRAINER_PIC_" + pic + ",\n");
+            // Encounter music and gender
+            trainerOutput.write("\t\t.encounterMusic_gender = ");
             if (female)
                 trainerOutput.write("F_TRAINER_FEMALE | ");
             trainerOutput.write("TRAINER_ENCOUNTER_MUSIC_" + encounterMusic + ",\n");
-            trainerOutput.write("\t.aiFlags = ");
+
+            // AI flags
+            trainerOutput.write("\t\t.aiFlags = ");
 
             Boolean firstVal = true;
             for (String flag : aiFlags)
@@ -102,7 +109,8 @@ public class Trainer {
             }
             trainerOutput.write(",\n");
 
-            trainerOutput.write("\t.items = { ");
+            // Items
+            trainerOutput.write("\t\t.items = { ");
             if (!items.equals(EMPTY_ITEMS)) {
                 for (String item : items) {
                     trainerOutput.write("ITEM_" + item + ", ");
@@ -110,22 +118,24 @@ public class Trainer {
             }
             trainerOutput.write("},\n");
 
+            // Double battle
             if (doubleBattle)
-                trainerOutput.write("\t.doubleBattle = TRUE,\n");
+                trainerOutput.write("\t\t.doubleBattle = TRUE,\n");
             else
-                trainerOutput.write("\t.doubleBattle = FALSE,\n");
+                trainerOutput.write("\t\t.doubleBattle = FALSE,\n");
 
+            // Party
             if (starterDependent)
             {
-                trainerOutput.write("\t.party = TRAINER_PARTY_STARTER_DEPENDENT,\n");
+                trainerOutput.write("\t\t.party = TRAINER_PARTY_STARTER_DEPENDENT,\n");
             }
             else if (difficulty)
             {
-                trainerOutput.write("\t.party = TRAINER_PARTY(" + label + "),\n");
+                trainerOutput.write("\t\t.party = TRAINER_PARTY(" + label + "),\n");
             }
             else
             {
-                trainerOutput.write("\t.party = TRAINER_PARTY_NO_DIFF(" + label + "),\n");
+                trainerOutput.write("\t\t.party = TRAINER_PARTY_NO_DIFF(" + label + "),\n");
             }
 
             trainerOutput.write("\t},\n\n");
