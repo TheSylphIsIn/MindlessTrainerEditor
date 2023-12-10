@@ -1,9 +1,11 @@
 package Model;
 
+import Data.Item;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,13 +21,16 @@ public class Trainer {
     private Boolean female;
     private Boolean doubleBattle;
     private Boolean starterDependent;
+    private Boolean difficulty;
     private ArrayList<PartySet> parties;
+
+    private static final ArrayList<String> EMPTY_ITEMS = new ArrayList<String>(Arrays.asList(Item.NONE.name(), Item.NONE.name(), Item.NONE.name(), Item.NONE.name()));
 
     public Trainer() {}
 
     public Trainer(String id, String name, String label, ArrayList<String> aiFlags, ArrayList<String> items,
                    String trainerClass, String encounterMusic, String pic, Boolean female, Boolean doubleBattle,
-                   Boolean starterDependent, ArrayList<PartySet> parties) {
+                   Boolean starterDependent, Boolean difficulty, ArrayList<PartySet> parties) {
         this.id = id;
         this.name = name;
         this.label = label;
@@ -37,6 +42,7 @@ public class Trainer {
         this.female = female;
         this.doubleBattle = doubleBattle;
         this.starterDependent = starterDependent;
+        this.difficulty = difficulty;
         this.parties = parties;
     }
 
@@ -58,6 +64,7 @@ public class Trainer {
         pic = (String) object.get("pic");
         female = (Boolean) object.get("female");
         doubleBattle = (Boolean) object.get("double_battle");
+        difficulty = (Boolean) object.get("difficulty");
         starterDependent = (Boolean) object.get("starter_dependent");
 
         parties = new ArrayList<>();
@@ -70,16 +77,82 @@ public class Trainer {
         }
     }
 
-    public void writeTrainerToFile(FileWriter output) {
+    public void writeTrainerToFile(FileWriter trainerOutput, FileWriter partyOutput) {
         int starterNum, setNum;
 
-        for (setNum = 0; setNum < 1; setNum++)
-        {
-            for (starterNum = 0; starterNum < 3; starterNum++)
+        try {
+            trainerOutput.write("\t[TRAINER_" + id + "] =\n\t{\n");
+            trainerOutput.write("\t.name = _(\"" + name + "\"),\n");
+            trainerOutput.write("\t.trainerClass = TRAINER_CLASS_" + trainerClass + ",\n");
+            trainerOutput.write("\t.trainerPic = TRAINER_PIC_" + pic + ",\n");
+            trainerOutput.write("\t.encounterMusic_gender = ");
+            if (female)
+                trainerOutput.write("F_TRAINER_FEMALE | ");
+            trainerOutput.write("TRAINER_ENCOUNTER_MUSIC_" + encounterMusic + ",\n");
+            trainerOutput.write("\t.aiFlags = ");
+
+            Boolean firstVal = true;
+            for (String flag : aiFlags)
             {
-                parties.get(starterNum + setNum).writePartyToFile(output, label + "Set" + setNum + "Choice" + starterNum);
+                if (!firstVal)
+                    trainerOutput.write(" | ");
+                firstVal = false;
+
+                trainerOutput.write("AI_FLAG_" + flag);
+            }
+            trainerOutput.write(",\n");
+
+            trainerOutput.write("\t.items = { ");
+            if (!items.equals(EMPTY_ITEMS)) {
+                for (String item : items) {
+                    trainerOutput.write("ITEM_" + item + ", ");
+                }
+            }
+            trainerOutput.write("},\n");
+
+            if (doubleBattle)
+                trainerOutput.write("\t.doubleBattle = TRUE,\n");
+            else
+                trainerOutput.write("\t.doubleBattle = FALSE,\n");
+
+            if (starterDependent)
+            {
+                trainerOutput.write("\t.party = TRAINER_PARTY_STARTER_DEPENDENT,\n");
+            }
+            else if (difficulty)
+            {
+                trainerOutput.write("\t.party = TRAINER_PARTY(" + label + "),\n");
+            }
+            else
+            {
+                trainerOutput.write("\t.party = TRAINER_PARTY_NO_DIFF(" + label + "),\n");
+            }
+
+            trainerOutput.write("\t},\n\n");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (starterDependent) {
+            for (setNum = 0; setNum < 1; setNum++) {
+                for (starterNum = 0; starterNum < 3; starterNum++) {
+                    parties.get(starterNum + setNum).writePartyToFile(partyOutput, label + "Set" + setNum + "Choice" + starterNum, difficulty);
+                }
             }
         }
+        else
+        {
+            parties.get(0).writePartyToFile(partyOutput, label, difficulty);
+        }
+    }
+
+    public Boolean getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Boolean difficulty) {
+        this.difficulty = difficulty;
     }
 
     public String getLabel() {

@@ -29,6 +29,6 @@ public class Main {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//        OutputTest test = new OutputTest();
+        OutputTest test = new OutputTest();
     }
 }

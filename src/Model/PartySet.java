@@ -76,7 +76,7 @@ public class PartySet {
         return parties;
     }
 
-    public void writePartyToFile(FileWriter output, String label) {
+    public void writePartyToFile(FileWriter output, String label, Boolean difficulty) {
         try {
             output.write("static const struct TrainerMon sParty_" + label + "[] = {\n");
             for (TrainerMon mon : normalParty)
@@ -85,19 +85,19 @@ public class PartySet {
             }
             output.write("};\n\n");
 
-            output.write("static const struct TrainerMon sParty_" + label + "Hard[] = {\n");
-            for (TrainerMon mon : hardParty)
-            {
-                mon.writeMonToFile(output);
-            }
-            output.write("};\n\n");
+            if (difficulty) {
+                output.write("static const struct TrainerMon sParty_" + label + "Hard[] = {\n");
+                for (TrainerMon mon : hardParty) {
+                    mon.writeMonToFile(output);
+                }
+                output.write("};\n\n");
 
-            output.write("static const struct TrainerMon sParty_" + label + "Unfair[] = {\n");
-            for (TrainerMon mon : unfairParty)
-            {
-                mon.writeMonToFile(output);
+                output.write("static const struct TrainerMon sParty_" + label + "Unfair[] = {\n");
+                for (TrainerMon mon : unfairParty) {
+                    mon.writeMonToFile(output);
+                }
+                output.write("};\n\n");
             }
-            output.write("};\n\n");
 
         } catch (IOException e) {
             throw new RuntimeException(e);

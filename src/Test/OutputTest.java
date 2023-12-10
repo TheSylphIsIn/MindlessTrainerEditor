@@ -32,11 +32,17 @@ public class OutputTest {
             Trainer testTrainer = new Trainer();
             testTrainer.initFromJson(trainer);
 
-            FileWriter testOutput = new FileWriter("src/data/test_output.h");
-            testTrainer.writeTrainerToFile(testOutput);
-//            testSet.writePartyToFile(testOutput, (String) trainer.get("label"));
+            FileWriter trainerTest = new FileWriter("src/data/trainers.h");
+            FileWriter partyTest = new FileWriter("src/data/trainer_parties.h");
+            FileWriter starterTest = new FileWriter("src/data/starter_dependent_parties.h");
+            if (testTrainer.getStarterDependent())
+                testTrainer.writeTrainerToFile(trainerTest, starterTest);
+            else
+                testTrainer.writeTrainerToFile(trainerTest, partyTest);
 
-            testOutput.flush();
+            trainerTest.flush();
+            partyTest.flush();
+            starterTest.flush();
 
             System.out.println("Tried output.");
         } catch (IOException e) {

@@ -9,6 +9,7 @@
     "name": "Morgan",
     "double_battle": false,
     "starter_dependent": true,
+    "difficulty": true,
     "items": ["NONE", "NONE", "NONE", "NONE"],
     "ai": ["CHECK_BAD_MOVE", "TRY_TO_FAINT", "CHECK_VIABILITY"],
     "parties": [
