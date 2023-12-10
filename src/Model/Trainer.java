@@ -77,6 +77,41 @@ public class Trainer {
         }
     }
 
+    public JSONObject writeToJson()
+    {
+        JSONObject object = new JSONObject();
+
+        object.put("id", id);
+        object.put("name", name);
+        object.put("label", label);
+        object.put("trainer_class", trainerClass);
+        object.put("encounter_music", encounterMusic);
+        object.put("pic", pic);
+        object.put("female", female);
+        object.put("double_battle", doubleBattle);
+        object.put("difficulty", difficulty);
+        object.put("starter_dependent", starterDependent);
+
+        JSONArray aiFlagsData = new JSONArray();
+        for (String flag : aiFlags)
+        {
+            aiFlagsData.add(flag);
+        }
+        object.put("ai", aiFlagsData);
+
+        JSONArray itemsData = new JSONArray();
+        for (String item : items)
+            itemsData.add(item);
+        object.put("items", itemsData);
+
+        JSONArray partiesData = new JSONArray();
+        for (PartySet partySet : parties)
+            partiesData.add(partySet.writeToJson());
+        object.put("parties", partiesData);
+
+        return object;
+    }
+
     public void writeTrainerToFile(FileWriter trainerOutput, FileWriter partyOutput) {
         int starterNum, setNum;
 
