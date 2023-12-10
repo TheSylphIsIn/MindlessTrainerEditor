@@ -43,11 +43,191 @@ public class MainView {
     private JPanel unfairPartyTab;
     private JPanel unfairPartyPanel;
     private JCheckBox starterDependentCheckBox;
+    private JComboBox hardAbilBox;
+    private JComboBox unfairAbilBox;
+    private JList hardMovesList;
+    private JButton hardEVButton;
+    private JButton hardIVButton;
+    private JLabel hardEVLabel;
+    private JLabel hardIVLabel;
+    private JSpinner hardLevelSpinner;
+    private JComboBox hardSpeciesBox;
+    private JComboBox hardItemBox;
+    private JComboBox hardNatureBox;
+    private JButton hardEditMovesButton;
+    private JSpinner hardFriendshipSpinner;
+    private JCheckBox hardShinyCheckBox;
+    private JTextField hardNickField;
+    private JComboBox hardBallBox;
+    private JRadioButton hardMaleButton;
+    private JRadioButton hardFemaleButton;
+    private JRadioButton hardDefaultButton;
+    private JComboBox unfairSpeciesBox;
+    private JSpinner unfairLevelSpinner;
+    private JComboBox unfairItemBox;
+    private JComboBox unfairNatureBox;
+    private JLabel unfairEVLabel;
+    private JLabel unfairIVLabel;
+    private JButton unfairEVButton;
+    private JButton unfairIVButton;
+    private JList unfairMoveList;
+    private JButton unfairMoveButton;
+    private JSpinner unfairFriendshipSpinner;
+    private JCheckBox unfairShinyBox;
+    private JTextField unfairNickField;
+    private JComboBox unfairBallBox;
+    private JRadioButton unfairMaleButton;
+    private JRadioButton unfairFemaleButton;
+    private JRadioButton unfairDefaultButton;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
 
     public ArrayList<StarterDependentPanel> getStarterDependentPanels() {
         return starterDependentPanels;
+    }
+
+    public JComboBox getHardAbilBox() {
+        return hardAbilBox;
+    }
+
+    public JComboBox getUnfairAbilBox() {
+        return unfairAbilBox;
+    }
+
+    public JList getHardMovesList() {
+        return hardMovesList;
+    }
+
+    public JButton getHardEVButton() {
+        return hardEVButton;
+    }
+
+    public JButton getHardIVButton() {
+        return hardIVButton;
+    }
+
+    public JLabel getHardEVLabel() {
+        return hardEVLabel;
+    }
+
+    public JLabel getHardIVLabel() {
+        return hardIVLabel;
+    }
+
+    public JSpinner getHardLevelSpinner() {
+        return hardLevelSpinner;
+    }
+
+    public JComboBox getHardSpeciesBox() {
+        return hardSpeciesBox;
+    }
+
+    public JComboBox getHardItemBox() {
+        return hardItemBox;
+    }
+
+    public JComboBox getHardNatureBox() {
+        return hardNatureBox;
+    }
+
+    public JButton getHardEditMovesButton() {
+        return hardEditMovesButton;
+    }
+
+    public JSpinner getHardFriendshipSpinner() {
+        return hardFriendshipSpinner;
+    }
+
+    public JCheckBox getHardShinyCheckBox() {
+        return hardShinyCheckBox;
+    }
+
+    public JTextField getHardNickField() {
+        return hardNickField;
+    }
+
+    public JComboBox getHardBallBox() {
+        return hardBallBox;
+    }
+
+    public JRadioButton getHardMaleButton() {
+        return hardMaleButton;
+    }
+
+    public JRadioButton getHardFemaleButton() {
+        return hardFemaleButton;
+    }
+
+    public JRadioButton getHardDefaultButton() {
+        return hardDefaultButton;
+    }
+
+    public JComboBox getUnfairSpeciesBox() {
+        return unfairSpeciesBox;
+    }
+
+    public JSpinner getUnfairLevelSpinner() {
+        return unfairLevelSpinner;
+    }
+
+    public JComboBox getUnfairItemBox() {
+        return unfairItemBox;
+    }
+
+    public JComboBox getUnfairNatureBox() {
+        return unfairNatureBox;
+    }
+
+    public JLabel getUnfairEVLabel() {
+        return unfairEVLabel;
+    }
+
+    public JLabel getUnfairIVLabel() {
+        return unfairIVLabel;
+    }
+
+    public JButton getUnfairEVButton() {
+        return unfairEVButton;
+    }
+
+    public JButton getUnfairIVButton() {
+        return unfairIVButton;
+    }
+
+    public JList getUnfairMoveList() {
+        return unfairMoveList;
+    }
+
+    public JButton getUnfairMoveButton() {
+        return unfairMoveButton;
+    }
+
+    public JSpinner getUnfairFriendshipSpinner() {
+        return unfairFriendshipSpinner;
+    }
+
+    public JCheckBox getUnfairShinyBox() {
+        return unfairShinyBox;
+    }
+
+    public JTextField getUnfairNickField() {
+        return unfairNickField;
+    }
+
+    public JComboBox getUnfairBallBox() {
+        return unfairBallBox;
+    }
+
+    public JRadioButton getUnfairMaleButton() {
+        return unfairMaleButton;
+    }
+
+    public JRadioButton getUnfairFemaleButton() {
+        return unfairFemaleButton;
+    }
+
+    public JRadioButton getUnfairDefaultButton() {
+        return unfairDefaultButton;
     }
 
     public JPanel getMainPanel() {

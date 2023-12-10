@@ -1,0 +1,30 @@
+package Data;
+
+public enum Nature {
+    NONE,
+    LONELY,
+    BRAVE,
+    ADAMANT,
+    NAUGHTY,
+    BOLD,
+    RELAXED,
+    IMPISH,
+    LAX,
+    TIMID,
+    HASTY,
+    JOLLY,
+    NAIVE,
+    MODEST,
+    MILD,
+    QUIET,
+    RASH,
+    CALM,
+    GENTLE,
+    SASSY,
+    CAREFUL,
+    HARDY,
+    DOCILE,
+    SERIOUS,
+    BASHFUL,
+    QUIRKY
+}
