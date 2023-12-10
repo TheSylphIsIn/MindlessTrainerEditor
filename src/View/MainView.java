@@ -79,8 +79,23 @@ public class MainView {
     private JRadioButton unfairMaleButton;
     private JRadioButton unfairFemaleButton;
     private JRadioButton unfairDefaultButton;
+    private JLabel spriteLabel;
+    private JLabel hardSpriteLabel;
+    private JLabel unfairSpriteLabel;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
+
+    public JLabel getSpriteLabel() {
+        return spriteLabel;
+    }
+
+    public JLabel getHardSpriteLabel() {
+        return hardSpriteLabel;
+    }
+
+    public JLabel getUnfairSpriteLabel() {
+        return unfairSpriteLabel;
+    }
 
     public ArrayList<StarterDependentPanel> getStarterDependentPanels() {
         return starterDependentPanels;

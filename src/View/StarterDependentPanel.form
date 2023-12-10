@@ -286,6 +286,14 @@
               <text value="Female"/>
             </properties>
           </component>
+          <component id="12504" class="javax.swing.JLabel" binding="spriteLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="a7b21" layout-manager="GridLayoutManager" row-count="13" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -561,6 +569,14 @@
             </constraints>
             <properties>
               <text value="Female"/>
+            </properties>
+          </component>
+          <component id="c5227" class="javax.swing.JLabel" binding="mon2SpriteLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value=""/>
             </properties>
           </component>
         </children>
@@ -841,6 +857,14 @@
             <properties>
               <background color="-4466715"/>
               <text value="Female"/>
+            </properties>
+          </component>
+          <component id="dad59" class="javax.swing.JLabel" binding="mon3SpriteLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value=""/>
             </properties>
           </component>
         </children>

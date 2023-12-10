@@ -5,9 +5,13 @@ import Model.MainModel;
 import View.MainView;
 import View.StarterDependentPanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,6 +48,7 @@ public class Controller {
         });
 
         initComboBoxes();
+        initIcons();
     }
 
     private void initComboBoxes() {
@@ -187,5 +192,35 @@ public class Controller {
             moves.add(m.name());
 
         return moves;
+    }
+
+    private void drawMonIcon(String species, JLabel label) {
+        try {
+            BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/front.png"));
+            label.setIcon(new ImageIcon(sprite));
+        } catch (IOException e) {
+            try { // dumb hack to catch mons that only have anim_front. blame expansion.
+                BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/anim_front.png"));
+                label.setIcon(new ImageIcon(sprite));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    private void initIcons() {
+        drawMonIcon(Species.GLASMA.name(), view.getSpriteLabel());
+        drawMonIcon(Species.ETERNATUS.name(), view.getHardSpriteLabel());
+        drawMonIcon(Species.DARMANITAN.name(), view.getUnfairSpriteLabel());
+
+        drawMonIcon(Species.SANDUDE.name(), view.getStarterDependentPanels().get(0).getSpriteLabel());
+        drawMonIcon(Species.ELADRIFT.name(), view.getStarterDependentPanels().get(0).getMon2SpriteLabel());
+        drawMonIcon(Species.GLASMA.name(), view.getStarterDependentPanels().get(0).getMon3SpriteLabel());
+        drawMonIcon(Species.SANDUDE.name(), view.getStarterDependentPanels().get(1).getSpriteLabel());
+        drawMonIcon(Species.ELADRIFT.name(), view.getStarterDependentPanels().get(1).getMon2SpriteLabel());
+        drawMonIcon(Species.GLASMA.name(), view.getStarterDependentPanels().get(1).getMon3SpriteLabel());
+        drawMonIcon(Species.SANDUDE.name(), view.getStarterDependentPanels().get(2).getSpriteLabel());
+        drawMonIcon(Species.ELADRIFT.name(), view.getStarterDependentPanels().get(2).getMon2SpriteLabel());
+        drawMonIcon(Species.GLASMA.name(), view.getStarterDependentPanels().get(2).getMon3SpriteLabel());
     }
 }

@@ -4,10 +4,12 @@
     "label": "MorganFisheye",
     "trainer_class": "RIVAL",
     "encounter_music": "FEMALE",
+    "pic": "MORGAN",
     "female": true,
     "name": "Morgan",
     "double_battle": false,
     "starter_dependent": true,
+    "items": ["NONE", "NONE", "NONE", "NONE"],
     "ai": ["CHECK_BAD_MOVE", "TRY_TO_FAINT", "CHECK_VIABILITY"],
     "parties": [
       {
@@ -129,7 +131,7 @@
         ],
         "hard": [
           {
-            "species": "ELADRIFT",
+            "species": "SANDUDE",
             "moves": ["TACKLE", "HARDEN", "MUD_SLAP", "FLASH"],
             "level": 6,
             "item": "ORAN_BERRY",

@@ -59,6 +59,9 @@ public class StarterDependentPanel {
     private JRadioButton mon3MaleButton;
     private JRadioButton mon3FemaleButton;
     private JRadioButton mon3DefaultButton;
+    private JLabel spriteLabel;
+    private JLabel mon2SpriteLabel;
+    private JLabel mon3SpriteLabel;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -222,6 +225,18 @@ public class StarterDependentPanel {
 
     public JComboBox getMon3ItemBox() {
         return mon3ItemBox;
+    }
+
+    public JLabel getSpriteLabel() {
+        return spriteLabel;
+    }
+
+    public JLabel getMon2SpriteLabel() {
+        return mon2SpriteLabel;
+    }
+
+    public JLabel getMon3SpriteLabel() {
+        return mon3SpriteLabel;
     }
 
     public JComboBox getMon3AbilBox() {

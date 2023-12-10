@@ -52,7 +52,6 @@ public class PartySet {
         JSONArray normal = new JSONArray();
         JSONArray hard = new JSONArray();
         JSONArray unfair = new JSONArray();
-        int i;
 
         for (TrainerMon mon : normalParty)
         {

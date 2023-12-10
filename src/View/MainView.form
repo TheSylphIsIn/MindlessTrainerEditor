@@ -335,6 +335,14 @@
                               <text value="Female"/>
                             </properties>
                           </component>
+                          <component id="199d4" class="javax.swing.JLabel" binding="spriteLabel">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
                         </children>
                       </grid>
                     </children>
@@ -621,6 +629,14 @@
                               <text value="Female"/>
                             </properties>
                           </component>
+                          <component id="3c19f" class="javax.swing.JLabel" binding="hardSpriteLabel">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
                         </children>
                       </grid>
                     </children>
@@ -905,6 +921,14 @@
                             </constraints>
                             <properties>
                               <text value="Female"/>
+                            </properties>
+                          </component>
+                          <component id="cbed9" class="javax.swing.JLabel" binding="unfairSpriteLabel">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
                             </properties>
                           </component>
                         </children>

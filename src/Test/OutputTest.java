@@ -1,6 +1,7 @@
 package Test;
 
 import Model.PartySet;
+import Model.Trainer;
 import Model.TrainerMon;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,8 +29,12 @@ public class OutputTest {
             PartySet testSet = new PartySet();
             testSet.initFromJson(partyGroup);
 
+            Trainer testTrainer = new Trainer();
+            testTrainer.initFromJson(trainer);
+
             FileWriter testOutput = new FileWriter("src/data/test_output.h");
-            testSet.writePartyToFile(testOutput, (String) trainer.get("label"));
+            testTrainer.writeTrainerToFile(testOutput);
+//            testSet.writePartyToFile(testOutput, (String) trainer.get("label"));
 
             testOutput.flush();
 
