@@ -1,5 +1,6 @@
 package Test;
 
+import Model.PartySet;
 import Model.TrainerMon;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,20 +24,16 @@ public class OutputTest {
             JSONObject trainer = (JSONObject) data.get(0);
             JSONArray parties = (JSONArray) trainer.get("parties");
             JSONObject partyGroup = (JSONObject) parties.get(0);
-            JSONArray party = (JSONArray) partyGroup.get("normal");
-            testMon.initFromJson((JSONObject) party.get(0));
+
+            PartySet testSet = new PartySet();
+            testSet.initFromJson(partyGroup);
+
             FileWriter testOutput = new FileWriter("src/data/test_output.h");
-            testMon.writeMonToFile(testOutput);
-
-            party = (JSONArray) partyGroup.get("hard");
-            testMon.initFromJson((JSONObject) party.get(0));
-            testMon.writeMonToFile(testOutput);
-
-            party = (JSONArray) partyGroup.get("unfair");
-            testMon.initFromJson((JSONObject) party.get(0));
-            testMon.writeMonToFile(testOutput);
+            testSet.writePartyToFile(testOutput, (String) trainer.get("label"));
 
             testOutput.flush();
+
+            System.out.println("Tried output.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {

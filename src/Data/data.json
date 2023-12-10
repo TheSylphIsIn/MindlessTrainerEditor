@@ -1,7 +1,7 @@
 [
   {
     "id": "MORGAN_FISHEYE_LAKE",
-    "idx": "MorganFisheye",
+    "label": "MorganFisheye",
     "trainer_class": "RIVAL",
     "encounter_music": "FEMALE",
     "female": true,

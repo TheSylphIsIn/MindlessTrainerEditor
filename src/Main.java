@@ -2,6 +2,7 @@ import Controller.Controller;
 import Data.*;
 import Model.MainModel;
 import Model.TrainerMon;
+import Test.OutputTest;
 import View.MainView;
 import View.StarterDependentPanel;
 import org.json.simple.JSONArray;
@@ -27,5 +28,7 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+//        OutputTest test = new OutputTest();
     }
 }

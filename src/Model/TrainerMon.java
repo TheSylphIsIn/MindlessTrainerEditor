@@ -86,7 +86,6 @@ public class TrainerMon {
         this.ball = (String) object.get("ball");
     }
 
-    // TODO
     public JSONObject writeToJson()
     {
         JSONObject mon = new JSONObject();
