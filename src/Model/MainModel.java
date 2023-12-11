@@ -23,7 +23,6 @@ public class MainModel {
     private ArrayList<Trainer> trainers;
 
     public MainModel() {
-        trainers = new ArrayList<Trainer>();
         initFromJson();
     }
 
@@ -32,6 +31,7 @@ public class MainModel {
             JSONParser parser = new JSONParser();
             FileReader reader = new FileReader("src/data/data.json");
             JSONArray data = (JSONArray) parser.parse(reader);
+            trainers = new ArrayList<Trainer>();
             for (Object trainer : data)
             {
                 Trainer add = new Trainer();

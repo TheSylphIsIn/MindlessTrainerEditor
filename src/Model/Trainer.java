@@ -194,6 +194,15 @@ public class Trainer {
         }
     }
 
+    public void prepForStarterSets() {
+        if (parties.size() < NUM_STARTERS * NUM_STARTER_SETS)
+        {
+            // Add dummy parties until there is one for each slot
+            for (int i = 0; i < NUM_STARTERS * NUM_STARTER_SETS; i++)
+                parties.add(parties.get(0));
+        }
+    }
+
     public Boolean getDifficulty() {
         return difficulty;
     }

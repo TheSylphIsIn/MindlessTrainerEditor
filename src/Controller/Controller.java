@@ -51,17 +51,28 @@ public class Controller {
 
     }
 
+    private Trainer getCurrentTrainer() {
+        return model.getTrainers().get(view.getList1().getSelectedIndex());
+    }
+
+    private int getCurrentMonIndex()
+    {
+        return view.getPartyIndexBox().getSelectedIndex();
+    }
+
     private void initListeners() {
+        // Clicking the checkbox swaps between the single or triple mon-editing panels and packs the frame
         view.getStarterDependentCheckBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.getTrainers().get(view.getList1().getSelectedIndex()).setStarterDependent(view.getStarterDependentCheckBox().isSelected());
+                getCurrentTrainer().setStarterDependent(view.getStarterDependentCheckBox().isSelected());
                 if (view.getStarterDependentCheckBox().isSelected())
                 {
                     view.getPartiesPane().setComponentAt(0, view.getStarterDependentPanels().get(0).getMainPanel());
                     view.getPartiesPane().setComponentAt(1, view.getStarterDependentPanels().get(1).getMainPanel());
                     view.getPartiesPane().setComponentAt(2, view.getStarterDependentPanels().get(2).getMainPanel());
-                    view.getPartyIndexBox().setSelectedIndex(0);
+                    getCurrentTrainer().prepForStarterSets();
+                    view.getPartyIndexBox().setSelectedIndex(0); // This redraws the mons
                     frame.pack();
                 }
                 else
@@ -75,12 +86,121 @@ public class Controller {
             }
         });
 
+        // Redraws the relevant panels with the info of the mons in the selected index.
         view.getPartyIndexBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                writeMonToView(model.getTrainers().get(view.getList1().getSelectedIndex()).getParties(),
-                        model.getTrainers().get(view.getList1().getSelectedIndex()).getStarterDependent(),
-                        view.getPartyIndexBox().getSelectedIndex());
+                writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(),
+                        getCurrentMonIndex());
+            }
+        });
+
+        // Redraws the mon icon and saves to model
+        view.getSpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawMonIcon((String) view.getSpeciesBox().getSelectedItem(), view.getSpriteLabel());
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setSpecies((String) view.getSpeciesBox().getSelectedItem());
+            }
+        });
+        view.getHardSpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawMonIcon((String) view.getHardSpeciesBox().getSelectedItem(), view.getSpriteLabel());
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setSpecies((String) view.getHardSpeciesBox().getSelectedItem());
+            }
+        });
+        view.getUnfairSpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawMonIcon((String) view.getUnfairSpeciesBox().getSelectedItem(), view.getSpriteLabel());
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setSpecies((String) view.getUnfairSpeciesBox().getSelectedItem());
+            }
+        });
+
+        // The above but for the starter panel.
+        // I have to repeat this stupid bullshit 9 times for every element on that panel........
+        view.getStarterDependentPanels().get(0).getSpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(0).getSpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(0).getSpriteLabel());
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+        view.getStarterDependentPanels().get(0).getMon2SpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(0).getMon2SpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(0).getMon2SpriteLabel());
+                getCurrentTrainer().getParties().get(1).getNormalParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+        view.getStarterDependentPanels().get(0).getMon3SpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(0).getMon3SpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(0).getMon3SpriteLabel());
+                getCurrentTrainer().getParties().get(2).getNormalParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+
+        view.getStarterDependentPanels().get(1).getSpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(1).getSpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(1).getSpriteLabel());
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+        view.getStarterDependentPanels().get(1).getMon2SpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(1).getMon2SpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(1).getMon2SpriteLabel());
+                getCurrentTrainer().getParties().get(1).getHardParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+        view.getStarterDependentPanels().get(1).getMon3SpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(1).getMon3SpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(1).getMon3SpriteLabel());
+                getCurrentTrainer().getParties().get(2).getHardParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+
+        view.getStarterDependentPanels().get(2).getSpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(2).getSpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(2).getSpriteLabel());
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+        view.getStarterDependentPanels().get(2).getMon2SpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(2).getMon2SpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(2).getMon2SpriteLabel());
+                getCurrentTrainer().getParties().get(1).getUnfairParty().get(getCurrentMonIndex()).setSpecies(species);
+            }
+        });
+        view.getStarterDependentPanels().get(2).getMon3SpeciesBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String species = (String) view.getStarterDependentPanels().get(2).getMon3SpeciesBox().getSelectedItem();
+                drawMonIcon(species,
+                        view.getStarterDependentPanels().get(2).getMon3SpriteLabel());
+                getCurrentTrainer().getParties().get(2).getUnfairParty().get(getCurrentMonIndex()).setSpecies(species);
             }
         });
     }
@@ -261,15 +381,20 @@ public class Controller {
 
 
     private void drawMonIcon(String species, JLabel label) {
-        try {
-            BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/front.png"));
-            label.setIcon(new ImageIcon(sprite));
-        } catch (IOException e) {
-            try { // dumb hack to catch mons that only have anim_front. blame expansion.
-                BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/anim_front.png"));
+        if (species.equals(Species.NONE.name()))
+            label.setIcon(null);
+        else {
+            try {
+                BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/front.png"));
                 label.setIcon(new ImageIcon(sprite));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            } catch (IOException e) {
+                try { // dumb hack to catch mons that only have anim_front. blame expansion.
+                    BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/anim_front.png"));
+                    label.setIcon(new ImageIcon(sprite));
+                    frame.pack();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
@@ -292,7 +417,7 @@ public class Controller {
 
         for (Trainer trainer : model.getTrainers())
         {
-            trainers.add(trainer.getName());
+            trainers.add(trainer.getLabel());
         }
         list.addAll(trainers);
         view.getList1().setModel(list);
@@ -322,7 +447,7 @@ public class Controller {
         view.getStarterDependentCheckBox().setSelected(data.getStarterDependent());
         view.getDifficultyCheckBox().setSelected(data.getDifficulty());
 
-        writeMonToView(parties, data.getStarterDependent(), view.getPartyIndexBox().getSelectedIndex());
+        writeMonToView(parties, data.getStarterDependent(), getCurrentMonIndex());
 
 
     }
