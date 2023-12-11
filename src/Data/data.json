@@ -27,7 +27,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ],
         "hard": [
@@ -43,7 +44,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ],
         "unfair": [
@@ -59,7 +61,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ]
       },
@@ -77,7 +80,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ],
         "hard": [
@@ -93,7 +97,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ],
         "unfair": [
@@ -109,7 +114,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ]
       },
@@ -127,7 +133,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ],
         "hard": [
@@ -143,7 +150,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ],
         "unfair": [
@@ -159,7 +167,8 @@
             "gender": "DEFAULT",
             "shiny": false,
             "nickname": "NONE",
-            "ball": "NONE"
+            "ball": "NONE",
+            "friendship": 0
           }
         ]
       }

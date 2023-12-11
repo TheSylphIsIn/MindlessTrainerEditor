@@ -25,6 +25,7 @@ public class TrainerMon {
     private Boolean shiny;
     private String nickname;
     private String ball;
+    private int friendship;
 
     // "Empty values" constants for prettifying file output
     private static final int[] EMPTY_EVS = {0, 0, 0, 0, 0, 0};
@@ -44,11 +45,12 @@ public class TrainerMon {
         shiny = false;
         nickname = null;
         ball = "NONE";
+        friendship = 0;
     }
 
     public TrainerMon(String species, String item, String ability, int level,
                       int[] evs, int[] ivs, ArrayList<String> moves, String nature,
-                      String gender, Boolean shiny, String nickname, String ball) {
+                      String gender, Boolean shiny, String nickname, String ball, int friendship) {
         this.species = species;
         this.item = item;
         this.ability = ability;
@@ -61,6 +63,7 @@ public class TrainerMon {
         this.shiny = shiny;
         this.nickname = nickname;
         this.ball = ball;
+        this.friendship = friendship;
     }
 
     public void initFromJson(JSONObject object)
@@ -84,6 +87,7 @@ public class TrainerMon {
         this.shiny = (Boolean) object.get("shiny");
         this.nickname = (String) object.get("nickname");
         this.ball = (String) object.get("ball");
+        this.friendship = Math.toIntExact((Long) object.get("friendship"));
     }
 
     public JSONObject writeToJson()
@@ -112,6 +116,7 @@ public class TrainerMon {
         mon.put("shiny", this.shiny);
         mon.put("nickname", this.nickname);
         mon.put("ball", this.ball);
+        mon.put("friendship", this.friendship);
 
         return mon;
     }
@@ -146,16 +151,26 @@ public class TrainerMon {
                 output.write("\t.gender = TRAINER_MON_" + gender + ",\n");
             if (shiny)
                 output.write("\t.shiny = TRUE,\n");
-            if (nickname.compareTo(NONE) != 0)
+            if (nickname != null && nickname.compareTo(NONE) != 0 && nickname.compareTo("") != 0)
                 output.write("\t.nickname = _(\"" + nickname + "\"),\n");
             if (ball.compareTo(NONE) != 0)
                 output.write("\t.ball = ITEM_" + ball + ",\n");
+            if (friendship != 0)
+                output.write("\t.friendship = " + friendship + ",\n");
 
             output.write("\t},\n");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int getFriendship() {
+        return friendship;
+    }
+
+    public void setFriendship(int friendship) {
+        this.friendship = friendship;
     }
 
     public String getSpecies() {

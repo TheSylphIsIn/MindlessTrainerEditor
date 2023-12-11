@@ -103,4 +103,16 @@ public class PartySet {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<TrainerMon> getNormalParty() {
+        return normalParty;
+    }
+
+    public ArrayList<TrainerMon> getHardParty() {
+        return hardParty;
+    }
+
+    public ArrayList<TrainerMon> getUnfairParty() {
+        return unfairParty;
+    }
 }

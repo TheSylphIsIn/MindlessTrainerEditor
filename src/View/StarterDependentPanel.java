@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class StarterDependentPanel {
     private JPanel mainPanel;
-    private JPanel normalPartyPanel;
+    private JPanel mon1Panel;
     private JList movesList;
     private JButton evButton;
     private JButton ivButton;
@@ -62,13 +62,27 @@ public class StarterDependentPanel {
     private JLabel spriteLabel;
     private JLabel mon2SpriteLabel;
     private JLabel mon3SpriteLabel;
+    private JPanel mon2Panel;
+    private JPanel mon3Panel;
+
+    public JPanel getMon1Panel() {
+        return mon1Panel;
+    }
+
+    public JPanel getMon2Panel() {
+        return mon2Panel;
+    }
+
+    public JPanel getMon3Panel() {
+        return mon3Panel;
+    }
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
     public JPanel getNormalPartyPanel() {
-        return normalPartyPanel;
+        return mon1Panel;
     }
 
     public JList getMovesList() {

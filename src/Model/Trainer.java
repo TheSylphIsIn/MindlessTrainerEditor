@@ -26,6 +26,8 @@ public class Trainer {
 
     private static final ArrayList<String> EMPTY_ITEMS = new ArrayList<String>(Arrays.asList(Item.NONE.name(), Item.NONE.name(), Item.NONE.name(), Item.NONE.name()));
 
+    public static final int NUM_STARTER_SETS = 1;
+    public static final int NUM_STARTERS = 3;
     public Trainer() {}
 
     public Trainer(String id, String name, String label, ArrayList<String> aiFlags, ArrayList<String> items,
@@ -180,8 +182,8 @@ public class Trainer {
         }
 
         if (starterDependent) {
-            for (setNum = 0; setNum < 1; setNum++) {
-                for (starterNum = 0; starterNum < 3; starterNum++) {
+            for (setNum = 0; setNum < NUM_STARTER_SETS; setNum++) {
+                for (starterNum = 0; starterNum < NUM_STARTERS; starterNum++) {
                     parties.get(starterNum + setNum).writePartyToFile(partyOutput, label + "Set" + setNum + "Choice" + starterNum, difficulty);
                 }
             }

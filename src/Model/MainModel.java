@@ -180,4 +180,7 @@ public class MainModel {
 
     }
 
+    public ArrayList<Trainer> getTrainers() {
+        return trainers;
+    }
 }

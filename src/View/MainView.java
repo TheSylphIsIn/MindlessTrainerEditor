@@ -82,8 +82,63 @@ public class MainView {
     private JLabel spriteLabel;
     private JLabel hardSpriteLabel;
     private JLabel unfairSpriteLabel;
+    private JTextField idField;
+    private JTextField nameField;
+    private JTextField labelField;
+    private JButton aiFlagsButton;
+    private JButton itemsButton;
+    private JComboBox trainerClassBox;
+    private JComboBox encounterMusicBox;
+    private JComboBox trainerSpriteBox;
+    private JCheckBox femaleCheckBox;
+    private JPanel nestedTrainerPanel;
+    private JCheckBox doubleBattleCheckBox;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
+
+    public JTextField getIdField() {
+        return idField;
+    }
+
+    public JTextField getNameField() {
+        return nameField;
+    }
+
+    public JTextField getLabelField() {
+        return labelField;
+    }
+
+    public JButton getAiFlagsButton() {
+        return aiFlagsButton;
+    }
+
+    public JButton getItemsButton() {
+        return itemsButton;
+    }
+
+    public JComboBox getTrainerClassBox() {
+        return trainerClassBox;
+    }
+
+    public JComboBox getEncounterMusicBox() {
+        return encounterMusicBox;
+    }
+
+    public JComboBox getTrainerSpriteBox() {
+        return trainerSpriteBox;
+    }
+
+    public JCheckBox getFemaleCheckBox() {
+        return femaleCheckBox;
+    }
+
+    public JPanel getNestedTrainerPanel() {
+        return nestedTrainerPanel;
+    }
+
+    public JCheckBox getDoubleBattleCheckBox() {
+        return doubleBattleCheckBox;
+    }
 
     public JLabel getSpriteLabel() {
         return spriteLabel;

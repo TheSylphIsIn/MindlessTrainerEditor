@@ -2,11 +2,17 @@ package Controller;
 
 import Data.*;
 import Model.MainModel;
+import Model.PartySet;
+import Model.Trainer;
+import Model.TrainerMon;
 import View.MainView;
 import View.StarterDependentPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class Controller {
@@ -27,14 +34,34 @@ public class Controller {
         view = v;
         frame = parentFrame;
 
+        if (model.getTrainers().get(0).getStarterDependent())
+        {
+            view.getPartiesPane().setComponentAt(0, view.getStarterDependentPanels().get(0).getMainPanel());
+            view.getPartiesPane().setComponentAt(1, view.getStarterDependentPanels().get(1).getMainPanel());
+            view.getPartiesPane().setComponentAt(2, view.getStarterDependentPanels().get(2).getMainPanel());
+            view.getStarterDependentCheckBox().setSelected(true);
+            frame.pack();
+        }
+
+        initComboBoxes();
+        initTrainerList();
+        view.getList1().setSelectedIndex(0);
+        initListeners();
+
+
+    }
+
+    private void initListeners() {
         view.getStarterDependentCheckBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                model.getTrainers().get(view.getList1().getSelectedIndex()).setStarterDependent(view.getStarterDependentCheckBox().isSelected());
                 if (view.getStarterDependentCheckBox().isSelected())
                 {
                     view.getPartiesPane().setComponentAt(0, view.getStarterDependentPanels().get(0).getMainPanel());
                     view.getPartiesPane().setComponentAt(1, view.getStarterDependentPanels().get(1).getMainPanel());
                     view.getPartiesPane().setComponentAt(2, view.getStarterDependentPanels().get(2).getMainPanel());
+                    view.getPartyIndexBox().setSelectedIndex(0);
                     frame.pack();
                 }
                 else
@@ -42,13 +69,20 @@ public class Controller {
                     view.getPartiesPane().setComponentAt(0, view.getNormPartyTab());
                     view.getPartiesPane().setComponentAt(1, view.getHardPartyTab());
                     view.getPartiesPane().setComponentAt(2, view.getUnfairPartyTab());
+                    view.getPartyIndexBox().setSelectedIndex(0);
                     frame.pack();
                 }
             }
         });
 
-        initComboBoxes();
-        initIcons();
+        view.getPartyIndexBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                writeMonToView(model.getTrainers().get(view.getList1().getSelectedIndex()).getParties(),
+                        model.getTrainers().get(view.getList1().getSelectedIndex()).getStarterDependent(),
+                        view.getPartyIndexBox().getSelectedIndex());
+            }
+        });
     }
 
     private void initComboBoxes() {
@@ -116,6 +150,12 @@ public class Controller {
         SetComboBoxModel(view.getStarterDependentPanels().get(2).getBallBox(), getBalls());
         SetComboBoxModel(view.getStarterDependentPanels().get(2).getMon2BallBox(), getBalls());
         SetComboBoxModel(view.getStarterDependentPanels().get(2).getMon3BallBox(), getBalls());
+
+        SetComboBoxModel(view.getTrainerClassBox(), getAllTrainerClasses());
+        SetComboBoxModel(view.getTrainerSpriteBox(), getAllTrainerPics());
+        SetComboBoxModel(view.getEncounterMusicBox(), getAllEncounterMusics());
+
+        SetComboBoxModel(view.getPartyIndexBox(), new ArrayList<String>(Arrays.asList("Mon 0", "Mon 1", "Mon 2", "Mon 3", "Mon 4", "Mon 5")));
     }
 
     private void SetComboBoxModel(JComboBox box, ArrayList<String> contents) {
@@ -194,6 +234,32 @@ public class Controller {
         return moves;
     }
 
+    private ArrayList<String> getAllTrainerClasses()
+    {
+        ArrayList<String> trainerClasses = new ArrayList<>();
+        for (TrainerClass c : TrainerClass.values())
+            trainerClasses.add(c.name());
+
+        return trainerClasses;
+    }
+
+    private ArrayList<String> getAllEncounterMusics() {
+        ArrayList<String> encounterMusics = new ArrayList<>();
+        for (EncounterMusic e : EncounterMusic.values())
+            encounterMusics.add(e.name());
+
+        return encounterMusics;
+    }
+
+    private ArrayList<String> getAllTrainerPics() {
+        ArrayList<String> trainerPics = new ArrayList<>();
+        for (TrainerPic p : TrainerPic.values())
+            trainerPics.add(p.name());
+
+        return trainerPics;
+    }
+
+
     private void drawMonIcon(String species, JLabel label) {
         try {
             BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/front.png"));
@@ -208,19 +274,255 @@ public class Controller {
         }
     }
 
-    private void initIcons() {
-        drawMonIcon(Species.GLASMA.name(), view.getSpriteLabel());
-        drawMonIcon(Species.ETERNATUS.name(), view.getHardSpriteLabel());
-        drawMonIcon(Species.DARMANITAN.name(), view.getUnfairSpriteLabel());
+    private void initTrainerList()
+    {
+        view.getList1().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                writeTrainerToView(view.getList1().getSelectedIndex());
+            }
+        });
+        writeTrainersToList(0);
+    }
 
-        drawMonIcon(Species.SANDUDE.name(), view.getStarterDependentPanels().get(0).getSpriteLabel());
-        drawMonIcon(Species.ELADRIFT.name(), view.getStarterDependentPanels().get(0).getMon2SpriteLabel());
-        drawMonIcon(Species.GLASMA.name(), view.getStarterDependentPanels().get(0).getMon3SpriteLabel());
-        drawMonIcon(Species.SANDUDE.name(), view.getStarterDependentPanels().get(1).getSpriteLabel());
-        drawMonIcon(Species.ELADRIFT.name(), view.getStarterDependentPanels().get(1).getMon2SpriteLabel());
-        drawMonIcon(Species.GLASMA.name(), view.getStarterDependentPanels().get(1).getMon3SpriteLabel());
-        drawMonIcon(Species.SANDUDE.name(), view.getStarterDependentPanels().get(2).getSpriteLabel());
-        drawMonIcon(Species.ELADRIFT.name(), view.getStarterDependentPanels().get(2).getMon2SpriteLabel());
-        drawMonIcon(Species.GLASMA.name(), view.getStarterDependentPanels().get(2).getMon3SpriteLabel());
+    private void writeTrainersToList(int selection) {
+        ArrayList<String> trainers = new ArrayList<>();
+        DefaultListModel list = new DefaultListModel<>();
+
+
+        for (Trainer trainer : model.getTrainers())
+        {
+            trainers.add(trainer.getName());
+        }
+        list.addAll(trainers);
+        view.getList1().setModel(list);
+        view.getList1().setSelectedIndex(selection);
+
+    }
+
+    private void writeMovesToList(ArrayList<String> moves, JList list)
+    {
+        DefaultListModel movesList = new DefaultListModel<>();
+        movesList.addAll(moves);
+        list.setModel(movesList);
+    }
+
+    private void writeTrainerToView(int trainerIndex) {
+        Trainer data = model.getTrainers().get(trainerIndex);
+        ArrayList<PartySet> parties = data.getParties();
+
+        view.getIdField().setText(data.getId());
+        view.getNameField().setText(data.getName());
+        view.getLabelField().setText(data.getLabel());
+        view.getTrainerClassBox().setSelectedItem(data.getTrainerClass());
+        view.getTrainerSpriteBox().setSelectedItem(data.getPic());
+        view.getEncounterMusicBox().setSelectedItem(data.getEncounterMusic());
+        view.getFemaleCheckBox().setSelected(data.getFemale());
+        view.getDoubleBattleCheckBox().setSelected(data.getDoubleBattle());
+        view.getStarterDependentCheckBox().setSelected(data.getStarterDependent());
+        view.getDifficultyCheckBox().setSelected(data.getDifficulty());
+
+        writeMonToView(parties, data.getStarterDependent(), view.getPartyIndexBox().getSelectedIndex());
+
+
+    }
+
+    private void writeMonToView(ArrayList<PartySet> parties, Boolean starterDependent, int monIndex) {
+        if (starterDependent)
+        {
+            ArrayList<StarterDependentPanel> panels = view.getStarterDependentPanels();
+
+            for (int i = 0; i < 3; i++)
+            {
+                ArrayList<TrainerMon> mons = new ArrayList<>();
+                for (int j = 0; j < Trainer.NUM_STARTERS; j++) {
+                    TrainerMon mon = null;
+                    TrainerMon hardMon = null;
+                    TrainerMon unfairMon = null;
+
+
+                    if (parties.get(j).getNormalParty().size() > monIndex)
+                        mon = parties.get(j).getNormalParty().get(monIndex);
+                    if (parties.get(j).getHardParty().size() > monIndex)
+                        hardMon = parties.get(j).getHardParty().get(monIndex);
+                    if (parties.get(j).getUnfairParty().size() > monIndex)
+                        unfairMon = parties.get(j).getUnfairParty().get(monIndex);
+                    mons.add(mon);
+                    mons.add(hardMon);
+                    mons.add(unfairMon);
+                }
+
+                // Deactivate the editing panel without updating it if the selected party slot is empty.
+                if (mons.get(i) == null)
+                {
+                    setPanelEnabled(panels.get(i).getMon1Panel(), false);
+                }
+                else {
+                    setPanelEnabled(panels.get(i).getMon1Panel(), true);
+                    panels.get(i).getSpeciesBox().setSelectedItem(mons.get(i).getSpecies());
+                    panels.get(i).getLevelSpinner().setValue(mons.get(i).getLevel());
+                    panels.get(i).getItemBox().setSelectedItem(mons.get(i).getItem());
+                    panels.get(i).getAbilBox().setSelectedItem(mons.get(i).getAbility());
+                    panels.get(i).getNatureBox().setSelectedItem(mons.get(i).getNature());
+                    panels.get(i).getEvLabel().setText("Total: " + Arrays.stream(mons.get(i).getEvs()).sum());
+                    panels.get(i).getIvLabel().setText("Total: " + Arrays.stream(mons.get(i).getIvs()).sum() +
+                            ", Avg: " + Arrays.stream(mons.get(i).getIvs()).average().getAsDouble());
+                    panels.get(i).getFriendshipSpinner().setValue(mons.get(i).getFriendship());
+                    panels.get(i).getNickField().setText(mons.get(i).getNickname());
+                    panels.get(i).getBallBox().setSelectedItem(mons.get(i).getBall());
+                    panels.get(i).getDefaultRadioButton().setSelected(mons.get(i).getGender().equals("DEFAULT"));
+                    panels.get(i).getMaleRadioButton().setSelected(mons.get(i).getGender().equals("MALE"));
+                    panels.get(i).getFemaleRadioButton().setSelected(mons.get(i).getGender().equals("FEMALE"));
+                    panels.get(i).getShinyBox().setSelected(mons.get(i).getShiny());
+                    drawMonIcon(mons.get(i).getSpecies(), panels.get(i).getSpriteLabel());
+                    writeMovesToList(mons.get(i).getMoves(), panels.get(i).getMovesList());
+                }
+
+                if (mons.get(3 + i) == null)
+                {
+                    setPanelEnabled(panels.get(i).getMon2Panel(), false);
+                }
+                else {
+                    setPanelEnabled(panels.get(i).getMon2Panel(), true);
+                    panels.get(i).getMon2SpeciesBox().setSelectedItem(mons.get(3 + i).getSpecies());
+                    panels.get(i).getMon2LevelBox().setValue(mons.get(3 + i).getLevel());
+                    panels.get(i).getMon2ItemBox().setSelectedItem(mons.get(3 + i).getItem());
+                    panels.get(i).getMon2AbilBox().setSelectedItem(mons.get(3 + i).getAbility());
+                    panels.get(i).getMon2NatureBox().setSelectedItem(mons.get(3 + i).getNature());
+                    panels.get(i).getMon2EVLabel().setText("Total: " + Arrays.stream(mons.get(3 + i).getEvs()).sum());
+                    panels.get(i).getMon2IVLabel().setText("Total: " + Arrays.stream(mons.get(3 + i).getIvs()).sum() +
+                            ", Avg: " + Arrays.stream(mons.get(3 + i).getIvs()).average().getAsDouble());
+                    panels.get(i).getMon2FriendshipSpinner().setValue(mons.get(3 + i).getFriendship());
+                    panels.get(i).getMon2NickField().setText(mons.get(3 + i).getNickname());
+                    panels.get(i).getMon2BallBox().setSelectedItem(mons.get(3 + i).getBall());
+                    panels.get(i).getMon2DefaultButton().setSelected(mons.get(3 + i).getGender().equals("DEFAULT"));
+                    panels.get(i).getMon2MaleButton().setSelected(mons.get(3 + i).getGender().equals("MALE"));
+                    panels.get(i).getMon2FemaleButton().setSelected(mons.get(3 + i).getGender().equals("FEMALE"));
+                    panels.get(i).getMon2ShinyCheckBox().setSelected(mons.get(3 + i).getShiny());
+                    drawMonIcon(mons.get(3 + i).getSpecies(), panels.get(i).getMon2SpriteLabel());
+                    writeMovesToList(mons.get(3 + i).getMoves(), panels.get(i).getMon2MovesList());
+                }
+
+                if (mons.get(6 + i) == null)
+                {
+                    setPanelEnabled(panels.get(i).getMon3Panel(), false);
+                }
+                else {
+                    setPanelEnabled(panels.get(i).getMon3Panel(), true);
+                    panels.get(i).getMon3SpeciesBox().setSelectedItem(mons.get(6 + i).getSpecies());
+                    panels.get(i).getMon3LevelSpinner().setValue(mons.get(6 + i).getLevel());
+                    panels.get(i).getMon3ItemBox().setSelectedItem(mons.get(6 + i).getItem());
+                    panels.get(i).getMon3AbilBox().setSelectedItem(mons.get(6 + i).getAbility());
+                    panels.get(i).getMon3NatureBox().setSelectedItem(mons.get(6 + i).getNature());
+                    panels.get(i).getMon3EVLabel().setText("Total: " + Arrays.stream(mons.get(6 + i).getEvs()).sum());
+                    panels.get(i).getMon3IVLabel().setText("Total: " + Arrays.stream(mons.get(6 + i).getIvs()).sum() +
+                            ", Avg: " + Arrays.stream(mons.get(6 + i).getIvs()).average().getAsDouble());
+                    panels.get(i).getMon3FriendshipSpinner().setValue(mons.get(6 + i).getFriendship());
+                    panels.get(i).getMon3NickField().setText(mons.get(6 + i).getNickname());
+                    panels.get(i).getMon3BallBox().setSelectedItem(mons.get(6 + i).getBall());
+                    panels.get(i).getMon3DefaultButton().setSelected(mons.get(6 + i).getGender().equals("DEFAULT"));
+                    panels.get(i).getMon3MaleButton().setSelected(mons.get(6 + i).getGender().equals("MALE"));
+                    panels.get(i).getMon3FemaleButton().setSelected(mons.get(6 + i).getGender().equals("FEMALE"));
+                    panels.get(i).getMon3ShinyCheckBox().setSelected(mons.get(6 + i).getShiny());
+                    drawMonIcon(mons.get(6 + i).getSpecies(), panels.get(i).getMon3SpriteLabel());
+                    writeMovesToList(mons.get(6 + i).getMoves(), panels.get(i).getMon3MovesList());
+                }
+            }
+        }
+        else {
+            TrainerMon mon = null;
+            TrainerMon hardMon = null;
+            TrainerMon unfairMon = null;
+
+            if (parties.get(0).getNormalParty().size() > monIndex)
+                mon = parties.get(0).getNormalParty().get(monIndex);
+            if (parties.get(0).getHardParty().size() > monIndex)
+                hardMon = parties.get(0).getHardParty().get(monIndex);
+            if (parties.get(0).getUnfairParty().size() > monIndex)
+                unfairMon = parties.get(0).getUnfairParty().get(monIndex);
+
+            if (mon == null) {
+                setPanelEnabled(view.getNormalPartyPanel(), false);
+            } else {
+                setPanelEnabled(view.getNormalPartyPanel(), true);
+                view.getSpeciesBox().setSelectedItem(mon.getSpecies());
+                view.getLevelSpinner().setValue(mon.getLevel());
+                view.getItemBox().setSelectedItem(mon.getItem());
+                view.getAbilBox().setSelectedItem(mon.getAbility());
+                view.getNatureBox().setSelectedItem(mon.getNature());
+                view.getEvLabel().setText("Total: " + Arrays.stream(mon.getEvs()).sum());
+                view.getIvLabel().setText("Total: " + Arrays.stream(mon.getIvs()).sum() +
+                        ", Avg: " + Arrays.stream(mon.getIvs()).average().getAsDouble());
+                view.getFriendshipSpinner().setValue(mon.getFriendship());
+                view.getNickField().setText(mon.getNickname());
+                view.getBallBox().setSelectedItem(mon.getBall());
+                view.getDefaultRadioButton().setSelected(mon.getGender().equals("DEFAULT"));
+                view.getMaleRadioButton().setSelected(mon.getGender().equals("MALE"));
+                view.getFemaleRadioButton().setSelected(mon.getGender().equals("FEMALE"));
+                view.getShinyBox().setSelected(mon.getShiny());
+                drawMonIcon(mon.getSpecies(), view.getSpriteLabel());
+                writeMovesToList(mon.getMoves(), view.getMovesList());
+            }
+
+            if (hardMon == null) {
+                setPanelEnabled(view.getHardPartyPanel(), false);
+            } else {
+                setPanelEnabled(view.getHardPartyPanel(), true);
+                view.getHardSpeciesBox().setSelectedItem(hardMon.getSpecies());
+                view.getHardLevelSpinner().setValue(hardMon.getLevel());
+                view.getHardItemBox().setSelectedItem(hardMon.getItem());
+                view.getHardAbilBox().setSelectedItem(hardMon.getAbility());
+                view.getHardNatureBox().setSelectedItem(hardMon.getNature());
+                view.getHardEVLabel().setText("Total: " + Arrays.stream(hardMon.getEvs()).sum());
+                view.getHardIVLabel().setText("Total: " + Arrays.stream(hardMon.getIvs()).sum() +
+                        ", Avg: " + Arrays.stream(hardMon.getIvs()).average().getAsDouble());
+                view.getHardFriendshipSpinner().setValue(hardMon.getFriendship());
+                view.getHardNickField().setText(hardMon.getNickname());
+                view.getHardBallBox().setSelectedItem(hardMon.getBall());
+                view.getHardDefaultButton().setSelected(hardMon.getGender().equals("DEFAULT"));
+                view.getHardMaleButton().setSelected(hardMon.getGender().equals("MALE"));
+                view.getHardFemaleButton().setSelected(hardMon.getGender().equals("FEMALE"));
+                view.getHardShinyCheckBox().setSelected(hardMon.getShiny());
+                drawMonIcon(hardMon.getSpecies(), view.getHardSpriteLabel());
+                writeMovesToList(hardMon.getMoves(), view.getHardMovesList());
+            }
+
+            if (unfairMon == null) {
+                setPanelEnabled(view.getUnfairPartyPanel(), false);
+            } else
+            {
+                setPanelEnabled(view.getUnfairPartyPanel(), true);
+                view.getUnfairSpeciesBox().setSelectedItem(unfairMon.getSpecies());
+                view.getUnfairLevelSpinner().setValue(unfairMon.getLevel());
+                view.getUnfairItemBox().setSelectedItem(unfairMon.getItem());
+                view.getUnfairAbilBox().setSelectedItem(unfairMon.getAbility());
+                view.getUnfairNatureBox().setSelectedItem(unfairMon.getNature());
+                view.getUnfairEVLabel().setText("Total: " + Arrays.stream(unfairMon.getEvs()).sum());
+                view.getUnfairIVLabel().setText("Total: " + Arrays.stream(unfairMon.getIvs()).sum() +
+                        ", Avg: " + Arrays.stream(unfairMon.getIvs()).average().getAsDouble());
+                view.getUnfairFriendshipSpinner().setValue(unfairMon.getFriendship());
+                view.getUnfairNickField().setText(unfairMon.getNickname());
+                view.getUnfairBallBox().setSelectedItem(unfairMon.getBall());
+                view.getUnfairDefaultButton().setSelected(unfairMon.getGender().equals("DEFAULT"));
+                view.getUnfairMaleButton().setSelected(unfairMon.getGender().equals("MALE"));
+                view.getUnfairFemaleButton().setSelected(unfairMon.getGender().equals("FEMALE"));
+                view.getUnfairShinyBox().setSelected(unfairMon.getShiny());
+                drawMonIcon(unfairMon.getSpecies(), view.getUnfairSpriteLabel());
+                writeMovesToList(unfairMon.getMoves(), view.getUnfairMoveList());
+            }
+        }
+    }
+
+    void setPanelEnabled(JPanel panel, Boolean isEnabled) {
+        panel.setEnabled(isEnabled);
+
+        Component[] components = panel.getComponents();
+
+        for (Component component : components) {
+            if (component instanceof JPanel) {
+                setPanelEnabled((JPanel) component, isEnabled);
+            }
+            component.setEnabled(isEnabled);
+        }
     }
 }

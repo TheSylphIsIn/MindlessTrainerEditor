@@ -28,8 +28,5 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        model.writeModelToFile();
-//        OutputTest test = new OutputTest();
     }
 }
