@@ -13,9 +13,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -61,6 +62,22 @@ public class Controller {
     }
 
     private void initListeners() {
+
+        view.getEditSelectedButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                switch() {
+                    model.getTrainers().sort(new Comparator<Trainer>() {
+                        @Override
+                        public int compare(Trainer o1, Trainer o2) {
+                            return o1.getName().compareToIgnoreCase(o2.getName());
+                        }
+                }
+
+                });
+            }
+        });
         // Clicking the checkbox swaps between the single or triple mon-editing panels and packs the frame
         view.getStarterDependentCheckBox().addActionListener(new ActionListener() {
             @Override
@@ -73,6 +90,8 @@ public class Controller {
                     view.getPartiesPane().setComponentAt(2, view.getStarterDependentPanels().get(2).getMainPanel());
                     getCurrentTrainer().prepForStarterSets();
                     view.getPartyIndexBox().setSelectedIndex(0); // This redraws the mons
+                    view.getDifficultyCheckBox().setSelected(true);
+                    view.getDifficultyCheckBox().setEnabled(false);
                     frame.pack();
                 }
                 else
@@ -80,8 +99,27 @@ public class Controller {
                     view.getPartiesPane().setComponentAt(0, view.getNormPartyTab());
                     view.getPartiesPane().setComponentAt(1, view.getHardPartyTab());
                     view.getPartiesPane().setComponentAt(2, view.getUnfairPartyTab());
+                    view.getDifficultyCheckBox().setEnabled(true);
                     view.getPartyIndexBox().setSelectedIndex(0);
                     frame.pack();
+                }
+            }
+        });
+
+        view.getDifficultyCheckBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().setDifficulty(view.getDifficultyCheckBox().isSelected());
+                if (view.getDifficultyCheckBox().isSelected())
+                {
+                    view.getPartiesPane().setEnabledAt(1, true);
+                    view.getPartiesPane().setEnabledAt(2, true);
+                }
+                else {
+                    view.getPartiesPane().setSelectedIndex(0);
+                    view.getPartiesPane().setEnabledAt(1, false);
+                    view.getPartiesPane().setEnabledAt(2, false);
+
                 }
             }
         });
@@ -117,6 +155,121 @@ public class Controller {
                 getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setSpecies((String) view.getUnfairSpeciesBox().getSelectedItem());
             }
         });
+
+        // Don't ask me why this is necessary to add focus listeners to the spinners.
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) view.getLevelSpinner().getEditor();
+
+        editor.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setLevel((int) view.getLevelSpinner().getValue());
+            }
+        });
+
+        view.getLevelSpinner().addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                view.getLevelSpinner().setValue((int) view.getLevelSpinner().getValue() - e.getWheelRotation());
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setLevel((int) view.getLevelSpinner().getValue());
+            }
+        });
+
+        editor = (JSpinner.DefaultEditor) view.getHardLevelSpinner().getEditor();
+        editor.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setLevel((int) view.getHardLevelSpinner().getValue());
+            }
+        });
+
+        view.getHardLevelSpinner().addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                view.getHardLevelSpinner().setValue((int) view.getHardLevelSpinner().getValue() - e.getWheelRotation());
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setLevel((int) view.getHardLevelSpinner().getValue());
+            }
+        });
+
+        editor = (JSpinner.DefaultEditor) view.getUnfairLevelSpinner().getEditor();
+        editor.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setLevel((int) view.getUnfairLevelSpinner().getValue());
+            }
+        });
+
+        view.getUnfairLevelSpinner().addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                view.getUnfairLevelSpinner().setValue((int) view.getUnfairLevelSpinner().getValue() - e.getWheelRotation());
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setLevel((int) view.getUnfairLevelSpinner().getValue());
+            }
+        });
+
+        view.getNickField().addFocusListener(new FocusListener() {
+             @Override
+             public void focusGained(FocusEvent e) {
+
+             }
+
+             @Override
+             public void focusLost(FocusEvent e) {
+                 getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setNickname(view.getNickField().getText());
+             }
+         }
+        );
+
+        view.getHardNickField().addFocusListener(new FocusListener() {
+             @Override
+             public void focusGained(FocusEvent e) {
+
+             }
+
+             @Override
+             public void focusLost(FocusEvent e) {
+                 getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setNickname(view.getHardNickField().getText());
+             }
+         }
+        );
+
+        view.getUnfairNickField().addFocusListener(new FocusListener() {
+             @Override
+             public void focusGained(FocusEvent e) {
+
+             }
+
+             @Override
+             public void focusLost(FocusEvent e) {
+                 getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setNickname(view.getUnfairNickField().getText());
+             }
+         }
+        );
+
+        // Needs listeners:
+        // item
+        // ability
+        // nature
+        // EV button
+        // IV button
+        // moves button
+        // friendship
+        // ball
+        // shiny
 
         // The above but for the starter panel.
         // I have to repeat this stupid bullshit 9 times for every element on that panel........
@@ -445,7 +598,9 @@ public class Controller {
         view.getFemaleCheckBox().setSelected(data.getFemale());
         view.getDoubleBattleCheckBox().setSelected(data.getDoubleBattle());
         view.getStarterDependentCheckBox().setSelected(data.getStarterDependent());
-        view.getDifficultyCheckBox().setSelected(data.getDifficulty());
+        view.getDifficultyCheckBox().setSelected((data.getDifficulty()));
+        if (data.getStarterDependent())
+            view.getDifficultyCheckBox().setEnabled(false);
 
         writeMonToView(parties, data.getStarterDependent(), getCurrentMonIndex());
 

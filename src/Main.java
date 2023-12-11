@@ -10,7 +10,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,5 +31,11 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Mindless Trainer Editor");
+        try {
+            BufferedImage sprite = ImageIO.read(new File("src/data/icon.png"));
+            frame.setIconImage(sprite);
+        } catch (IOException e) {
+        }
     }
 }
