@@ -173,5 +173,188 @@
         ]
       }
     ]
+  },
+  {
+    "id": "KYLE",
+    "label": "Kyle",
+    "trainer_class": "YOUNGSTER",
+    "encounter_music": "MALE",
+    "pic": "YOUNGSTER",
+    "female": false,
+    "name": "Kyle",
+    "double_battle": false,
+    "starter_dependent": false,
+    "difficulty": false,
+    "items": ["NONE", "NONE", "NONE", "NONE"],
+    "ai": ["CHECK_BAD_MOVE"],
+    "parties": [
+      {
+        "normal": [
+          {
+            "species": "NIDORAN_M",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 4,
+            "ivs": [0, 0, 0, 0, 0, 0],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          }
+        ],
+        "hard": [
+          {
+            "species": "NIDORAN_M",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 4,
+            "ivs": [0, 0, 0, 0, 0, 0],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          }
+        ],
+        "unfair": [
+          {
+            "species": "NIDORAN_M",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 4,
+            "ivs": [0, 0, 0, 0, 0, 0],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "KEY_LACKEY_FISHEYE_LAKE",
+    "label": "LackeyFisheyeLake",
+    "trainer_class": "TEAM_MAGMA",
+    "encounter_music": "MAGMA",
+    "pic": "MAGMA_GRUNT_M",
+    "female": false,
+    "name": "Lackey",
+    "double_battle": true,
+    "starter_dependent": false,
+    "difficulty": true,
+    "items": ["NONE", "NONE", "NONE", "NONE"],
+    "ai": ["CHECK_BAD_MOVE", "TRY_TO_FAINT"],
+    "parties": [
+      {
+        "normal": [
+          {
+            "species": "KEESIGHT",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 7,
+            "ivs": [5, 5, 5, 5, 5, 5],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          },
+          {
+            "species": "MAGNEMITE",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 8,
+            "ivs": [5, 5, 5, 5, 5, 5],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          }
+        ],
+        "hard": [
+          {
+            "species": "KEESIGHT",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 7,
+            "ivs": [5, 5, 5, 5, 5, 5],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          },
+          {
+            "species": "MAGNEMITE",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 8,
+            "ivs": [5, 5, 5, 5, 5, 5],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          }
+        ],
+        "unfair": [
+          {
+            "species": "KEESIGHT",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 7,
+            "ivs": [5, 5, 5, 5, 5, 5],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          },
+          {
+            "species": "MAGNEMITE",
+            "moves": ["NONE", "NONE", "NONE", "NONE"],
+            "level": 8,
+            "ivs": [5, 5, 5, 5, 5, 5],
+            "item": "NONE",
+            "ability": "NONE",
+            "evs": [0, 0, 0, 0, 0, 0],
+            "nature": "NONE",
+            "gender": "DEFAULT",
+            "shiny": false,
+            "nickname": "NONE",
+            "ball": "NONE",
+            "friendship": 0
+          }
+        ]
+      }
+    ]
   }
 ]

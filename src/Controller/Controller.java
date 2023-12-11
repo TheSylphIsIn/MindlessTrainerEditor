@@ -6,10 +6,13 @@ import Model.PartySet;
 import Model.Trainer;
 import Model.TrainerMon;
 import View.MainView;
+import View.SortDialog;
 import View.StarterDependentPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -66,22 +69,95 @@ public class Controller {
         view.getEditSelectedButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                switch() {
-                    model.getTrainers().sort(new Comparator<Trainer>() {
-                        @Override
-                        public int compare(Trainer o1, Trainer o2) {
-                            return o1.getName().compareToIgnoreCase(o2.getName());
+                SortDialog dialog = new SortDialog();
+                dialog.setLocationRelativeTo(frame);
+                dialog.setIconImage(frame.getIconImage());
+                dialog.pack();
+                String result = dialog.showAndWait();
+                Boolean sorted = true;
+                switch(result) {
+                    case "Alphabetical":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getName().compareToIgnoreCase(o2.getName());
+                            }
+                        });
+                        break;
+                    case "Lead Mon Level":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getParties().get(0).getNormalParty().get(0).getLevel() - o2.getParties().get(0).getNormalParty().get(0).getLevel();
+                            }
+                        });
+                        break;
+                    case "Trainer Class":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getTrainerClass().compareToIgnoreCase(o2.getTrainerClass());
+                            }
+                        });
+                        break;
+                    case "Trainer Pic":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getPic().compareToIgnoreCase(o2.getPic());
+                            }
+                        });
+                    case "Double Battles on bottom":
+                        ArrayList<Trainer> newTrainers = new ArrayList<>();
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (!t.getDoubleBattle())
+                                newTrainers.add(t);
                         }
-                }
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (t.getDoubleBattle())
+                                newTrainers.add(t);
+                        }
 
-                });
-            }
-        });
+                        model.setTrainers(newTrainers);
+                        break;
+                    case "Starter Dependent on bottom":
+                        ArrayList<Trainer> newTrainers2 = new ArrayList<>();
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (!t.getDifficulty() && !t.getStarterDependent())
+                                newTrainers2.add(t);
+                        }
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (t.getDifficulty() && !t.getStarterDependent())
+                                newTrainers2.add(t);
+                        }
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (t.getStarterDependent())
+                                newTrainers2.add(t);
+                        }
+
+                        model.setTrainers(newTrainers2);
+                        break;
+                    default:
+                        sorted = false;
+                        break;
+                    }
+
+                    if (sorted)
+                    {
+                        writeTrainersToList(0);
+                    }
+                }
+            });
+
         // Clicking the checkbox swaps between the single or triple mon-editing panels and packs the frame
-        view.getStarterDependentCheckBox().addActionListener(new ActionListener() {
+        view.getStarterDependentCheckBox().addChangeListener(new ChangeListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void stateChanged(ChangeEvent e) {
                 getCurrentTrainer().setStarterDependent(view.getStarterDependentCheckBox().isSelected());
                 if (view.getStarterDependentCheckBox().isSelected())
                 {
@@ -106,9 +182,9 @@ public class Controller {
             }
         });
 
-        view.getDifficultyCheckBox().addActionListener(new ActionListener() {
+        view.getDifficultyCheckBox().addChangeListener(new ChangeListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void stateChanged(ChangeEvent e) {
                 getCurrentTrainer().setDifficulty(view.getDifficultyCheckBox().isSelected());
                 if (view.getDifficultyCheckBox().isSelected())
                 {
@@ -552,12 +628,22 @@ public class Controller {
         }
     }
 
+    private void drawTrainerIcon(String pic, JLabel label) {
+        try {
+            BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/trainers/front_pics/" + pic.toLowerCase() + ".png"));
+            label.setIcon(new ImageIcon(sprite));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void initTrainerList()
     {
         view.getList1().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                writeTrainerToView(view.getList1().getSelectedIndex());
+                if (view.getList1().getSelectedIndex() != -1)
+                    writeTrainerToView(view.getList1().getSelectedIndex());
             }
         });
         writeTrainersToList(0);
@@ -597,10 +683,11 @@ public class Controller {
         view.getEncounterMusicBox().setSelectedItem(data.getEncounterMusic());
         view.getFemaleCheckBox().setSelected(data.getFemale());
         view.getDoubleBattleCheckBox().setSelected(data.getDoubleBattle());
-        view.getStarterDependentCheckBox().setSelected(data.getStarterDependent());
         view.getDifficultyCheckBox().setSelected((data.getDifficulty()));
+        view.getStarterDependentCheckBox().setSelected(data.getStarterDependent());
         if (data.getStarterDependent())
             view.getDifficultyCheckBox().setEnabled(false);
+        drawTrainerIcon(data.getPic(), view.getTrainerSpriteLabel());
 
         writeMonToView(parties, data.getStarterDependent(), getCurrentMonIndex());
 

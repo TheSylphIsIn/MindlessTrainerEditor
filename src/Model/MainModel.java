@@ -183,4 +183,8 @@ public class MainModel {
     public ArrayList<Trainer> getTrainers() {
         return trainers;
     }
+
+    public void setTrainers(ArrayList<Trainer> trainers) {
+        this.trainers = trainers;
+    }
 }

@@ -93,8 +93,13 @@ public class MainView {
     private JCheckBox femaleCheckBox;
     private JPanel nestedTrainerPanel;
     private JCheckBox doubleBattleCheckBox;
+    private JLabel trainerSpriteLabel;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
+
+    public JLabel getTrainerSpriteLabel() {
+        return trainerSpriteLabel;
+    }
 
     public JTextField getIdField() {
         return idField;
