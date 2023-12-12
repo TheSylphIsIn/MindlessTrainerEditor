@@ -94,8 +94,18 @@ public class MainView {
     private JPanel nestedTrainerPanel;
     private JCheckBox doubleBattleCheckBox;
     private JLabel trainerSpriteLabel;
+    private JButton saveButton;
+    private JButton discardButton;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
+
+    public JButton getSaveButton() {
+        return saveButton;
+    }
+
+    public JButton getDiscardButton() {
+        return discardButton;
+    }
 
     public JLabel getTrainerSpriteLabel() {
         return trainerSpriteLabel;
