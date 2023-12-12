@@ -595,149 +595,7 @@ public class Controller {
      * These listeners are responsible for syncing the data between Model and View.
      */
     private void initListeners() {
-
-        view.getEditSelectedButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SortDialog dialog = new SortDialog();
-                dialog.setLocationRelativeTo(frame);
-                dialog.setIconImage(frame.getIconImage());
-                dialog.pack();
-                String result = dialog.showAndWait();
-                Boolean sorted = true;
-                switch(result) {
-                    case "Alphabetical":
-                        model.getTrainers().sort(new Comparator<Trainer>() {
-                            @Override
-                            public int compare(Trainer o1, Trainer o2) {
-                                return o1.getName().compareToIgnoreCase(o2.getName());
-                            }
-                        });
-                        break;
-                    case "Lead Mon Level":
-                        model.getTrainers().sort(new Comparator<Trainer>() {
-                            @Override
-                            public int compare(Trainer o1, Trainer o2) {
-                                return o1.getParties().get(0).getNormalParty().get(0).getLevel() - o2.getParties().get(0).getNormalParty().get(0).getLevel();
-                            }
-                        });
-                        break;
-                    case "Trainer Class":
-                        model.getTrainers().sort(new Comparator<Trainer>() {
-                            @Override
-                            public int compare(Trainer o1, Trainer o2) {
-                                return o1.getTrainerClass().compareToIgnoreCase(o2.getTrainerClass());
-                            }
-                        });
-                        break;
-                    case "Trainer Pic":
-                        model.getTrainers().sort(new Comparator<Trainer>() {
-                            @Override
-                            public int compare(Trainer o1, Trainer o2) {
-                                return o1.getPic().compareToIgnoreCase(o2.getPic());
-                            }
-                        });
-                    case "Double Battles on bottom":
-                        ArrayList<Trainer> newTrainers = new ArrayList<>();
-                        for (Trainer t : model.getTrainers())
-                        {
-                            if (!t.getDoubleBattle())
-                                newTrainers.add(t);
-                        }
-                        for (Trainer t : model.getTrainers())
-                        {
-                            if (t.getDoubleBattle())
-                                newTrainers.add(t);
-                        }
-
-                        model.setTrainers(newTrainers);
-                        break;
-                    case "Starter Dependent on bottom":
-                        ArrayList<Trainer> newTrainers2 = new ArrayList<>();
-                        for (Trainer t : model.getTrainers())
-                        {
-                            if (!t.getDifficulty() && !t.getStarterDependent())
-                                newTrainers2.add(t);
-                        }
-                        for (Trainer t : model.getTrainers())
-                        {
-                            if (t.getDifficulty() && !t.getStarterDependent())
-                                newTrainers2.add(t);
-                        }
-                        for (Trainer t : model.getTrainers())
-                        {
-                            if (t.getStarterDependent())
-                                newTrainers2.add(t);
-                        }
-
-                        model.setTrainers(newTrainers2);
-                        break;
-                    default:
-                        sorted = false;
-                        break;
-                }
-
-                if (sorted)
-                {
-                    writeTrainersToList(0);
-                }
-            }
-        });
-
-        // Clicking the checkbox swaps between the single or triple mon-editing panels and packs the frame
-        view.getStarterDependentCheckBox().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                getCurrentTrainer().setStarterDependent(view.getStarterDependentCheckBox().isSelected());
-                if (view.getStarterDependentCheckBox().isSelected())
-                {
-                    view.getPartiesPane().setComponentAt(0, view.getStarterDependentPanels().get(0).getMainPanel());
-                    view.getPartiesPane().setComponentAt(1, view.getStarterDependentPanels().get(1).getMainPanel());
-                    view.getPartiesPane().setComponentAt(2, view.getStarterDependentPanels().get(2).getMainPanel());
-                    getCurrentTrainer().prepForStarterSets();
-                    view.getPartyIndexBox().setSelectedIndex(0); // This redraws the mons
-                    view.getDifficultyCheckBox().setSelected(true);
-                    view.getDifficultyCheckBox().setEnabled(false);
-                    frame.pack();
-                }
-                else
-                {
-                    view.getPartiesPane().setComponentAt(0, view.getNormPartyTab());
-                    view.getPartiesPane().setComponentAt(1, view.getHardPartyTab());
-                    view.getPartiesPane().setComponentAt(2, view.getUnfairPartyTab());
-                    view.getDifficultyCheckBox().setEnabled(true);
-                    view.getPartyIndexBox().setSelectedIndex(0);
-                    frame.pack();
-                }
-            }
-        });
-
-        view.getDifficultyCheckBox().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                getCurrentTrainer().setDifficulty(view.getDifficultyCheckBox().isSelected());
-                if (view.getDifficultyCheckBox().isSelected())
-                {
-                    view.getPartiesPane().setEnabledAt(1, true);
-                    view.getPartiesPane().setEnabledAt(2, true);
-                }
-                else {
-                    view.getPartiesPane().setSelectedIndex(0);
-                    view.getPartiesPane().setEnabledAt(1, false);
-                    view.getPartiesPane().setEnabledAt(2, false);
-
-                }
-            }
-        });
-
-        // Redraws the relevant panels with the info of the mons in the selected index.
-        view.getPartyIndexBox().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(),
-                        getCurrentMonIndex());
-            }
-        });
+        initGeneralListeners();
 
         // Redraws the mon icon and saves to model
         view.getSpeciesBox().addActionListener(new ActionListener() {
@@ -1710,5 +1568,183 @@ public class Controller {
         panel.getMon3MaleButton().addActionListener(normMon1RadioListener);
         panel.getMon3FemaleButton().addActionListener(normMon1RadioListener);
         panel.getMon3DefaultButton().addActionListener(normMon1RadioListener);
+    }
+
+    /**
+     * Assigns listeners to the fields in the Trainer tab to sync them with the model.
+     */
+    private void initTrainerListeners() {
+        // id
+        // name
+        // label
+        // items button
+        // flags button
+        // class box
+        // pic box
+        // music box
+        // female
+        // double battle
+
+        // Clicking the checkbox swaps between the single or triple mon-editing panels and packs the frame
+        view.getStarterDependentCheckBox().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                getCurrentTrainer().setStarterDependent(view.getStarterDependentCheckBox().isSelected());
+                if (view.getStarterDependentCheckBox().isSelected())
+                {
+                    view.getPartiesPane().setComponentAt(0, view.getStarterDependentPanels().get(0).getMainPanel());
+                    view.getPartiesPane().setComponentAt(1, view.getStarterDependentPanels().get(1).getMainPanel());
+                    view.getPartiesPane().setComponentAt(2, view.getStarterDependentPanels().get(2).getMainPanel());
+                    getCurrentTrainer().prepForStarterSets();
+                    view.getPartyIndexBox().setSelectedIndex(0); // This redraws the mons
+                    view.getDifficultyCheckBox().setSelected(true);
+                    view.getDifficultyCheckBox().setEnabled(false);
+                    frame.pack();
+                }
+                else
+                {
+                    view.getPartiesPane().setComponentAt(0, view.getNormPartyTab());
+                    view.getPartiesPane().setComponentAt(1, view.getHardPartyTab());
+                    view.getPartiesPane().setComponentAt(2, view.getUnfairPartyTab());
+                    view.getDifficultyCheckBox().setEnabled(true);
+                    view.getPartyIndexBox().setSelectedIndex(0);
+                    frame.pack();
+                }
+            }
+        });
+
+        view.getDifficultyCheckBox().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                getCurrentTrainer().setDifficulty(view.getDifficultyCheckBox().isSelected());
+                if (view.getDifficultyCheckBox().isSelected())
+                {
+                    view.getPartiesPane().setEnabledAt(1, true);
+                    view.getPartiesPane().setEnabledAt(2, true);
+                }
+                else {
+                    view.getPartiesPane().setSelectedIndex(0);
+                    view.getPartiesPane().setEnabledAt(1, false);
+                    view.getPartiesPane().setEnabledAt(2, false);
+
+                }
+            }
+        });
+    }
+
+    /**
+     * Assigns listeners to the non-data components, such as the Save button.
+     */
+    private void initGeneralListeners() {
+        // Actually the sort button.
+        view.getEditSelectedButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SortDialog dialog = new SortDialog();
+                dialog.setLocationRelativeTo(frame);
+                dialog.setIconImage(frame.getIconImage());
+                dialog.pack();
+                String result = dialog.showAndWait();
+                Boolean sorted = true;
+                switch(result) {
+                    case "Alphabetical":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getName().compareToIgnoreCase(o2.getName());
+                            }
+                        });
+                        break;
+                    case "Lead Mon Level":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getParties().get(0).getNormalParty().get(0).getLevel() - o2.getParties().get(0).getNormalParty().get(0).getLevel();
+                            }
+                        });
+                        break;
+                    case "Trainer Class":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getTrainerClass().compareToIgnoreCase(o2.getTrainerClass());
+                            }
+                        });
+                        break;
+                    case "Trainer Pic":
+                        model.getTrainers().sort(new Comparator<Trainer>() {
+                            @Override
+                            public int compare(Trainer o1, Trainer o2) {
+                                return o1.getPic().compareToIgnoreCase(o2.getPic());
+                            }
+                        });
+                    case "Double Battles on bottom":
+                        ArrayList<Trainer> newTrainers = new ArrayList<>();
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (!t.getDoubleBattle())
+                                newTrainers.add(t);
+                        }
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (t.getDoubleBattle())
+                                newTrainers.add(t);
+                        }
+
+                        model.setTrainers(newTrainers);
+                        break;
+                    case "Starter Dependent on bottom":
+                        ArrayList<Trainer> newTrainers2 = new ArrayList<>();
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (!t.getDifficulty() && !t.getStarterDependent())
+                                newTrainers2.add(t);
+                        }
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (t.getDifficulty() && !t.getStarterDependent())
+                                newTrainers2.add(t);
+                        }
+                        for (Trainer t : model.getTrainers())
+                        {
+                            if (t.getStarterDependent())
+                                newTrainers2.add(t);
+                        }
+
+                        model.setTrainers(newTrainers2);
+                        break;
+                    default:
+                        sorted = false;
+                        break;
+                }
+
+                if (sorted)
+                {
+                    writeTrainersToList(0);
+                }
+            }
+        });
+
+        // Redraws the relevant panels with the info of the mons in the selected index.
+        view.getPartyIndexBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(),
+                        getCurrentMonIndex());
+            }
+        });
+
+        ActionListener saveData = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.saveToJson();
+                model.writeModelToFile();
+            }
+        };
+
+        // Allows saving with the Save button or CTRL + S.
+        view.getMainPanel().registerKeyboardAction(saveData, KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        view.getSaveButton().addActionListener(saveData);
+
     }
 }
