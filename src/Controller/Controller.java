@@ -5,9 +5,7 @@ import Model.MainModel;
 import Model.PartySet;
 import Model.Trainer;
 import Model.TrainerMon;
-import View.MainView;
-import View.SortDialog;
-import View.StarterDependentPanel;
+import View.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,6 +21,9 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -220,14 +221,14 @@ public class Controller {
         view.getHardSpeciesBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                drawMonIcon((String) view.getHardSpeciesBox().getSelectedItem(), view.getSpriteLabel());
+                drawMonIcon((String) view.getHardSpeciesBox().getSelectedItem(), view.getHardSpriteLabel());
                 getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setSpecies((String) view.getHardSpeciesBox().getSelectedItem());
             }
         });
         view.getUnfairSpeciesBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                drawMonIcon((String) view.getUnfairSpeciesBox().getSelectedItem(), view.getSpriteLabel());
+                drawMonIcon((String) view.getUnfairSpeciesBox().getSelectedItem(), view.getUnfairSpriteLabel());
                 getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setSpecies((String) view.getUnfairSpeciesBox().getSelectedItem());
             }
         });
@@ -243,6 +244,11 @@ public class Controller {
 
             @Override
             public void focusLost(FocusEvent e) {
+                try {
+                    view.getLevelSpinner().commitEdit();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
                 getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setLevel((int) view.getLevelSpinner().getValue());
             }
         });
@@ -264,6 +270,11 @@ public class Controller {
 
             @Override
             public void focusLost(FocusEvent e) {
+                try {
+                    view.getHardLevelSpinner().commitEdit();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
                 getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setLevel((int) view.getHardLevelSpinner().getValue());
             }
         });
@@ -285,6 +296,11 @@ public class Controller {
 
             @Override
             public void focusLost(FocusEvent e) {
+                try {
+                    view.getUnfairLevelSpinner().commitEdit();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
                 getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setLevel((int) view.getUnfairLevelSpinner().getValue());
             }
         });
@@ -337,15 +353,338 @@ public class Controller {
         );
 
         // Needs listeners:
-        // item
-        // ability
-        // nature
-        // EV button
-        // IV button
-        // moves button
-        // friendship
-        // ball
-        // shiny
+
+        view.getEditMovesButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MovesDialog dialog = new MovesDialog(getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).getMoves());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setMoves(dialog.showAndWait());
+                writeMovesToList(getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).getMoves(), view.getMovesList());
+            }
+        });
+
+        view.getHardEditMovesButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MovesDialog dialog = new MovesDialog(getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).getMoves());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setMoves(dialog.showAndWait());
+                writeMovesToList(getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).getMoves(), view.getHardMovesList());
+            }
+        });
+        view.getUnfairMoveButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MovesDialog dialog = new MovesDialog(getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).getMoves());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setMoves(dialog.showAndWait());
+                writeMovesToList(getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).getMoves(), view.getUnfairMoveList());
+            }
+        });
+
+        view.getItemBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setItem((String) view.getItemBox().getSelectedItem());
+            }
+        });
+        view.getHardItemBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setItem((String) view.getHardItemBox().getSelectedItem());
+            }
+        });
+        view.getUnfairItemBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setItem((String) view.getUnfairItemBox().getSelectedItem());
+            }
+        });
+
+        view.getAbilBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setAbility((String) view.getAbilBox().getSelectedItem());
+            }
+        });
+        view.getHardAbilBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setAbility((String) view.getHardAbilBox().getSelectedItem());
+            }
+        });
+        view.getUnfairAbilBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setAbility((String) view.getUnfairAbilBox().getSelectedItem());
+            }
+        });
+
+        view.getNatureBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setNature((String) view.getNatureBox().getSelectedItem());
+            }
+        });
+        view.getHardNatureBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setNature((String) view.getHardNatureBox().getSelectedItem());
+            }
+        });
+        view.getUnfairNatureBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setNature((String) view.getUnfairNatureBox().getSelectedItem());
+            }
+        });
+
+        view.getBallBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setBall((String) view.getBallBox().getSelectedItem());
+            }
+        });
+        view.getHardBallBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setBall((String) view.getHardBallBox().getSelectedItem());
+            }
+        });
+        view.getUnfairBallBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setBall((String) view.getUnfairBallBox().getSelectedItem());
+            }
+        });
+
+        view.getEvButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EVsDialog dialog = new EVsDialog(true, getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).getEvs());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setEvs(dialog.showAndWait());
+                view.getEvLabel().setText("Total: " + Arrays.stream(getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).getEvs()).sum());
+            }
+        });
+        view.getHardEVButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EVsDialog dialog = new EVsDialog(true, getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).getEvs());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setEvs(dialog.showAndWait());
+                view.getHardEVLabel().setText("Total: " + Arrays.stream(getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).getEvs()).sum());
+            }
+        });
+        view.getUnfairEVButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EVsDialog dialog = new EVsDialog(true, getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).getEvs());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setEvs(dialog.showAndWait());
+                view.getUnfairEVLabel().setText("Total: " + Arrays.stream(getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).getEvs()).sum());
+            }
+        });
+
+        view.getIvButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EVsDialog dialog = new EVsDialog(false, getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).getIvs());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setIvs(dialog.showAndWait());
+                view.getIvLabel().setText(getIvLabelText(getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).getIvs()));
+            }
+        });
+        view.getHardIVButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EVsDialog dialog = new EVsDialog(false, getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).getIvs());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setIvs(dialog.showAndWait());
+                view.getHardIVLabel().setText(getIvLabelText(getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).getIvs()));
+            }
+        });
+        view.getUnfairIVButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EVsDialog dialog = new EVsDialog(false, getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).getIvs());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setIvs(dialog.showAndWait());
+                view.getUnfairIVLabel().setText(getIvLabelText(getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).getIvs()));
+            }
+        });
+
+        editor = (JSpinner.DefaultEditor) view.getFriendshipSpinner().getEditor();
+
+        editor.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    view.getFriendshipSpinner().commitEdit();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setFriendship((int) view.getFriendshipSpinner().getValue());
+            }
+        });
+
+        view.getFriendshipSpinner().addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                view.getFriendshipSpinner().setValue((int) view.getFriendshipSpinner().getValue() - e.getWheelRotation());
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setFriendship((int) view.getFriendshipSpinner().getValue());
+            }
+        });
+
+        editor = (JSpinner.DefaultEditor) view.getHardFriendshipSpinner().getEditor();
+        editor.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    view.getHardFriendshipSpinner().commitEdit();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setFriendship((int) view.getHardFriendshipSpinner().getValue());
+            }
+        });
+
+        view.getHardFriendshipSpinner().addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                view.getHardFriendshipSpinner().setValue((int) view.getHardFriendshipSpinner().getValue() - e.getWheelRotation());
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setFriendship((int) view.getHardFriendshipSpinner().getValue());
+            }
+        });
+
+        editor = (JSpinner.DefaultEditor) view.getUnfairFriendshipSpinner().getEditor();
+        editor.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    view.getUnfairFriendshipSpinner().commitEdit();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setFriendship((int) view.getUnfairFriendshipSpinner().getValue());
+            }
+        });
+
+        view.getUnfairFriendshipSpinner().addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                view.getUnfairFriendshipSpinner().setValue((int) view.getUnfairFriendshipSpinner().getValue() - e.getWheelRotation());
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setFriendship((int) view.getUnfairFriendshipSpinner().getValue());
+            }
+        });
+
+        view.getShinyBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setShiny(view.getShinyBox().isSelected());
+            }
+        });
+        view.getHardShinyCheckBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setShiny(view.getHardShinyCheckBox().isSelected());
+            }
+        });
+        view.getUnfairShinyBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setShiny(view.getUnfairShinyBox().isSelected());
+            }
+        });
+
+        ActionListener normRadioButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newGender;
+                if (view.getMaleRadioButton().isSelected())
+                    newGender = "MALE";
+                else if (view.getFemaleRadioButton().isSelected())
+                    newGender = "FEMALE";
+                else
+                    newGender = "DEFAULT";
+
+                getCurrentTrainer().getParties().get(0).getNormalParty().get(getCurrentMonIndex()).setGender(newGender);
+            }
+
+        };
+        view.getMaleRadioButton().addActionListener(normRadioButtonListener);
+        view.getFemaleRadioButton().addActionListener(normRadioButtonListener);
+        view.getDefaultRadioButton().addActionListener(normRadioButtonListener);
+        ActionListener hardRadioButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newGender;
+                if (view.getHardMaleButton().isSelected())
+                    newGender = "MALE";
+                else if (view.getHardFemaleButton().isSelected())
+                    newGender = "FEMALE";
+                else
+                    newGender = "DEFAULT";
+
+                getCurrentTrainer().getParties().get(0).getHardParty().get(getCurrentMonIndex()).setGender(newGender);
+            }
+
+        };
+        view.getHardMaleButton().addActionListener(hardRadioButtonListener);
+        view.getHardFemaleButton().addActionListener(hardRadioButtonListener);
+        view.getHardDefaultButton().addActionListener(hardRadioButtonListener);
+        ActionListener unfairRadioButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newGender;
+                if (view.getUnfairMaleButton().isSelected())
+                    newGender = "MALE";
+                else if (view.getUnfairFemaleButton().isSelected())
+                    newGender = "FEMALE";
+                else
+                    newGender = "DEFAULT";
+
+                getCurrentTrainer().getParties().get(0).getUnfairParty().get(getCurrentMonIndex()).setGender(newGender);
+            }
+
+        };
+        view.getUnfairMaleButton().addActionListener(normRadioButtonListener);
+        view.getUnfairFemaleButton().addActionListener(normRadioButtonListener);
+        view.getUnfairDefaultButton().addActionListener(normRadioButtonListener);
 
         // The above but for the starter panel.
         // I have to repeat this stupid bullshit 9 times for every element on that panel........
@@ -575,14 +914,6 @@ public class Controller {
         return balls;
     }
 
-    private ArrayList<String> getAllMoves() {
-        ArrayList<String> moves = new ArrayList<>();
-        for (Move m : Move.values())
-            moves.add(m.name());
-
-        return moves;
-    }
-
     private ArrayList<String> getAllTrainerClasses()
     {
         ArrayList<String> trainerClasses = new ArrayList<>();
@@ -732,8 +1063,7 @@ public class Controller {
                     panels.get(i).getAbilBox().setSelectedItem(mons.get(i).getAbility());
                     panels.get(i).getNatureBox().setSelectedItem(mons.get(i).getNature());
                     panels.get(i).getEvLabel().setText("Total: " + Arrays.stream(mons.get(i).getEvs()).sum());
-                    panels.get(i).getIvLabel().setText("Total: " + Arrays.stream(mons.get(i).getIvs()).sum() +
-                            ", Avg: " + Arrays.stream(mons.get(i).getIvs()).average().getAsDouble());
+                    panels.get(i).getIvLabel().setText(getIvLabelText(mons.get(i).getIvs()));
                     panels.get(i).getFriendshipSpinner().setValue(mons.get(i).getFriendship());
                     panels.get(i).getNickField().setText(mons.get(i).getNickname());
                     panels.get(i).getBallBox().setSelectedItem(mons.get(i).getBall());
@@ -757,8 +1087,7 @@ public class Controller {
                     panels.get(i).getMon2AbilBox().setSelectedItem(mons.get(3 + i).getAbility());
                     panels.get(i).getMon2NatureBox().setSelectedItem(mons.get(3 + i).getNature());
                     panels.get(i).getMon2EVLabel().setText("Total: " + Arrays.stream(mons.get(3 + i).getEvs()).sum());
-                    panels.get(i).getMon2IVLabel().setText("Total: " + Arrays.stream(mons.get(3 + i).getIvs()).sum() +
-                            ", Avg: " + Arrays.stream(mons.get(3 + i).getIvs()).average().getAsDouble());
+                    panels.get(i).getMon2IVLabel().setText(getIvLabelText(mons.get(3 + i).getIvs()));
                     panels.get(i).getMon2FriendshipSpinner().setValue(mons.get(3 + i).getFriendship());
                     panels.get(i).getMon2NickField().setText(mons.get(3 + i).getNickname());
                     panels.get(i).getMon2BallBox().setSelectedItem(mons.get(3 + i).getBall());
@@ -782,8 +1111,7 @@ public class Controller {
                     panels.get(i).getMon3AbilBox().setSelectedItem(mons.get(6 + i).getAbility());
                     panels.get(i).getMon3NatureBox().setSelectedItem(mons.get(6 + i).getNature());
                     panels.get(i).getMon3EVLabel().setText("Total: " + Arrays.stream(mons.get(6 + i).getEvs()).sum());
-                    panels.get(i).getMon3IVLabel().setText("Total: " + Arrays.stream(mons.get(6 + i).getIvs()).sum() +
-                            ", Avg: " + Arrays.stream(mons.get(6 + i).getIvs()).average().getAsDouble());
+                    panels.get(i).getMon3IVLabel().setText(getIvLabelText(mons.get(6 + i).getIvs()));
                     panels.get(i).getMon3FriendshipSpinner().setValue(mons.get(6 + i).getFriendship());
                     panels.get(i).getMon3NickField().setText(mons.get(6 + i).getNickname());
                     panels.get(i).getMon3BallBox().setSelectedItem(mons.get(6 + i).getBall());
@@ -818,8 +1146,7 @@ public class Controller {
                 view.getAbilBox().setSelectedItem(mon.getAbility());
                 view.getNatureBox().setSelectedItem(mon.getNature());
                 view.getEvLabel().setText("Total: " + Arrays.stream(mon.getEvs()).sum());
-                view.getIvLabel().setText("Total: " + Arrays.stream(mon.getIvs()).sum() +
-                        ", Avg: " + Arrays.stream(mon.getIvs()).average().getAsDouble());
+                view.getIvLabel().setText(getIvLabelText(mon.getIvs()));
                 view.getFriendshipSpinner().setValue(mon.getFriendship());
                 view.getNickField().setText(mon.getNickname());
                 view.getBallBox().setSelectedItem(mon.getBall());
@@ -841,8 +1168,7 @@ public class Controller {
                 view.getHardAbilBox().setSelectedItem(hardMon.getAbility());
                 view.getHardNatureBox().setSelectedItem(hardMon.getNature());
                 view.getHardEVLabel().setText("Total: " + Arrays.stream(hardMon.getEvs()).sum());
-                view.getHardIVLabel().setText("Total: " + Arrays.stream(hardMon.getIvs()).sum() +
-                        ", Avg: " + Arrays.stream(hardMon.getIvs()).average().getAsDouble());
+                view.getHardIVLabel().setText(getIvLabelText(hardMon.getIvs()));
                 view.getHardFriendshipSpinner().setValue(hardMon.getFriendship());
                 view.getHardNickField().setText(hardMon.getNickname());
                 view.getHardBallBox().setSelectedItem(hardMon.getBall());
@@ -865,8 +1191,7 @@ public class Controller {
                 view.getUnfairAbilBox().setSelectedItem(unfairMon.getAbility());
                 view.getUnfairNatureBox().setSelectedItem(unfairMon.getNature());
                 view.getUnfairEVLabel().setText("Total: " + Arrays.stream(unfairMon.getEvs()).sum());
-                view.getUnfairIVLabel().setText("Total: " + Arrays.stream(unfairMon.getIvs()).sum() +
-                        ", Avg: " + Arrays.stream(unfairMon.getIvs()).average().getAsDouble());
+                view.getUnfairIVLabel().setText(getIvLabelText(unfairMon.getIvs()));
                 view.getUnfairFriendshipSpinner().setValue(unfairMon.getFriendship());
                 view.getUnfairNickField().setText(unfairMon.getNickname());
                 view.getUnfairBallBox().setSelectedItem(unfairMon.getBall());
@@ -891,5 +1216,11 @@ public class Controller {
             }
             component.setEnabled(isEnabled);
         }
+    }
+
+    String getIvLabelText(int[] ivs)
+    {
+        return "Total: " + Arrays.stream(ivs).sum() +
+                ", Avg: " + new BigDecimal(Arrays.stream(ivs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }
