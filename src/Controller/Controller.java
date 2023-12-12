@@ -596,6 +596,7 @@ public class Controller {
      */
     private void initListeners() {
         initGeneralListeners();
+        initTrainerListeners();
 
         // Redraws the mon icon and saves to model
         view.getSpeciesBox().addActionListener(new ActionListener() {
