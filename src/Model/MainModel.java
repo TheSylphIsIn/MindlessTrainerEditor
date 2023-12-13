@@ -71,6 +71,11 @@ public class MainModel {
 
             trainerOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
                     "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n" + "const struct Trainer gTrainers[] = {\n\n");
+            trainerOutput.write("\t[TRAINER_NONE] =\n\t{\n\t.trainerClass = TRAINER_CLASS_PKMN_TRAINER_1,\n\t" +
+                    ".encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,\n\t.trainerPic = TRAINER_PIC_HIKER,\n\t" +
+                    ".trainerName = _(\"\"),\n\t.items = {},\n\t.doubleBattle = FALSE,\n\t.aiFlags = 0,\n\t" +
+                    ".partySize = 0,\n\t.party = NULL,\n\t},\n\n");
+
             starterOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
                     "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n");
 

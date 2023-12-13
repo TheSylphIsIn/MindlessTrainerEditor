@@ -249,6 +249,7 @@
               <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-4266561"/>
               <text value="Shiny"/>
             </properties>
           </component>
@@ -265,6 +266,7 @@
               <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-4266561"/>
               <selected value="true"/>
               <text value="Default"/>
             </properties>
@@ -274,7 +276,7 @@
               <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4466715"/>
+              <background color="-4266561"/>
               <text value="Male"/>
             </properties>
           </component>
@@ -283,6 +285,7 @@
               <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-4266561"/>
               <text value="Female"/>
             </properties>
           </component>
@@ -535,6 +538,7 @@
               <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1716803"/>
               <text value="Shiny"/>
             </properties>
           </component>
@@ -551,6 +555,7 @@
               <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1716803"/>
               <selected value="true"/>
               <text value="Default"/>
             </properties>
@@ -560,6 +565,7 @@
               <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1716803"/>
               <text value="Male"/>
             </properties>
           </component>
@@ -568,6 +574,7 @@
               <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1716803"/>
               <text value="Female"/>
             </properties>
           </component>

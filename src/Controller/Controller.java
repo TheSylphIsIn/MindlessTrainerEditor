@@ -1577,16 +1577,96 @@ public class Controller {
      * Assigns listeners to the fields in the Trainer tab to sync them with the model.
      */
     private void initTrainerListeners() {
-        // id
-        // name
-        // label
-        // items button
-        // flags button
-        // class box
-        // pic box
-        // music box
-        // female
-        // double battle
+        view.getIdField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().setId(view.getIdField().getText());
+            }
+        });
+        view.getNameField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().setName(view.getNameField().getText());
+            }
+        });
+        view.getLabelField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().setLabel(view.getLabelField().getText());
+            }
+        });
+
+        view.getItemsButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ItemsDialog dialog = new ItemsDialog(getCurrentTrainer().getItems());
+                dialog.setIconImage(frame.getIconImage());
+                dialog.pack();
+                dialog.setLocationRelativeTo(frame);
+                getCurrentTrainer().setItems(dialog.showAndWait());
+
+            }
+        });
+
+        view.getAiFlagsButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AiFlagsDialog dialog = new AiFlagsDialog(getCurrentTrainer().getAiFlags());
+                dialog.pack();
+                dialog.setLocationRelativeTo(frame);
+                dialog.setIconImage(frame.getIconImage());
+                getCurrentTrainer().setAiFlags(dialog.showAndWait());
+            }
+        });
+        
+        view.getTrainerClassBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().setTrainerClass((String) view.getTrainerClassBox().getSelectedItem());
+            }
+        });
+        view.getTrainerSpriteBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().setPic((String) view.getTrainerSpriteBox().getSelectedItem());
+                drawTrainerIcon((String) view.getTrainerSpriteBox().getSelectedItem(), view.getTrainerSpriteLabel());
+            }
+        });
+        view.getEncounterMusicBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().setEncounterMusic((String) view.getEncounterMusicBox().getSelectedItem());
+            }
+        });
+
+        view.getFemaleCheckBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().setFemale(view.getFemaleCheckBox().isSelected());
+            }
+        });
+
+        view.getDoubleBattleCheckBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getCurrentTrainer().setDoubleBattle(view.getDoubleBattleCheckBox().isSelected());
+            }
+        });
 
         // Clicking the checkbox swaps between the single or triple mon-editing panels and packs the frame
         view.getStarterDependentCheckBox().addChangeListener(new ChangeListener() {
@@ -1644,9 +1724,9 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SortDialog dialog = new SortDialog();
+                dialog.pack();
                 dialog.setLocationRelativeTo(frame);
                 dialog.setIconImage(frame.getIconImage());
-                dialog.pack();
                 String result = dialog.showAndWait();
                 Boolean sorted = true;
                 switch(result) {
@@ -1830,8 +1910,8 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 AddRemoveMonDialog dialog = new AddRemoveMonDialog(getCurrentTrainer(), true);
                 dialog.setIconImage(frame.getIconImage());
-                dialog.setLocationRelativeTo(view.getAddButton());
                 dialog.pack();
+                dialog.setLocationRelativeTo(view.getAddButton());
                 dialog.setVisible(true);
                 writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(), view.getPartyIndexBox().getSelectedIndex());
             }
@@ -1841,8 +1921,8 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 AddRemoveMonDialog dialog = new AddRemoveMonDialog(getCurrentTrainer(), false);
                 dialog.setIconImage(frame.getIconImage());
-                dialog.setLocationRelativeTo(view.getRemoveButton());
                 dialog.pack();
+                dialog.setLocationRelativeTo(view.getRemoveButton());
                 dialog.setVisible(true);
                 writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(), view.getPartyIndexBox().getSelectedIndex());
             }
