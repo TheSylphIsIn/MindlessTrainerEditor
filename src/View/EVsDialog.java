@@ -19,6 +19,8 @@ public class EVsDialog extends JDialog {
     private JSpinner spatkSpinner;
     private JSpinner spdefSpinner;
     private JLabel totalLabel;
+    private JButton setAllButton;
+    private JSpinner spinner1;
     private int[] oldEvs;
     private int[] newEvs;
     private int[] returning;
@@ -37,7 +39,7 @@ public class EVsDialog extends JDialog {
             spdSpinner.setModel(new SpinnerNumberModel(0, 0, 252, 4));
             spatkSpinner.setModel(new SpinnerNumberModel(0, 0, 252, 4));
             spdefSpinner.setModel(new SpinnerNumberModel(0, 0, 252, 4));
-            totalLabel.setText("Total: " + Arrays.stream(evs).sum() + "/510");
+            totalLabel.setText("Total: " + Arrays.stream(evs).sum() + "/508");
         }
         else
         {
@@ -90,6 +92,29 @@ public class EVsDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+        setAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int val = (int) spinner1.getValue();
+                hpSpinner.setValue(val);
+                atkSpinner.setValue(val);
+                defSpinner.setValue(val);
+                spdSpinner.setValue(val);
+                spatkSpinner.setValue(val);
+                spdefSpinner.setValue(val);
+                if (notIvs)
+                    totalLabel.setText("Total: " + val * 6 + "/508");
+                else
+                    totalLabel.setText("Total: " + (val * 6) + "/186, Avg: " +  val);
+
+                newEvs[0] = val;
+                newEvs[1] = val;
+                newEvs[2] = val;
+                newEvs[3] = val;
+                newEvs[4] = val;
+                newEvs[5] = val;
+            }
+        });
 
         JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) hpSpinner.getEditor();
 
@@ -106,14 +131,13 @@ public class EVsDialog extends JDialog {
                 } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
-                System.out.println(hpSpinner.getValue());
                 newEvs[0] = (int) hpSpinner.getValue();
                 int sum = Arrays.stream(newEvs).sum();
                 if (notIvs)
-                    totalLabel.setText("Total: " + sum + "/510");
+                    totalLabel.setText("Total: " + sum + "/508");
                 else
                     totalLabel.setText("Total: " + Arrays.stream(newEvs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(newEvs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                if (sum > 510)
+                if (sum > 508)
                     totalLabel.setForeground(Color.red);
                 else
                     totalLabel.setForeground(Color.black);
@@ -138,10 +162,10 @@ public class EVsDialog extends JDialog {
                 newEvs[1] = (int) atkSpinner.getValue();
                 int sum = Arrays.stream(newEvs).sum();
                 if (notIvs)
-                    totalLabel.setText("Total: " + sum + "/510");
+                    totalLabel.setText("Total: " + sum + "/508");
                 else
                     totalLabel.setText("Total: " + Arrays.stream(newEvs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(newEvs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                if (sum > 510)
+                if (sum > 508)
                     totalLabel.setForeground(Color.red);
                 else
                     totalLabel.setForeground(Color.black);
@@ -166,10 +190,10 @@ public class EVsDialog extends JDialog {
                 newEvs[2] = (int) defSpinner.getValue();
                 int sum = Arrays.stream(newEvs).sum();
                 if (notIvs)
-                    totalLabel.setText("Total: " + sum + "/510");
+                    totalLabel.setText("Total: " + sum + "/508");
                 else
                     totalLabel.setText("Total: " + Arrays.stream(newEvs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(newEvs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                if (sum > 510)
+                if (sum > 508)
                     totalLabel.setForeground(Color.red);
                 else
                     totalLabel.setForeground(Color.black);
@@ -194,10 +218,10 @@ public class EVsDialog extends JDialog {
                 newEvs[3] = (int) spdSpinner.getValue();
                 int sum = Arrays.stream(newEvs).sum();
                 if (notIvs)
-                    totalLabel.setText("Total: " + sum + "/510");
+                    totalLabel.setText("Total: " + sum + "/508");
                 else
                     totalLabel.setText("Total: " + Arrays.stream(newEvs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(newEvs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                if (sum > 510)
+                if (sum > 508)
                     totalLabel.setForeground(Color.red);
                 else
                     totalLabel.setForeground(Color.black);
@@ -222,10 +246,10 @@ public class EVsDialog extends JDialog {
                 newEvs[4] = (int) spatkSpinner.getValue();
                 int sum = Arrays.stream(newEvs).sum();
                 if (notIvs)
-                    totalLabel.setText("Total: " + sum + "/510");
+                    totalLabel.setText("Total: " + sum + "/508");
                 else
                     totalLabel.setText("Total: " + Arrays.stream(newEvs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(newEvs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                if (sum > 510)
+                if (sum > 508)
                     totalLabel.setForeground(Color.red);
                 else
                     totalLabel.setForeground(Color.black);
@@ -250,10 +274,10 @@ public class EVsDialog extends JDialog {
                 newEvs[5] = (int) spdefSpinner.getValue();
                 int sum = Arrays.stream(newEvs).sum();
                 if (notIvs)
-                    totalLabel.setText("Total: " + sum + "/510");
+                    totalLabel.setText("Total: " + sum + "/508");
                 else
                     totalLabel.setText("Total: " + Arrays.stream(newEvs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(newEvs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                if (sum > 510)
+                if (sum > 508)
                     totalLabel.setForeground(Color.red);
                 else
                     totalLabel.setForeground(Color.black);
@@ -264,7 +288,6 @@ public class EVsDialog extends JDialog {
     private void onOK() {
         // add your code here
         returning = newEvs;
-        System.out.println(Arrays.toString(newEvs));
         dispose();
     }
 

@@ -25,6 +25,8 @@ public class CopyDialog extends JDialog {
     private JComboBox srcPartyBox;
     private JComboBox destPartyBox;
     private JCheckBox wholeSetCheckBox;
+    private JButton selfNormalToHardButton;
+    private JButton selfHardToUnfairButton;
     private ArrayList<Trainer> allTrainers;
     private int currentTrainer;
 
@@ -49,7 +51,7 @@ public class CopyDialog extends JDialog {
         srcPartyBox.setModel(model5);
         srcPartyBox.setSelectedIndex(0);
         DefaultComboBoxModel model6 = new DefaultComboBoxModel();
-        model6.addAll(getAvailableParties(trainers.get(0)));
+        model6.addAll(getAvailableParties(trainers.get(currentTrainer)));
         destPartyBox.setModel(model6);
         destPartyBox.setSelectedIndex(0);
 
@@ -64,7 +66,7 @@ public class CopyDialog extends JDialog {
         srcMonBox.setModel(model2);
         srcMonBox.setSelectedIndex(0);
         DefaultComboBoxModel model4 = new DefaultComboBoxModel();
-        model4.addAll(getPartyMonsList(trainers.get(0).getParties().get(0).getNormalParty()));
+        model4.addAll(getPartyMonsList(trainers.get(currentTrainer).getParties().get(0).getNormalParty()));
         destMonBox.setModel(model4);
         destMonBox.setSelectedIndex(0);
 
