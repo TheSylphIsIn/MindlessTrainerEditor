@@ -53,7 +53,7 @@ public class Trainer {
         this.name = label;
         this.label = label;
         this.aiFlags = new ArrayList<String>();
-        this.items = new ArrayList<String>();
+        this.items = new ArrayList<String>(Arrays.asList("NONE", "NONE", "NONE", "NONE"));
         this.trainerClass = TrainerClass.HIKER.name();
         this.encounterMusic = EncounterMusic.MALE.name();
         this.pic = TrainerPic.BRENDAN.name();
@@ -251,7 +251,15 @@ public class Trainer {
         this.doubleBattle = src.getDoubleBattle();
         this.starterDependent = src.getStarterDependent();
         this.difficulty = src.getDifficulty();
-        this.parties = src.getParties();
+        this.parties = new ArrayList<PartySet>();
+        this.parties.add(new PartySet());
+        this.parties.add(new PartySet());
+        this.parties.add(new PartySet());
+
+        for (int i = 0; i < this.parties.size() && i < src.getParties().size(); i++)
+        {
+            this.parties.get(i).copyFrom(src.getParties().get(i));
+        }
 
     }
 

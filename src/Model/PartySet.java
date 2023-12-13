@@ -122,4 +122,28 @@ public class PartySet {
     public ArrayList<TrainerMon> getUnfairParty() {
         return unfairParty;
     }
+
+    public void copyFrom(PartySet partySet) {
+        this.normalParty = new ArrayList<>();
+        this.hardParty = new ArrayList<>();
+        this.unfairParty = new ArrayList<>();
+        for (int i = 0; i < partySet.getNormalParty().size(); i++)
+        {
+            TrainerMon newMon = new TrainerMon();
+            newMon.copyFrom(partySet.getNormalParty().get(i));
+            this.normalParty.add(newMon);
+        }
+        for (int i = 0; i < partySet.getHardParty().size(); i++)
+        {
+            TrainerMon newMon = new TrainerMon();
+            newMon.copyFrom(partySet.getHardParty().get(i));
+            this.hardParty.add(newMon);
+        }
+        for (int i = 0; i < partySet.getUnfairParty().size(); i++)
+        {
+            TrainerMon newMon = new TrainerMon();
+            newMon.copyFrom(partySet.getUnfairParty().get(i));
+            this.unfairParty.add(newMon);
+        }
+    }
 }
