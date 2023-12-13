@@ -1,6 +1,9 @@
 package Model;
 
+import Data.EncounterMusic;
 import Data.Item;
+import Data.TrainerClass;
+import Data.TrainerPic;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -28,7 +31,39 @@ public class Trainer {
 
     public static final int NUM_STARTER_SETS = 1;
     public static final int NUM_STARTERS = 3;
-    public Trainer() {}
+    public Trainer() {
+        id = "DUMMY";
+        name = "Dummy";
+        label = "Dummy";
+        aiFlags = new ArrayList<>();
+        items = new ArrayList<>();
+        this.trainerClass = TrainerClass.HIKER.name();
+        this.encounterMusic = EncounterMusic.MALE.name();
+        this.pic = TrainerPic.BRENDAN.name();
+        this.female = false;
+        this.doubleBattle = false;
+        this.starterDependent = false;
+        this.difficulty = false;
+        parties = new ArrayList<>();
+        parties.add(new PartySet());
+    }
+
+    public Trainer(String label) {
+        this.id = "DUMMY";
+        this.name = label;
+        this.label = label;
+        this.aiFlags = new ArrayList<String>();
+        this.items = new ArrayList<String>();
+        this.trainerClass = TrainerClass.HIKER.name();
+        this.encounterMusic = EncounterMusic.MALE.name();
+        this.pic = TrainerPic.BRENDAN.name();
+        this.female = false;
+        this.doubleBattle = false;
+        this.starterDependent = false;
+        this.difficulty = false;
+        this.parties = new ArrayList<PartySet>();
+        parties.add(new PartySet());
+    }
 
     public Trainer(String id, String name, String label, ArrayList<String> aiFlags, ArrayList<String> items,
                    String trainerClass, String encounterMusic, String pic, Boolean female, Boolean doubleBattle,
@@ -201,6 +236,23 @@ public class Trainer {
             for (int i = 0; i < NUM_STARTERS * NUM_STARTER_SETS; i++)
                 parties.add(parties.get(0));
         }
+    }
+
+    public void copyFrom(Trainer src) {
+        this.id = src.getId();
+        this.name = src.getName();
+        this.label = src.getLabel();
+        this.aiFlags = src.getAiFlags();
+        this.items = src.getItems();
+        this.trainerClass = src.getTrainerClass();
+        this.encounterMusic = src.getEncounterMusic();
+        this.pic = src.getPic();
+        this.female = src.getFemale();
+        this.doubleBattle = src.getDoubleBattle();
+        this.starterDependent = src.getStarterDependent();
+        this.difficulty = src.getDifficulty();
+        this.parties = src.getParties();
+
     }
 
     public Boolean getDifficulty() {

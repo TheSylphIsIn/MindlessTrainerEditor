@@ -14,14 +14,21 @@ public class PartySet {
 
     public PartySet() {
         normalParty = new ArrayList<>();
+        normalParty.add(new TrainerMon());
         hardParty = new ArrayList<>();
+        hardParty.add(new TrainerMon());
         unfairParty = new ArrayList<>();
+        unfairParty.add(new TrainerMon());
     }
 
     public void initFromJson(JSONObject object) {
         JSONArray normalParty = (JSONArray) object.get("normal");
         JSONArray hardParty = (JSONArray) object.get("hard");
         JSONArray unfairParty = (JSONArray) object.get("unfair");
+
+        this.normalParty = new ArrayList<>();
+        this.hardParty = new ArrayList<>();
+        this.unfairParty = new ArrayList<>();
 
         int i;
 

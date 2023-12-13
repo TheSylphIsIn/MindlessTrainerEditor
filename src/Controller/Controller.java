@@ -16,11 +16,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
@@ -334,7 +331,10 @@ public class Controller {
         }
         list.addAll(trainers);
         view.getList1().setModel(list);
-        view.getList1().setSelectedIndex(selection);
+        if (selection == -1)
+            view.getList1().setSelectedIndex(view.getList1().getModel().getSize() - 1);
+        else
+            view.getList1().setSelectedIndex(selection);
 
     }
 
@@ -1735,17 +1735,93 @@ public class Controller {
             }
         });
 
+        ActionListener resetStatusLabel = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.getStatusLabel().setText("");
+            }
+        };
+
+        Timer resetStatus = new Timer(5000, resetStatusLabel);
+        resetStatus.setRepeats(false);
+
         ActionListener saveData = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                view.getStatusLabel().setText("Saving...");
                 model.saveToJson();
                 model.writeModelToFile();
+                view.getStatusLabel().setText("Saved to files!");
+                resetStatus.restart();
             }
         };
 
         // Allows saving with the Save button or CTRL + S.
         view.getMainPanel().registerKeyboardAction(saveData, KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         view.getSaveButton().addActionListener(saveData);
+
+        ActionListener discardData = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.initFromJson();
+                view.getStatusLabel().setText("Reverted to last save.");
+                writeTrainersToList(0);
+                resetStatus.restart();
+            }
+        };
+
+        view.getMainPanel().registerKeyboardAction(discardData, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        view.getDiscardButton().addActionListener(discardData);
+
+        view.getAddNewButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<String> trainers = new ArrayList<>();
+                for (Trainer trainer : model.getTrainers())
+                {
+                    trainers.add(trainer.getLabel());
+                }
+                AddNewDialog dialog = new AddNewDialog(trainers);
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                dialog.pack();
+                ArrayList<String> result = dialog.showAndWait();
+
+                if (!result.get(0).equals("NONE")) {
+                    Trainer newTrainer = new Trainer(result.get(0));
+                    if (!result.get(1).equals("NONE")){
+                        int i;
+                        for (i = 0; i < model.getTrainers().size(); i++)
+                        {
+                            if (model.getTrainers().get(i).getLabel().equals(result.get(1)))
+                                break;
+                        }
+                        newTrainer.copyFrom(model.getTrainers().get(i));
+                        newTrainer.setLabel(result.get(0));
+                    }
+
+                    model.getTrainers().add(newTrainer);
+                    writeTrainersToList(-1);
+                }
+            }
+        });
+
+        view.getDeleteSelectedButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ConfirmDialog dialog = new ConfirmDialog("Delete Trainer", "Delete Trainer " +
+                        view.getList1().getSelectedValue() + "?");
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                Boolean delete = dialog.showAndWait();
+
+                if (delete)
+                {
+                    model.getTrainers().remove(view.getList1().getSelectedIndex());
+                    writeTrainersToList(0);
+                }
+            }
+        });
 
     }
 }

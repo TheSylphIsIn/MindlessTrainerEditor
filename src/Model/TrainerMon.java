@@ -1,6 +1,7 @@
 package Model;
 
 import Data.Ability;
+import Data.Move;
 import Data.Nature;
 import Data.Species;
 import org.json.simple.JSONArray;
@@ -33,13 +34,13 @@ public class TrainerMon {
     private static final ArrayList<String> EMPTY_MOVES = new ArrayList<>(Arrays.asList(NONE, NONE, NONE, NONE));
 
     public TrainerMon() {
-        species = Species.NONE.name();
+        species = Species.DUBSNAKE.name();
         item = "NONE";
         ability = Ability.NONE.name();
         level = 10;
         evs = new int[]{0, 0, 0, 0, 0, 0};
         ivs = new int[]{0, 0, 0, 0, 0, 0};
-        moves = new ArrayList<String>();
+        moves = new ArrayList<String>(Arrays.asList(Move.ICE_SHARD.name(), Move.ACID.name(), Move.HAIL.name(), Move.POISON_GAS.name()));
         nature = Nature.NONE.name();
         gender = "DEFAULT";
         shiny = false;
@@ -106,7 +107,7 @@ public class TrainerMon {
             evs.add(this.evs[i]);
         mon.put("evs", evs);
         for (int i = 0; i < NUM_STATS; i++)
-            ivs.add(this.evs[i]);
+            ivs.add(this.ivs[i]);
         mon.put("ivs", ivs);
         for (int i = 0; i < this.moves.size(); i++)
             moves.add(this.moves.get(i));

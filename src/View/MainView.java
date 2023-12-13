@@ -96,8 +96,13 @@ public class MainView {
     private JLabel trainerSpriteLabel;
     private JButton saveButton;
     private JButton discardButton;
+    private JLabel statusLabel;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
+
+    public JLabel getStatusLabel() {
+        return statusLabel;
+    }
 
     public JButton getSaveButton() {
         return saveButton;
