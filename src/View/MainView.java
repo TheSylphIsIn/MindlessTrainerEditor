@@ -97,8 +97,18 @@ public class MainView {
     private JButton saveButton;
     private JButton discardButton;
     private JLabel statusLabel;
+    private JLabel partySizeLabel;
+    private JButton removeButton;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
+
+    public JButton getRemoveButton() {
+        return removeButton;
+    }
+
+    public JLabel getPartySizeLabel() {
+        return partySizeLabel;
+    }
 
     public JLabel getStatusLabel() {
         return statusLabel;

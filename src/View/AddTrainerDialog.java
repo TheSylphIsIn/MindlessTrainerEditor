@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class AddNewDialog extends JDialog {
+public class AddTrainerDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -13,7 +13,7 @@ public class AddNewDialog extends JDialog {
     private JComboBox comboBox1;
     private ArrayList<String> returnValues = new ArrayList<String>();
 
-    public AddNewDialog(ArrayList<String> trainerNames) {
+    public AddTrainerDialog(ArrayList<String> trainerNames) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

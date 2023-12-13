@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class MainModel {
     private ArrayList<Trainer> trainers;
+    public final String outputPath = "C:/fandango/src/data";
 
     public MainModel() {
         initFromJson();
@@ -21,7 +22,7 @@ public class MainModel {
     public void initFromJson() {
         try {
             JSONParser parser = new JSONParser();
-            FileReader reader = new FileReader("src/data/data.json");
+            FileReader reader = new FileReader("src/data/trainer_data.json");
             JSONArray data = (JSONArray) parser.parse(reader);
             trainers = new ArrayList<Trainer>();
             for (Object trainer : data)
@@ -51,7 +52,7 @@ public class MainModel {
         }
 
         try {
-            FileWriter jsonOutput = new FileWriter("src/data/data.json");
+            FileWriter jsonOutput = new FileWriter("src/data/trainer_data.json");
             jsonOutput.write(file.toJSONString());
 
             jsonOutput.flush();
@@ -64,11 +65,14 @@ public class MainModel {
     public void writeModelToFile()
     {
         try {
-            FileWriter trainerOutput = new FileWriter("src/data/trainers.h");
-            FileWriter partyOutput = new FileWriter("src/data/trainer_parties.h");
-            FileWriter starterOutput = new FileWriter("src/data/starter_dependent_parties.h");
+            FileWriter trainerOutput = new FileWriter(outputPath + "/trainers.h");
+            FileWriter partyOutput = new FileWriter(outputPath + "/trainer_parties.h");
+            FileWriter starterOutput = new FileWriter(outputPath + "/starter_dependent_parties.h");
 
-            trainerOutput.write("const struct Trainer gTrainers[] = {\n\n");
+            trainerOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
+                    "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n" + "const struct Trainer gTrainers[] = {\n\n");
+            starterOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
+                    "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n");
 
             for (Trainer trainer : trainers)
             {
@@ -81,7 +85,8 @@ public class MainModel {
             trainerOutput.write("\n};");
 
             // Normal
-            starterOutput.write("static const struct TrainerMon * const sStarterDependentParties[STARTER_MON_COUNT][STARTER_DEPENDENT_PARTIES_COUNT] = {\n");
+            starterOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
+                    "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n" + "static const struct TrainerMon * const sStarterDependentParties[STARTER_MON_COUNT][STARTER_DEPENDENT_PARTIES_COUNT] = {\n");
             for (int i = 0; i < 3; i++)
             {
                 starterOutput.write("\t[STARTER_MON_" + i + "] = {\n");

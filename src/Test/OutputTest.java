@@ -18,7 +18,7 @@ public class OutputTest {
         try {
             TrainerMon testMon = new TrainerMon();
             JSONParser parser = new JSONParser();
-            FileReader reader = new FileReader("src/data/data.json");
+            FileReader reader = new FileReader("src/data/trainer_data.json");
 
             // Go deep in the weeds for the array of mons
             JSONArray data = (JSONArray) parser.parse(reader);

@@ -383,6 +383,8 @@ public class Controller {
      * @param monIndex Index into parties.
      */
     private void writeMonToView(ArrayList<PartySet> parties, Boolean starterDependent, int monIndex) {
+        view.getPartySizeLabel().setText("Party Sizes: " + parties.get(0).getNormalParty().size() + " / " +
+                parties.get(0).getHardParty().size() + " / " + parties.get(0).getUnfairParty().size());
         if (starterDependent)
         {
             ArrayList<StarterDependentPanel> panels = view.getStarterDependentPanels();
@@ -1781,9 +1783,8 @@ public class Controller {
                 {
                     trainers.add(trainer.getLabel());
                 }
-                AddNewDialog dialog = new AddNewDialog(trainers);
+                AddTrainerDialog dialog = new AddTrainerDialog(trainers);
                 dialog.setIconImage(frame.getIconImage());
-                dialog.setLocationRelativeTo(frame);
                 dialog.pack();
                 ArrayList<String> result = dialog.showAndWait();
 
@@ -1820,6 +1821,37 @@ public class Controller {
                     model.getTrainers().remove(view.getList1().getSelectedIndex());
                     writeTrainersToList(0);
                 }
+            }
+        });
+
+        // Add button
+        view.getAddButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddRemoveMonDialog dialog = new AddRemoveMonDialog(getCurrentTrainer(), true);
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(view.getAddButton());
+                dialog.pack();
+                dialog.setVisible(true);
+                writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(), view.getPartyIndexBox().getSelectedIndex());
+            }
+        });
+        view.getRemoveButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddRemoveMonDialog dialog = new AddRemoveMonDialog(getCurrentTrainer(), false);
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(view.getRemoveButton());
+                dialog.pack();
+                dialog.setVisible(true);
+                writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(), view.getPartyIndexBox().getSelectedIndex());
+            }
+        });
+
+        view.getCopyButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
 

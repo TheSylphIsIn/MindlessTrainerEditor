@@ -166,6 +166,23 @@ public class TrainerMon {
         }
     }
 
+    public void copyFrom(TrainerMon mon) {
+        this.species = mon.getSpecies();
+        this.item = mon.getItem();
+        this.ability = mon.getAbility();
+        this.level = mon.getLevel();
+        this.evs = mon.getEvs();
+        this.ivs = mon.getIvs();
+        this.moves = mon.getMoves();
+        this.nature = mon.getNature();
+        this.gender = mon.getGender();
+        this.shiny = mon.getShiny();
+        this.nickname = mon.getNickname();
+        this.ball = mon.getBall();
+        this.friendship = mon.getFriendship();
+
+    }
+
     public int getFriendship() {
         return friendship;
     }
