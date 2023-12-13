@@ -29,9 +29,9 @@ public class TrainerMon {
     private int friendship;
 
     // "Empty values" constants for prettifying file output
-    private static final int[] EMPTY_EVS = {0, 0, 0, 0, 0, 0};
-    private static final String NONE = "NONE";
-    private static final ArrayList<String> EMPTY_MOVES = new ArrayList<>(Arrays.asList(NONE, NONE, NONE, NONE));
+    public static final int[] EMPTY_EVS = {0, 0, 0, 0, 0, 0};
+    public static final String NONE = "NONE";
+    public static final ArrayList<String> EMPTY_MOVES = new ArrayList<>(Arrays.asList(NONE, NONE, NONE, NONE));
 
     public TrainerMon() {
         species = Species.DUBSNAKE.name();

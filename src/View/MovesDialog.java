@@ -5,6 +5,7 @@ import Data.Move;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MovesDialog extends JDialog {
     private JPanel contentPane;
@@ -14,6 +15,7 @@ public class MovesDialog extends JDialog {
     private JComboBox comboBox2;
     private JComboBox comboBox3;
     private JComboBox comboBox4;
+    private JButton useLevelUpMovesetButton;
     private ArrayList<String> result;
 
     public MovesDialog(ArrayList<String> moves) {
@@ -74,6 +76,14 @@ public class MovesDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        useLevelUpMovesetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                result = new ArrayList<>(Arrays.asList("NONE", "NONE", "NONE", "NONE"));
+                dispose();
+            }
+        });
     }
 
     private void onOK() {

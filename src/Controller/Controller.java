@@ -336,6 +336,10 @@ public class Controller {
 
     }
 
+    /**
+     * Swaps the mon tab between the StarterDependentPanels or the normal JPanel.
+     * @param show Whether to show or hide the StarterDependentPanels
+     */
     private void drawStarterDependentPanels(Boolean show) {
         if (show)
         {
@@ -370,6 +374,8 @@ public class Controller {
         DefaultListModel movesList = new DefaultListModel<>();
         movesList.addAll(moves);
         list.setModel(movesList);
+
+        list.setEnabled(!moves.equals(TrainerMon.EMPTY_MOVES));
     }
 
     /**
@@ -401,6 +407,10 @@ public class Controller {
 
     }
 
+    /**
+     * Disables the "Hard" and "Unfair" Mon tabs if the trainer does not use difficulty parties.
+     * @param difficulty Enable or disable
+     */
     private void drawDifficultyTabs(Boolean difficulty) {
         if (difficulty)
         {
@@ -624,7 +634,7 @@ public class Controller {
     /**
      * Uses the given array to get the text that should be printed on an IV label.
      * @param ivs IVs to use for the label.
-     * @return "Total: (sum of ivs), Avg: (average of ivs)
+     * @return "Total: (sum of ivs), Avg: (average of ivs)"
      */
     String getIvLabelText(int[] ivs) {
         return "Total: " + Arrays.stream(ivs).sum() +

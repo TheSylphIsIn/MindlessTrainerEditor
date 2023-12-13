@@ -16,12 +16,12 @@ public class CopyDialog extends JDialog {
     private JComboBox srcMonBox;
     private JComboBox destTrainerBox;
     private JComboBox destMonBox;
-    private JRadioButton normalRadioButton;
-    private JRadioButton hardRadioButton;
-    private JRadioButton unfairRadioButton;
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
+    private JRadioButton srcNormalButton;
+    private JRadioButton srcHardButton;
+    private JRadioButton srcUnfairButton;
+    private JRadioButton destNormalButton;
+    private JRadioButton destHardButton;
+    private JRadioButton destUnfairButton;
     private JComboBox srcPartyBox;
     private JComboBox destPartyBox;
     private JCheckBox wholeSetCheckBox;
@@ -114,25 +114,7 @@ public class CopyDialog extends JDialog {
                 destPartyBox.setEnabled(!wholeSetCheckBox.isSelected());
 
                 if (wholeSetCheckBox.isSelected()) {
-                    ArrayList<Trainer> starterDependentTrainers = new ArrayList<>();
-                    for (Trainer t : allTrainers) {
-                        if (t.getStarterDependent())
-                            starterDependentTrainers.add(t);
-                    }
-
-                    ArrayList<String> starterDependentNames = new ArrayList<>();
-                    for (Trainer t : starterDependentTrainers)
-                        starterDependentNames.add(t.getLabel());
-
-                    DefaultComboBoxModel srcModel = new DefaultComboBoxModel<>();
-                    srcModel.addAll(starterDependentNames);
-                    srcTrainerBox.setModel(srcModel);
-                    srcTrainerBox.setSelectedIndex(0);
-
-                    DefaultComboBoxModel destModel = new DefaultComboBoxModel<>();
-                    destModel.addAll(starterDependentNames);
-                    destTrainerBox.setModel(destModel);
-                    destTrainerBox.setSelectedIndex(0);
+                    setStarterDependentModels();
                 } else
                 {
                     DefaultComboBoxModel model1 = new DefaultComboBoxModel();
@@ -178,6 +160,60 @@ public class CopyDialog extends JDialog {
                 resetDestMonsBoxModel(destTrainerBox.getSelectedIndex(), destPartyBox.getSelectedIndex());
             }
         });
+
+        selfNormalToHardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                srcNormalButton.setSelected(true);
+                destHardButton.setSelected(true);
+                if (allTrainers.get(currentTrainer).getStarterDependent()) {
+                    wholeSetCheckBox.setSelected(true);
+                    setStarterDependentModels();
+                }
+                srcTrainerBox.setSelectedItem(allTrainers.get(currentTrainer).getLabel());
+                destTrainerBox.setSelectedItem(allTrainers.get(currentTrainer).getLabel());
+                wholePartyCheckBox.setSelected(true);
+                onOK();
+            }
+        });
+
+        selfHardToUnfairButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                srcHardButton.setSelected(true);
+                destUnfairButton.setSelected(true);
+                if (allTrainers.get(currentTrainer).getStarterDependent()) {
+                    wholeSetCheckBox.setSelected(true);
+                    setStarterDependentModels();
+                }
+                srcTrainerBox.setSelectedItem(allTrainers.get(currentTrainer).getLabel());
+                destTrainerBox.setSelectedItem(allTrainers.get(currentTrainer).getLabel());
+                wholePartyCheckBox.setSelected(true);
+                onOK();
+            }
+        });
+    }
+
+    private void setStarterDependentModels() {
+        ArrayList<Trainer> starterDependentTrainers = new ArrayList<>();
+        for (Trainer t : allTrainers) {
+            if (t.getStarterDependent())
+                starterDependentTrainers.add(t);
+        }
+
+        ArrayList<String> starterDependentNames = new ArrayList<>();
+        for (Trainer t : starterDependentTrainers)
+            starterDependentNames.add(t.getLabel());
+
+        DefaultComboBoxModel srcModel = new DefaultComboBoxModel<>();
+        srcModel.addAll(starterDependentNames);
+        srcTrainerBox.setModel(srcModel);
+        srcTrainerBox.setSelectedIndex(0);
+
+        DefaultComboBoxModel destModel = new DefaultComboBoxModel<>();
+        destModel.addAll(starterDependentNames);
+        destTrainerBox.setModel(destModel);
+        destTrainerBox.setSelectedIndex(0);
     }
 
     private void onOK() {
@@ -186,9 +222,9 @@ public class CopyDialog extends JDialog {
         int srcMonIndex = srcMonBox.getSelectedIndex();
         ArrayList<TrainerMon> srcParty;
 
-        if (unfairRadioButton.isSelected())
+        if (srcUnfairButton.isSelected())
             srcParty = allTrainers.get(srcTrainer).getParties().get(srcPartyIndex).getUnfairParty();
-        else if (hardRadioButton.isSelected())
+        else if (srcHardButton.isSelected())
             srcParty = allTrainers.get(srcTrainer).getParties().get(srcPartyIndex).getHardParty();
         else
             srcParty = allTrainers.get(srcTrainer).getParties().get(srcPartyIndex).getNormalParty();
@@ -205,9 +241,9 @@ public class CopyDialog extends JDialog {
                 starterDependentParties.add(t);
         }
 
-        if (radioButton3.isSelected())
+        if (destUnfairButton.isSelected())
             destParty = allTrainers.get(destTrainer).getParties().get(destPartyIndex).getUnfairParty(); // Difficulty party to get
-        else if (radioButton2.isSelected())
+        else if (destHardButton.isSelected())
             destParty = allTrainers.get(destTrainer).getParties().get(destPartyIndex).getHardParty(); // Difficulty party to get
         else
             destParty = allTrainers.get(destTrainer).getParties().get(destPartyIndex).getNormalParty(); // Difficulty party to get
@@ -216,11 +252,11 @@ public class CopyDialog extends JDialog {
         {
             for (int i = 0; i < Trainer.NUM_STARTER_SETS * Trainer.NUM_STARTERS; i++)
             {
-                if (radioButton3.isSelected()){
+                if (destUnfairButton.isSelected()){
                     starterDependentParties.get(destTrainer).getParties().get(i).setUnfairParty(new ArrayList<>());
                     destParty = starterDependentParties.get(destTrainer).getParties().get(i).getUnfairParty();
                 }
-                else if (radioButton2.isSelected()) {
+                else if (destHardButton.isSelected()) {
                     starterDependentParties.get(destTrainer).getParties().get(i).setHardParty(new ArrayList<>());
                     destParty = starterDependentParties.get(destTrainer).getParties().get(i).getHardParty();
                 }
@@ -229,10 +265,10 @@ public class CopyDialog extends JDialog {
                     destParty = starterDependentParties.get(destTrainer).getParties().get(i).getNormalParty();
                 }
 
-                if (unfairRadioButton.isSelected())
+                if (srcUnfairButton.isSelected())
                 {
                     srcParty = starterDependentParties.get(srcTrainer).getParties().get(i).getUnfairParty();
-                } else if (hardRadioButton.isSelected())
+                } else if (srcHardButton.isSelected())
                 {
                     srcParty = starterDependentParties.get(srcTrainer).getParties().get(i).getHardParty();
                 } else
@@ -298,9 +334,9 @@ public class CopyDialog extends JDialog {
 
     private void resetSrcMonsBoxModel(int trainerIndex, int monIndex) {
         DefaultComboBoxModel model2 = new DefaultComboBoxModel();
-        if (normalRadioButton.isSelected())
+        if (srcNormalButton.isSelected())
             model2.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getNormalParty()));
-        else if (hardRadioButton.isSelected())
+        else if (srcHardButton.isSelected())
             model2.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getHardParty()));
         else
             model2.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getUnfairParty()));
@@ -320,9 +356,9 @@ public class CopyDialog extends JDialog {
 
     private void resetDestMonsBoxModel(int trainerIndex, int monIndex) {
         DefaultComboBoxModel model4 = new DefaultComboBoxModel();
-        if (normalRadioButton.isSelected())
+        if (srcNormalButton.isSelected())
             model4.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getNormalParty()));
-        else if (hardRadioButton.isSelected())
+        else if (srcHardButton.isSelected())
             model4.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getHardParty()));
         else
             model4.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getUnfairParty()));

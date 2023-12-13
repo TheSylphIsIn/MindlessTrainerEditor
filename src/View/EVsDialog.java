@@ -39,6 +39,7 @@ public class EVsDialog extends JDialog {
             spdSpinner.setModel(new SpinnerNumberModel(0, 0, 252, 4));
             spatkSpinner.setModel(new SpinnerNumberModel(0, 0, 252, 4));
             spdefSpinner.setModel(new SpinnerNumberModel(0, 0, 252, 4));
+            spinner1.setModel(new SpinnerNumberModel(0, 0, 252, 20));
             totalLabel.setText("Total: " + Arrays.stream(evs).sum() + "/508");
         }
         else
@@ -49,6 +50,7 @@ public class EVsDialog extends JDialog {
             spdSpinner.setModel(new SpinnerNumberModel(0, 0, 31, 1));
             spatkSpinner.setModel(new SpinnerNumberModel(0, 0, 31, 1));
             spdefSpinner.setModel(new SpinnerNumberModel(0, 0, 31, 1));
+            spinner1.setModel(new SpinnerNumberModel(0, 0, 31, 5));
             totalLabel.setText("Total: " + Arrays.stream(evs).sum() + "/186, Avg: " +  new BigDecimal(Arrays.stream(evs).average().getAsDouble()).setScale(2, RoundingMode.HALF_UP).doubleValue());
 
         }

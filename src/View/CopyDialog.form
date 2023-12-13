@@ -80,7 +80,7 @@
               <text value="Trainer:"/>
             </properties>
           </component>
-          <component id="f0b21" class="javax.swing.JRadioButton" binding="normalRadioButton" default-binding="true">
+          <component id="f0b21" class="javax.swing.JRadioButton" binding="srcNormalButton">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -89,7 +89,7 @@
               <text value="Normal"/>
             </properties>
           </component>
-          <component id="4dbf6" class="javax.swing.JRadioButton" binding="hardRadioButton" default-binding="true">
+          <component id="4dbf6" class="javax.swing.JRadioButton" binding="srcHardButton">
             <constraints>
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -97,7 +97,7 @@
               <text value="Hard"/>
             </properties>
           </component>
-          <component id="e4a98" class="javax.swing.JRadioButton" binding="unfairRadioButton" default-binding="true">
+          <component id="e4a98" class="javax.swing.JRadioButton" binding="srcUnfairButton">
             <constraints>
               <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -127,7 +127,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="4b397" class="javax.swing.JRadioButton" binding="radioButton1" default-binding="true">
+          <component id="4b397" class="javax.swing.JRadioButton" binding="destNormalButton">
             <constraints>
               <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -136,7 +136,7 @@
               <text value="Normal"/>
             </properties>
           </component>
-          <component id="9f357" class="javax.swing.JRadioButton" binding="radioButton2" default-binding="true">
+          <component id="9f357" class="javax.swing.JRadioButton" binding="destHardButton">
             <constraints>
               <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -144,7 +144,7 @@
               <text value="Hard"/>
             </properties>
           </component>
-          <component id="f1533" class="javax.swing.JRadioButton" binding="radioButton3" default-binding="true">
+          <component id="f1533" class="javax.swing.JRadioButton" binding="destUnfairButton">
             <constraints>
               <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
