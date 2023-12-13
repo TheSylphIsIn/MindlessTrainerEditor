@@ -123,6 +123,18 @@ public class PartySet {
         return unfairParty;
     }
 
+    public void setNormalParty(ArrayList<TrainerMon> normalParty) {
+        this.normalParty = normalParty;
+    }
+
+    public void setHardParty(ArrayList<TrainerMon> hardParty) {
+        this.hardParty = hardParty;
+    }
+
+    public void setUnfairParty(ArrayList<TrainerMon> unfairParty) {
+        this.unfairParty = unfairParty;
+    }
+
     public void copyFrom(PartySet partySet) {
         this.normalParty = new ArrayList<>();
         this.hardParty = new ArrayList<>();

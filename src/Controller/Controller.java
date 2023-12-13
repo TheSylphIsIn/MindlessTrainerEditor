@@ -1598,9 +1598,9 @@ public class Controller {
             }
 
         };
-        view.getStarterDependentPanels().get(0).getMon3MaleButton().addActionListener(normMon1RadioListener);
-        view.getStarterDependentPanels().get(0).getMon3FemaleButton().addActionListener(normMon1RadioListener);
-        view.getStarterDependentPanels().get(0).getMon3DefaultButton().addActionListener(normMon1RadioListener);
+        view.getStarterDependentPanels().get(0).getMon3MaleButton().addActionListener(normMon3RadioListener);
+        view.getStarterDependentPanels().get(0).getMon3FemaleButton().addActionListener(normMon3RadioListener);
+        view.getStarterDependentPanels().get(0).getMon3DefaultButton().addActionListener(normMon3RadioListener);
 
         view.getStarterDependentPanels().get(1).getSpeciesBox().addActionListener(new ActionListener() {
             @Override
@@ -2076,9 +2076,9 @@ public class Controller {
             }
 
         };
-        view.getStarterDependentPanels().get(1).getMon3MaleButton().addActionListener(hardMon1RadioListener);
-        view.getStarterDependentPanels().get(1).getMon3FemaleButton().addActionListener(hardMon1RadioListener);
-        view.getStarterDependentPanels().get(1).getMon3DefaultButton().addActionListener(hardMon1RadioListener);
+        view.getStarterDependentPanels().get(1).getMon3MaleButton().addActionListener(hardMon3RadioListener);
+        view.getStarterDependentPanels().get(1).getMon3FemaleButton().addActionListener(hardMon3RadioListener);
+        view.getStarterDependentPanels().get(1).getMon3DefaultButton().addActionListener(hardMon3RadioListener);
 
         view.getStarterDependentPanels().get(2).getSpeciesBox().addActionListener(new ActionListener() {
             @Override
@@ -2554,9 +2554,9 @@ public class Controller {
             }
 
         };
-        view.getStarterDependentPanels().get(2).getMon3MaleButton().addActionListener(unfairMon1RadioListener);
-        view.getStarterDependentPanels().get(2).getMon3FemaleButton().addActionListener(unfairMon1RadioListener);
-        view.getStarterDependentPanels().get(2).getMon3DefaultButton().addActionListener(unfairMon1RadioListener);
+        view.getStarterDependentPanels().get(2).getMon3MaleButton().addActionListener(unfairMon3RadioListener);
+        view.getStarterDependentPanels().get(2).getMon3FemaleButton().addActionListener(unfairMon3RadioListener);
+        view.getStarterDependentPanels().get(2).getMon3DefaultButton().addActionListener(unfairMon3RadioListener);
     }
 
     /**
@@ -2889,7 +2889,12 @@ public class Controller {
         view.getCopyButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                CopyDialog dialog = new CopyDialog(model.getTrainers(), view.getList1().getSelectedIndex());
+                dialog.pack();
+                dialog.setIconImage(frame.getIconImage());
+                dialog.setLocationRelativeTo(frame);
+                dialog.setVisible(true);
+                writeMonToView(getCurrentTrainer().getParties(), getCurrentTrainer().getStarterDependent(), getCurrentMonIndex());
             }
         });
 

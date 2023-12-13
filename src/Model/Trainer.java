@@ -156,7 +156,7 @@ public class Trainer {
             // Array assignment
             trainerOutput.write("\t[TRAINER_" + id + "] =\n\t{\n");
             // Name
-            trainerOutput.write("\t\t.name = _(\"" + name + "\"),\n");
+            trainerOutput.write("\t\t.trainerName = _(\"" + name + "\"),\n");
             // Trainer Class
             trainerOutput.write("\t\t.trainerClass = TRAINER_CLASS_" + trainerClass + ",\n");
             // Trainer pic
@@ -203,11 +203,11 @@ public class Trainer {
             }
             else if (difficulty)
             {
-                trainerOutput.write("\t\t.party = TRAINER_PARTY(" + label + "),\n");
+                trainerOutput.write("\t\t.party = TRAINER_PARTY(sParty_" + label + "),\n");
             }
             else
             {
-                trainerOutput.write("\t\t.party = TRAINER_PARTY_NO_DIFF(" + label + "),\n");
+                trainerOutput.write("\t\t.party = TRAINER_PARTY_NO_DIFF(sParty_" + label + "),\n");
             }
 
             trainerOutput.write("\t},\n\n");

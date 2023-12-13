@@ -79,6 +79,15 @@ public class MainModel {
             starterOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
                     "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n");
 
+            partyOutput.write("static const struct TrainerMon sParty_Dummy[] = {\n" +
+                    "    {\n" +
+                    "    .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),\n" +
+                    "    .lvl = 6,\n" +
+                    "    .species = SPECIES_DUBSNAKE,\n" +
+                    "    .ability = ABILITY_ICE_BODY,\n" +
+                    "    .moves = {MOVE_ACID, MOVE_ICE_SHARD, MOVE_BLOCK, MOVE_PERISH_SONG}\n" +
+                    "    },\n};\n\n");
+
             for (Trainer trainer : trainers)
             {
                 if (trainer.getStarterDependent())
