@@ -99,6 +99,50 @@ public class MainView {
     private JLabel statusLabel;
     private JLabel partySizeLabel;
     private JButton removeButton;
+    private JLabel overviewSpriteLabel;
+    private JLabel overviewClassLabel;
+    private JComboBox overviewPartySelectorBox;
+    private JLabel mon1Sprite;
+    private JPanel overviewTab;
+    private JLabel mon2Sprite;
+    private JPanel overviewPanel;
+    private JLabel mon4Sprite;
+    private JLabel mon3Sprite;
+    private JLabel mon5Sprite;
+    private JLabel mon6Sprite;
+    private JLabel mon1LevelLabel;
+    private JLabel mon2LevelLabel;
+    private JLabel mon3LevelLabel;
+    private JLabel mon4LevelLabel;
+    private JLabel mon5LevelLabel;
+    private JLabel mon6LevelLabel;
+    private JLabel mon1HardLevel;
+    private JLabel mon2HardLevel;
+    private JLabel mon3HardLevel;
+    private JLabel mon4HardLevel;
+    private JLabel mon5HardLevel;
+    private JLabel mon6HardLevel;
+    private JLabel mon1HardSprite;
+    private JLabel mon2HardSprite;
+    private JLabel mon3HardSprite;
+    private JLabel mon4HardSprite;
+    private JLabel mon5HardSprite;
+    private JLabel mon6HardSprite;
+    private JPanel normPartySummary;
+    private JPanel hardPartySummary;
+    private JPanel unfairPartySummary;
+    private JLabel mon1UnfairLevel;
+    private JLabel mon2UnfairLevel;
+    private JLabel mon3UnfairLevel;
+    private JLabel mon4UnfairLevel;
+    private JLabel mon5UnfairLevel;
+    private JLabel mon6UnfairLevel;
+    private JLabel mon1UnfairSprite;
+    private JLabel mon2UnfairSprite;
+    private JLabel mon3UnfairSprite;
+    private JLabel mon4UnfairSprite;
+    private JLabel mon5UnfairSprite;
+    private JLabel mon6UnfairSprite;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
 
@@ -484,6 +528,182 @@ public class MainView {
 
     public void setItemBox(JComboBox itemBox) {
         this.itemBox = itemBox;
+    }
+
+    public JLabel getMon1HardLevel() {
+        return mon1HardLevel;
+    }
+
+    public JLabel getMon2HardLevel() {
+        return mon2HardLevel;
+    }
+
+    public JLabel getMon3HardLevel() {
+        return mon3HardLevel;
+    }
+
+    public JLabel getMon4HardLevel() {
+        return mon4HardLevel;
+    }
+
+    public JLabel getMon5HardLevel() {
+        return mon5HardLevel;
+    }
+
+    public JLabel getMon6HardLevel() {
+        return mon6HardLevel;
+    }
+
+    public JLabel getMon1HardSprite() {
+        return mon1HardSprite;
+    }
+
+    public JLabel getMon2HardSprite() {
+        return mon2HardSprite;
+    }
+
+    public JLabel getMon3HardSprite() {
+        return mon3HardSprite;
+    }
+
+    public JLabel getMon4HardSprite() {
+        return mon4HardSprite;
+    }
+
+    public JLabel getMon5HardSprite() {
+        return mon5HardSprite;
+    }
+
+    public JLabel getMon6HardSprite() {
+        return mon6HardSprite;
+    }
+
+    public JPanel getNormPartySummary() {
+        return normPartySummary;
+    }
+
+    public JPanel getHardPartySummary() {
+        return hardPartySummary;
+    }
+
+    public JPanel getUnfairPartySummary() {
+        return unfairPartySummary;
+    }
+
+    public JLabel getMon1UnfairLevel() {
+        return mon1UnfairLevel;
+    }
+
+    public JLabel getMon2UnfairLevel() {
+        return mon2UnfairLevel;
+    }
+
+    public JLabel getMon3UnfairLevel() {
+        return mon3UnfairLevel;
+    }
+
+    public JLabel getMon4UnfairLevel() {
+        return mon4UnfairLevel;
+    }
+
+    public JLabel getMon5UnfairLevel() {
+        return mon5UnfairLevel;
+    }
+
+    public JLabel getMon6UnfairLevel() {
+        return mon6UnfairLevel;
+    }
+
+    public JLabel getMon1UnfairSprite() {
+        return mon1UnfairSprite;
+    }
+
+    public JLabel getMon2UnfairSprite() {
+        return mon2UnfairSprite;
+    }
+
+    public JLabel getMon3UnfairSprite() {
+        return mon3UnfairSprite;
+    }
+
+    public JLabel getMon4UnfairSprite() {
+        return mon4UnfairSprite;
+    }
+
+    public JLabel getMon5UnfairSprite() {
+        return mon5UnfairSprite;
+    }
+
+    public JLabel getMon6UnfairSprite() {
+        return mon6UnfairSprite;
+    }
+
+    public JLabel getMon1LevelLabel() {
+        return mon1LevelLabel;
+    }
+
+    public JLabel getMon2LevelLabel() {
+        return mon2LevelLabel;
+    }
+
+    public JLabel getMon3LevelLabel() {
+        return mon3LevelLabel;
+    }
+
+    public JLabel getMon4LevelLabel() {
+        return mon4LevelLabel;
+    }
+
+    public JLabel getMon5LevelLabel() {
+        return mon5LevelLabel;
+    }
+
+    public JLabel getMon6LevelLabel() {
+        return mon6LevelLabel;
+    }
+
+    public JLabel getOverviewSpriteLabel() {
+        return overviewSpriteLabel;
+    }
+
+    public JLabel getOverviewClassLabel() {
+        return overviewClassLabel;
+    }
+
+    public JComboBox getOverviewPartySelectorBox() {
+        return overviewPartySelectorBox;
+    }
+
+    public JLabel getMon1Sprite() {
+        return mon1Sprite;
+    }
+
+    public JPanel getOverviewTab() {
+        return overviewTab;
+    }
+
+    public JLabel getMon2Sprite() {
+        return mon2Sprite;
+    }
+
+    public JPanel getOverviewPanel() {
+        return overviewPanel;
+    }
+
+    public JLabel getMon4Sprite() {
+        return mon4Sprite;
+    }
+
+    public JLabel getMon3Sprite() {
+        return mon3Sprite;
+    }
+
+    public JLabel getMon5Sprite() {
+        return mon5Sprite;
+    }
+
+    public JLabel getMon6Sprite() {
+        return mon6Sprite;
     }
 
     public JComboBox getAbilBox() {

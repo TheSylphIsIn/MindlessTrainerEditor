@@ -33,7 +33,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Mindless Trainer Editor");
         try {
-            BufferedImage sprite = ImageIO.read(new File("src/data/icon.png"));
+            BufferedImage sprite = ImageIO.read(new File("mte_assets/icon.png"));
             frame.setIconImage(sprite);
         } catch (IOException e) {
         }

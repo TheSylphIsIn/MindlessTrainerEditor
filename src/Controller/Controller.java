@@ -9,6 +9,8 @@ import View.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -276,7 +278,7 @@ public class Controller {
             } catch (IOException e) {
                 try { // dumb hack to catch mons that only have anim_front. blame expansion.
                     BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/anim_front.png"));
-                    label.setIcon(new ImageIcon(sprite));
+                    label.setIcon(new ImageIcon(sprite.getSubimage(0, 0, 64, 64)));
                     frame.pack();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -307,8 +309,11 @@ public class Controller {
         view.getList1().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (view.getList1().getSelectedIndex() != -1)
+                if (view.getList1().getSelectedIndex() != -1) {
                     writeTrainerToView(view.getList1().getSelectedIndex());
+                    if (view.getOverallPane().getSelectedIndex() == 2)
+                        writeOverview(getCurrentTrainer());
+                }
             }
         });
         writeTrainersToList(0);
@@ -403,8 +408,79 @@ public class Controller {
         drawDifficultyTabs(data.getDifficulty());
 
         writeMonToView(parties, data.getStarterDependent(), getCurrentMonIndex());
+    }
 
+    private void writeOverview(Trainer trainer) {
+        drawTrainerIcon(trainer.getPic(), view.getOverviewSpriteLabel());
+        view.getOverviewClassLabel().setText(trainer.getTrainerClass() + " " + trainer.getName().toUpperCase());
 
+        int currentParty;
+
+        if (trainer.getStarterDependent())
+        {
+            if (!view.getOverviewPartySelectorBox().isVisible()) {
+                DefaultComboBoxModel selectorModel = new DefaultComboBoxModel();
+                ArrayList<String> parties = new ArrayList<>();
+                for (int i = 0; i < trainer.getParties().size(); i++)
+                    parties.add("Party " + i);
+                selectorModel.addAll(parties);
+                view.getOverviewPartySelectorBox().setModel(selectorModel);
+                view.getOverviewPartySelectorBox().setSelectedIndex(0);
+                view.getOverviewPartySelectorBox().setVisible(true);
+            }
+            currentParty = view.getOverviewPartySelectorBox().getSelectedIndex();
+        }
+        else {
+            currentParty = 0;
+            view.getOverviewPartySelectorBox().setVisible(false);
+        }
+
+        JLabel[] normLabels = new JLabel[]{view.getMon1Sprite(), view.getMon1LevelLabel(), view.getMon2Sprite(), view.getMon2LevelLabel(),
+                view.getMon3Sprite(), view.getMon3LevelLabel(), view.getMon4Sprite(), view.getMon4LevelLabel(),
+                view.getMon5Sprite(), view.getMon5LevelLabel(), view.getMon6Sprite(), view.getMon6LevelLabel()};
+        JLabel[] hardLabels = new JLabel[]{view.getMon1HardSprite(), view.getMon1HardLevel(), view.getMon2HardSprite(), view.getMon2HardLevel(),
+                view.getMon3HardSprite(), view.getMon3HardLevel(), view.getMon4HardSprite(), view.getMon4HardLevel(),
+                view.getMon5HardSprite(), view.getMon5HardLevel(), view.getMon6HardSprite(), view.getMon6HardLevel()};
+        JLabel[] unfairLabels = new JLabel[]{view.getMon1UnfairSprite(), view.getMon1UnfairLevel(), view.getMon2UnfairSprite(), view.getMon2UnfairLevel(),
+                view.getMon3UnfairSprite(), view.getMon3UnfairLevel(), view.getMon4UnfairSprite(), view.getMon4UnfairLevel(),
+                view.getMon5UnfairSprite(), view.getMon5UnfairLevel(), view.getMon6UnfairSprite(), view.getMon6UnfairLevel()};
+
+        for (int i = 0, j = 0; i < normLabels.length; i += 2, j++)
+        {
+            if (j < trainer.getParties().get(currentParty).getNormalParty().size()) {
+                TrainerMon mon = trainer.getParties().get(currentParty).getNormalParty().get(j);
+                drawMonIcon(mon.getSpecies(), normLabels[i]);
+                normLabels[i + 1].setText("Level " + mon.getLevel());
+            }
+            else {
+                normLabels[i].setIcon(null);
+                normLabels[i + 1].setText("");
+            }
+        }
+        for (int i = 0, j = 0; i < hardLabels.length; i += 2, j++)
+        {
+            if (j < trainer.getParties().get(currentParty).getHardParty().size()) {
+                TrainerMon mon = trainer.getParties().get(currentParty).getHardParty().get(j);
+                drawMonIcon(mon.getSpecies(), hardLabels[i]);
+                hardLabels[i + 1].setText("Level " + mon.getLevel());
+            }
+            else {
+                hardLabels[i].setIcon(null);
+                hardLabels[i + 1].setText("");
+            }
+        }
+        for (int i = 0, j = 0; i < unfairLabels.length; i += 2, j++)
+        {
+            if (j < trainer.getParties().get(currentParty).getUnfairParty().size()) {
+                TrainerMon mon = trainer.getParties().get(currentParty).getUnfairParty().get(j);
+                drawMonIcon(mon.getSpecies(), unfairLabels[i]);
+                unfairLabels[i + 1].setText("Level " + mon.getLevel());
+            }
+            else {
+                unfairLabels[i].setIcon(null);
+                unfairLabels[i + 1].setText("");
+            }
+        }
     }
 
     /**
@@ -2908,5 +2984,14 @@ public class Controller {
             }
         });
 
+        view.getOverallPane().addChangeListener(e -> {
+            if (view.getOverallPane().getSelectedIndex() == 2) {
+                writeOverview(getCurrentTrainer());
+            }
+        });
+
+        view.getOverviewPartySelectorBox().addActionListener(e -> {
+            writeOverview(getCurrentTrainer());
+        });
     }
 }
