@@ -1,5 +1,6 @@
 package Model;
 
+import View.ErrorDialog;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,32 +21,56 @@ public class MainModel {
     }
 
     public void initFromJson() {
+        JSONParser parser = new JSONParser();
+        FileReader config = null;
         try {
-            JSONParser parser = new JSONParser();
-            FileReader config = new FileReader("mte_assets/config.json");
-            JSONObject configSettings = (JSONObject) parser.parse(config);
-
-            outputPath = (String) configSettings.get("output_path");
-            repoPath = (String) configSettings.get("repo_path");
-            constantsPath = (String) configSettings.get("constants_path");
-            scriptsPath = (String) configSettings.get("scripts_path");
-
-            FileReader reader = new FileReader(outputPath + "/trainer_data.json");
-            JSONArray data = (JSONArray) parser.parse(reader);
-            trainers = new ArrayList<Trainer>();
-            for (Object trainer : data)
-            {
-                Trainer add = new Trainer();
-                add.initFromJson((JSONObject) trainer);
-                trainers.add(add);
-            }
-
-            reader.close();
+            config = new FileReader("mte_assets/config.json");
         } catch (FileNotFoundException e) {
+            ErrorDialog error = new ErrorDialog(e.getMessage() + " mte_assets/config.json");
+            int i = error.showAndWait();
             throw new RuntimeException(e);
+        }
+        JSONObject configSettings = null;
+        try {
+            configSettings = (JSONObject) parser.parse(config);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        outputPath = (String) configSettings.get("output_path");
+        repoPath = (String) configSettings.get("repo_path");
+        constantsPath = (String) configSettings.get("constants_path");
+        scriptsPath = (String) configSettings.get("scripts_path");
+
+        FileReader reader = null;
+        try {
+            reader = new FileReader(outputPath + "/trainer_data.json");
+        } catch (FileNotFoundException e) {
+            ErrorDialog error = new ErrorDialog(e.getMessage() + " " + outputPath + "/trainer_data.json");
+            int i = error.showAndWait();
+            throw new RuntimeException(e);
+        }
+        JSONArray data = null;
+        try {
+            data = (JSONArray) parser.parse(reader);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        trainers = new ArrayList<Trainer>();
+        for (Object trainer : data)
+        {
+            Trainer add = new Trainer();
+            add.initFromJson((JSONObject) trainer);
+            trainers.add(add);
+        }
+
+        try {
+            reader.close();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -66,6 +91,8 @@ public class MainModel {
             jsonOutput.flush();
             jsonOutput.close();
         } catch (IOException e) {
+            ErrorDialog error = new ErrorDialog(e.getMessage() + " " + outputPath + "/trainer_data.json");
+            int i = error.showAndWait();
             throw new RuntimeException(e);
         }
     }
@@ -272,6 +299,8 @@ public class MainModel {
             opponentsOutput.close();
             scriptsOutput.flush();
         } catch (IOException e) {
+            ErrorDialog error = new ErrorDialog("Output error! " + e.getMessage() + " Check your output paths!");
+            int i = error.showAndWait();
             throw new RuntimeException(e);
         }
 

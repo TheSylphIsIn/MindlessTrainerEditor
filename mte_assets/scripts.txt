@@ -4,7 +4,7 @@ TrainerScript_Kyle::
 	end
 
 TrainerScript_Text_KyleIntro:
-	.string ""Hey! Got any cool Pokémon?\n"
+	.string "Hey! Got any cool Pokémon?\n"
 	.string "Show me, show me!$"
 
 TrainerScript_Text_KyleDefeated:

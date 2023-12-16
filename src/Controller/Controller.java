@@ -281,6 +281,8 @@ public class Controller {
                     label.setIcon(new ImageIcon(sprite.getSubimage(0, 0, 64, 64)));
                     frame.pack();
                 } catch (IOException ex) {
+                    ErrorDialog error = new ErrorDialog(e.getMessage() + " couldn't find mon sprite at " + model.repoPath);
+                    int i = error.showAndWait();
                     throw new RuntimeException(ex);
                 }
             }
@@ -297,6 +299,8 @@ public class Controller {
             BufferedImage sprite = ImageIO.read(new File(model.repoPath + "/graphics/trainers/front_pics/" + pic.toLowerCase() + ".png"));
             label.setIcon(new ImageIcon(sprite));
         } catch (IOException e) {
+            ErrorDialog error = new ErrorDialog(e.getMessage() + " couldn't find trainer sprite at " + model.repoPath);
+            int i = error.showAndWait();
             throw new RuntimeException(e);
         }
     }
@@ -408,32 +412,7 @@ public class Controller {
         drawDifficultyTabs(data.getDifficulty());
 
         view.getSimpleScriptCheckBox().setSelected(data.getHasScript());
-
-        if (data.getHasScript())
-        {
-            view.getIntroTextBox().setEnabled(true);
-            view.getIntroTextBox().setText(data.getIntroText());
-            view.getDefeatTextBox().setEnabled(true);
-            view.getDefeatTextBox().setText(data.getDefeatText());
-            view.getPostBattleTextBox().setEnabled(true);
-            view.getPostBattleTextBox().setText(data.getPostBattleText());
-            setScriptCharsLabel(view.getIntroTextBox(), view.getIntroCharsLabel());
-            setScriptCharsLabel(view.getDefeatTextBox(), view.getDefeatCharsLabel());
-            setScriptCharsLabel(view.getPostBattleTextBox(), view.getPostCharsLabel());
-        }
-        else
-        {
-            view.getIntroTextBox().setEnabled(false);
-            view.getIntroTextBox().setText("");
-            view.getDefeatTextBox().setEnabled(false);
-            view.getDefeatTextBox().setText("");
-            view.getPostBattleTextBox().setEnabled(false);
-            view.getPostBattleTextBox().setText("");
-            view.getIntroCharsLabel().setText("");
-            view.getDefeatCharsLabel().setText("");
-            view.getPostCharsLabel().setText("");
-
-        }
+        view.getEditScriptButton().setEnabled(data.getHasScript());
 
         writeMonToView(parties, data.getStarterDependent(), getCurrentMonIndex());
     }
@@ -2789,126 +2768,21 @@ public class Controller {
         view.getSimpleScriptCheckBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Boolean sel = view.getSimpleScriptCheckBox().isSelected();
-                view.getIntroTextBox().setEnabled(sel);
-                view.getDefeatTextBox().setEnabled(sel);
-                view.getPostBattleTextBox().setEnabled(sel);
-                getCurrentTrainer().setHasScript(sel);
+                view.getEditScriptButton().setEnabled(view.getSimpleScriptCheckBox().isSelected());
+                getCurrentTrainer().setHasScript(view.getSimpleScriptCheckBox().isSelected());
             }
         });
 
-        view.getIntroTextBox().addKeyListener(new KeyListener() {
+        view.getEditScriptButton().addActionListener(new ActionListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                getCurrentTrainer().setIntroText(view.getIntroTextBox().getText());
-                setScriptCharsLabel(view.getIntroTextBox(), view.getIntroCharsLabel());
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
+            public void actionPerformed(ActionEvent e) {
+                ScriptDialog dialog = new ScriptDialog(getCurrentTrainer());
+                dialog.setIconImage(frame.getIconImage());
+                dialog.pack();
+                dialog.setLocationRelativeTo(view.getEditScriptButton());
+                dialog.setVisible(true);
             }
         });
-
-        view.getIntroTextBox().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                getCurrentTrainer().setIntroText(view.getIntroTextBox().getText());
-                setScriptCharsLabel(view.getIntroTextBox(), view.getIntroCharsLabel());
-            }
-        });
-
-        view.getDefeatTextBox().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                getCurrentTrainer().setDefeatText(view.getDefeatTextBox().getText());
-                setScriptCharsLabel(view.getDefeatTextBox(), view.getDefeatCharsLabel());
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        view.getDefeatTextBox().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                getCurrentTrainer().setDefeatText(view.getDefeatTextBox().getText());
-                setScriptCharsLabel(view.getDefeatTextBox(), view.getDefeatCharsLabel());
-            }
-        });
-
-        view.getPostBattleTextBox().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                getCurrentTrainer().setPostBattleText(view.getPostBattleTextBox().getText());
-                setScriptCharsLabel(view.getPostBattleTextBox(), view.getPostCharsLabel());
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-
-        view.getPostBattleTextBox().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                getCurrentTrainer().setPostBattleText(view.getPostBattleTextBox().getText());
-                setScriptCharsLabel(view.getPostBattleTextBox(), view.getPostCharsLabel());
-            }
-        });
-    }
-
-    private void setScriptCharsLabel(JTextArea textBox, JLabel label) {
-        String[] lines = textBox.getText().split("\n");
-        int length = 28;
-        for (String line : lines)
-        {
-            if (line.length() > length) {
-                label.setText("" + line.length());
-                if (line.length() > 36)
-                    label.setForeground(Color.red);
-                else if (line.length() > 30)
-                    label.setForeground(Color.orange);
-                else
-                    label.setForeground(Color.black);
-                length = line.length();
-            }
-        }
-        if (length <= 28)
-            label.setText("");
     }
 
     /**
