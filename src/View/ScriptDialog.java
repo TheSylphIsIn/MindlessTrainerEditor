@@ -151,6 +151,7 @@ public class ScriptDialog extends JDialog {
     private void onOK() {
         data.setIntroText(introTextBox.getText());
         data.setDefeatText(defeatTextBox.getText());
+        data.setPostBattleText(postBattleTextBox.getText());
         dispose();
     }
 
