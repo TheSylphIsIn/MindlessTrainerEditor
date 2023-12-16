@@ -15,21 +15,58 @@ TrainerScript_Text_KylePostBattle:
 	.string "they always swim away too fast.$"
 
 
-TrainerScript_Billy::
-	trainerbattle_single TRAINER_BILLY, TrainerScript_Text_BillyIntro,TrainerScript_Text_BillyDefeated
-	msgbox TrainerScript_Text_BillyPostBattle, MSGBOX_AUTOCLOSE
+TrainerScript_Bobby::
+	trainerbattle_single TRAINER_BOBBY, TrainerScript_Text_BobbyIntro,TrainerScript_Text_BobbyDefeated
+	msgbox TrainerScript_Text_BobbyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-TrainerScript_Text_BillyIntro:
+TrainerScript_Text_BobbyIntro:
 	.string "You wanna know why it's called\n"
 	.string "Fisheye Pond? I'll tell if you win!$"
 
-TrainerScript_Text_BillyDefeated:
+TrainerScript_Text_BobbyDefeated:
 	.string "Glub!$"
 
-TrainerScript_Text_BillyPostBattle:
+TrainerScript_Text_BobbyPostBattle:
 	.string "It's called Fisheye Pond because\n"
 	.string "it's shaped like a fish Pokémon!\n"
 	.string "I think its name is Guppage.$"
+
+
+TrainerScript_Kris::
+	trainerbattle_single TRAINER_KRIS, TrainerScript_Text_KrisIntro,TrainerScript_Text_KrisDefeated
+	msgbox TrainerScript_Text_KrisPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+TrainerScript_Text_KrisIntro:
+	.string "Don't tell my mom I'm down here!$"
+
+TrainerScript_Text_KrisDefeated:
+	.string "Please don't tell!$"
+
+TrainerScript_Text_KrisPostBattle:
+	.string "I'm not supposed to play in the\n"
+	.string "cliff caves, but they're way more\n"
+	.string "fun than the city!$"
+
+
+TrainerScript_Wilbur::
+	trainerbattle_single TRAINER_WILBUR, TrainerScript_Text_WilburIntro,TrainerScript_Text_WilburDefeated
+	msgbox TrainerScript_Text_WilburPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+TrainerScript_Text_WilburIntro:
+	.string "I will get stronger!\n"
+	.string "I will overcome the rocks!$"
+
+TrainerScript_Text_WilburDefeated:
+	.string "Not a chance!$"
+
+TrainerScript_Text_WilburPostBattle:
+	.string "People look down on bugs.\n"
+	.string "It makes me mad!\n"
+	.string "I want to prove them wrong, so\n"
+	.string "I'm trying to train my bugs to\n"
+	.string "beat Rock types.$"
 
 

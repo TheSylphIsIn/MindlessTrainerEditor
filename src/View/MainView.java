@@ -145,11 +145,16 @@ public class MainView {
     private JLabel mon6UnfairSprite;
     private JCheckBox simpleScriptCheckBox;
 
+    public JButton getSuggestedMusicButton() {
+        return suggestedMusicButton;
+    }
+
     public JButton getEditScriptButton() {
         return editScriptButton;
     }
 
     private JButton editScriptButton;
+    private JButton suggestedMusicButton;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
 

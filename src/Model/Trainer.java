@@ -89,7 +89,7 @@ public class Trainer {
     }
 
     public Trainer(String label) {
-        this.id = "DUMMY";
+        this.id = label.toUpperCase();
         this.name = label;
         this.label = label;
         this.aiFlags = new ArrayList<String>();

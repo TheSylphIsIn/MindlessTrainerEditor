@@ -2719,6 +2719,14 @@ public class Controller {
                 getCurrentTrainer().setTrainerClass((String) view.getTrainerClassBox().getSelectedItem());
             }
         });
+
+        view.getSuggestedMusicButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.getEncounterMusicBox().setSelectedItem(getSuggestedMusicFromClass(getCurrentTrainer()));
+                getCurrentTrainer().setEncounterMusic((String) view.getEncounterMusicBox().getSelectedItem());
+            }
+        });
         view.getTrainerSpriteBox().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2783,6 +2791,42 @@ public class Controller {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    /**
+     * Guesses which encounter music the trainer should use based on their class.
+     * @param trainer Trainer to get class from.
+     * @return Encounter music based on the class.
+     */
+    private String getSuggestedMusicFromClass(Trainer trainer) {
+        if (EncounterMusic.femaleClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.FEMALE.name();
+        if (EncounterMusic.girlClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.GIRL.name();
+        if (EncounterMusic.coolClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.COOL.name();
+        if (EncounterMusic.suspiciousClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.SUSPICIOUS.name();
+        if (EncounterMusic.intenseClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.INTENSE.name();
+        if (EncounterMusic.hikerClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.HIKER.name();
+        if (EncounterMusic.swimmerClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.SWIMMER.name();
+        if (EncounterMusic.twinsClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.TWINS.name();
+        if (EncounterMusic.aquaClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.AQUA.name();
+        if (EncounterMusic.magmaClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.MAGMA.name();
+        if (EncounterMusic.eliteFourClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.ELITE_FOUR.name();
+        if (EncounterMusic.interviewerClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.INTERVIEWER.name();
+        if (EncounterMusic.richClasses.contains(trainer.getTrainerClass()))
+            return EncounterMusic.RICH.name();
+
+        return EncounterMusic.MALE.name();
     }
 
     /**
