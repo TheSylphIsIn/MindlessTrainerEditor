@@ -2891,6 +2891,7 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.getStatusLabel().setText("");
+                view.getStatusLabel().setForeground(Color.black);
             }
         };
 
@@ -2902,8 +2903,16 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 view.getStatusLabel().setText("Saving...");
                 model.saveToJson();
-                model.writeModelToFile();
-                view.getStatusLabel().setText("Saved to files!");
+                int[] saveStatus = model.writeModelToFile();
+                if (saveStatus[0] == model.getTrainers().size())
+                    view.getStatusLabel().setText("Saved to files!");
+                else {
+                    String[] errors = new String[]{"Label", "ID"};
+                    String errorType = errors[saveStatus[2]];
+                    view.getStatusLabel().setText("Error! Trainer " + model.getTrainers().get(saveStatus[0]).getLabel() +
+                            " and Trainer " + model.getTrainers().get(saveStatus[1]).getLabel() + " have the same " + errorType + ".");
+                    view.getStatusLabel().setForeground(Color.red);
+                }
                 resetStatus.restart();
             }
         };

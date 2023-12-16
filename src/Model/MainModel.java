@@ -97,8 +97,31 @@ public class MainModel {
         }
     }
 
-    public void writeModelToFile()
+    public int[] writeModelToFile()
     {
+        int[] status = new int[3];
+        // Don't output if there are any non-unique labels or IDs, as that would cause an error in Fandango
+        for (int i = 0; i < trainers.size(); i++)
+        {
+            for (int j = 0; j < trainers.size(); j++)
+            {
+                if (i == j)
+                    continue;
+                if (trainers.get(j).getLabel().equals(trainers.get(i).getLabel()))
+                {
+                    status[0] = i;
+                    status[1] = j;
+                    return status;
+                }
+                if (trainers.get(j).getId().equals(trainers.get(i).getId()))
+                {
+                    status[0] = i;
+                    status[1] = j;
+                    status[2] = 1;
+                    return status;
+                }
+            }
+        }
         try {
             FileWriter trainerOutput = new FileWriter(outputPath + "/trainers.h");
             FileWriter partyOutput = new FileWriter(outputPath + "/trainer_parties.h");
@@ -304,6 +327,8 @@ public class MainModel {
             throw new RuntimeException(e);
         }
 
+        status[0] = trainers.size();
+        return status;
     }
 
     public ArrayList<Trainer> getTrainers() {

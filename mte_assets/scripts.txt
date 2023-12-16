@@ -15,3 +15,21 @@ TrainerScript_Text_KylePostBattle:
 	.string "they always swim away too fast.$"
 
 
+TrainerScript_Billy::
+	trainerbattle_single TRAINER_BILLY, TrainerScript_Text_BillyIntro,TrainerScript_Text_BillyDefeated
+	msgbox TrainerScript_Text_BillyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+TrainerScript_Text_BillyIntro:
+	.string "You wanna know why it's called\n"
+	.string "Fisheye Pond? I'll tell if you win!$"
+
+TrainerScript_Text_BillyDefeated:
+	.string "Glub!$"
+
+TrainerScript_Text_BillyPostBattle:
+	.string "It's called Fisheye Pond because\n"
+	.string "it's shaped like a fish Pokémon!\n"
+	.string "I think its name is Guppage.$"
+
+
