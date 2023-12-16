@@ -1,0 +1,6 @@
+{
+  "repo_path": "//wsl.localhost/Ubuntu/home/sylph/pokeemerald",
+  "output_path": "//wsl.localhost/Ubuntu/home/sylph/pokeemerald/src/data",
+  "constants_path": "//wsl.localhost/Ubuntu/home/sylph/pokeemerald/include/constants",
+  "scripts_path": "mte_assets"
+}

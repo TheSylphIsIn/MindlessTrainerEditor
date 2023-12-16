@@ -26,6 +26,42 @@ public class Trainer {
     private Boolean starterDependent;
     private Boolean difficulty;
     private ArrayList<PartySet> parties;
+    private Boolean hasScript;
+    private String introText;
+    private String defeatText;
+    private String postBattleText;
+
+    public Boolean getHasScript() {
+        return hasScript;
+    }
+
+    public void setHasScript(Boolean hasScript) {
+        this.hasScript = hasScript;
+    }
+
+    public String getIntroText() {
+        return introText;
+    }
+
+    public void setIntroText(String introText) {
+        this.introText = introText;
+    }
+
+    public String getDefeatText() {
+        return defeatText;
+    }
+
+    public void setDefeatText(String defeatText) {
+        this.defeatText = defeatText;
+    }
+
+    public String getPostBattleText() {
+        return postBattleText;
+    }
+
+    public void setPostBattleText(String postBattleText) {
+        this.postBattleText = postBattleText;
+    }
 
     private static final ArrayList<String> EMPTY_ITEMS = new ArrayList<String>(Arrays.asList(Item.NONE.name(), Item.NONE.name(), Item.NONE.name(), Item.NONE.name()));
 
@@ -46,6 +82,10 @@ public class Trainer {
         this.difficulty = false;
         parties = new ArrayList<>();
         parties.add(new PartySet());
+        this.hasScript = false;
+        this.introText = "";
+        this.defeatText = "";
+        this.postBattleText = "";
     }
 
     public Trainer(String label) {
@@ -63,6 +103,10 @@ public class Trainer {
         this.difficulty = false;
         this.parties = new ArrayList<PartySet>();
         parties.add(new PartySet());
+        this.hasScript = false;
+        this.introText = "";
+        this.defeatText = "";
+        this.postBattleText = "";
     }
 
     public Trainer(String id, String name, String label, ArrayList<String> aiFlags, ArrayList<String> items,
@@ -81,6 +125,10 @@ public class Trainer {
         this.starterDependent = starterDependent;
         this.difficulty = difficulty;
         this.parties = parties;
+        this.hasScript = false;
+        this.introText = "";
+        this.defeatText = "";
+        this.postBattleText = "";
     }
 
     public void initFromJson(JSONObject object) {
@@ -103,6 +151,12 @@ public class Trainer {
         doubleBattle = (Boolean) object.get("double_battle");
         difficulty = (Boolean) object.get("difficulty");
         starterDependent = (Boolean) object.get("starter_dependent");
+        hasScript = (Boolean) object.get("has_script");
+        if (hasScript) {
+            introText = (String) object.get("intro_text");
+            defeatText = (String) object.get("defeat_text");
+            postBattleText = (String) object.get("post_text");
+        }
 
         parties = new ArrayList<>();
 
@@ -128,6 +182,12 @@ public class Trainer {
         object.put("double_battle", doubleBattle);
         object.put("difficulty", difficulty);
         object.put("starter_dependent", starterDependent);
+        object.put("has_script", hasScript);
+        if (hasScript) {
+            object.put("intro_text", introText);
+            object.put("defeat_text", defeatText);
+            object.put("post_text", postBattleText);
+        }
 
         JSONArray aiFlagsData = new JSONArray();
         for (String flag : aiFlags)

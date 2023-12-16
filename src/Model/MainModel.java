@@ -5,15 +5,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class MainModel {
     private ArrayList<Trainer> trainers;
-    public final String outputPath = "C:/fandango/src/data";
+    public String outputPath;
+    public String repoPath;
+    public String constantsPath;
+    public String scriptsPath;
 
     public MainModel() {
         initFromJson();
@@ -22,6 +22,14 @@ public class MainModel {
     public void initFromJson() {
         try {
             JSONParser parser = new JSONParser();
+            FileReader config = new FileReader("mte_assets/config.json");
+            JSONObject configSettings = (JSONObject) parser.parse(config);
+
+            outputPath = (String) configSettings.get("output_path");
+            repoPath = (String) configSettings.get("repo_path");
+            constantsPath = (String) configSettings.get("constants_path");
+            scriptsPath = (String) configSettings.get("scripts_path");
+
             FileReader reader = new FileReader(outputPath + "/trainer_data.json");
             JSONArray data = (JSONArray) parser.parse(reader);
             trainers = new ArrayList<Trainer>();
@@ -68,6 +76,8 @@ public class MainModel {
             FileWriter trainerOutput = new FileWriter(outputPath + "/trainers.h");
             FileWriter partyOutput = new FileWriter(outputPath + "/trainer_parties.h");
             FileWriter starterOutput = new FileWriter(outputPath + "/starter_dependent_parties.h");
+            FileWriter opponentsOutput = new FileWriter(constantsPath + "/fandango_opponents.h");
+            FileWriter scriptsOutput = new FileWriter(scriptsPath + "/scripts.txt");
 
             trainerOutput.write("/* DO NOT EDIT! THESE FILES ARE OUTPUT BY THE MINDLESS TRAINER EDITOR." +
                     "MODIFICATIONS WILL BE LOST IF IT IS USED AGAIN. */\n\n" + "const struct Trainer gTrainers[] = {\n\n");
@@ -178,13 +188,89 @@ public class MainModel {
             starterOutput.write("\t},\n");
             starterOutput.write("};\n\n");
 
+            // Opponents constants
+            int plainTrainerNum = 1;
+            int starterTrainerNum = 0;
+            String firstStarterId = null;
+            Boolean firstStarter = true;
+
+            for (Trainer trainer : trainers) {
+                if (!trainer.getStarterDependent()) {
+                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + plainTrainerNum + "\n");
+                    plainTrainerNum++;
+                }
+            }
+            for (Trainer trainer : trainers)
+            {
+                if (trainer.getStarterDependent())
+                {
+                    if (firstStarter) {
+                        firstStarterId = trainer.getId(); //
+                        firstStarter = false;
+                    }
+                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + (starterTrainerNum + plainTrainerNum) + "\n");
+                    starterTrainerNum++;
+                }
+            }
+
+            if (firstStarterId != null) {
+                opponentsOutput.write("\n#define FIRST_STARTER_DEPENDENT_INDEX TRAINER_" + firstStarterId + "\n");
+                opponentsOutput.write("\n#define STARTER_DEPENDENT_PARTIES_COUNT " + starterTrainerNum + "\n\n");
+            }
+
+            for (Trainer trainer : trainers) {
+                if (trainer.getHasScript()) {
+                    scriptsOutput.write("TrainerScript_" + trainer.getLabel() + "::\n" +
+                            "\ttrainerbattle_single TRAINER_" + trainer.getId() + ", TrainerScript_Text_" + trainer.getLabel() + "Intro," +
+                            "TrainerScript_Text_" + trainer.getLabel() + "Defeated\n" +
+                            "\tmsgbox TrainerScript_Text_" + trainer.getLabel() + "PostBattle, MSGBOX_AUTOCLOSE\n" +
+                            "\tend\n" +
+                            "\n" +
+                            "TrainerScript_Text_" + trainer.getLabel() + "Intro:\n");
+                    String[] lines = trainer.getIntroText().split("\n");
+                    for (int i = 0; i < lines.length; i++)
+                    {
+                        scriptsOutput.write("\t.string \"" + lines[i]);
+                        if (i + 1 == lines.length)
+                            scriptsOutput.write("$\"\n\n");
+                        else
+                            scriptsOutput.write("\\n\"\n");
+                    }
+                    scriptsOutput.write("TrainerScript_Text_" + trainer.getLabel() + "Defeated:\n");
+                    lines = trainer.getDefeatText().split("\n");
+                    for (int i = 0; i < lines.length; i++)
+                    {
+                        scriptsOutput.write("\t.string \"" + lines[i]);
+                        if (i + 1 == lines.length)
+                            scriptsOutput.write("$\"\n\n");
+                        else
+                            scriptsOutput.write("\\n\"\n");
+                    }
+                    scriptsOutput.write("TrainerScript_Text_" + trainer.getLabel() + "PostBattle:\n");
+                    lines = trainer.getPostBattleText().split("\n");
+                    for (int i = 0; i < lines.length; i++)
+                    {
+                        scriptsOutput.write("\t.string \"" + lines[i]);
+                        if (i + 1 == lines.length)
+                            scriptsOutput.write("$\"\n\n");
+                        else
+                            scriptsOutput.write("\\n\"\n");
+                    }
+                    scriptsOutput.write("\n");
+                }
+            }
+
             trainerOutput.flush();
             partyOutput.flush();
             starterOutput.flush();
+            opponentsOutput.flush();
+            scriptsOutput.flush();
 
             trainerOutput.close();
             partyOutput.close();
             starterOutput.close();
+            opponentsOutput.close();
+            scriptsOutput.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

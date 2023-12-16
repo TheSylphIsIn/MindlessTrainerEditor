@@ -273,11 +273,11 @@ public class Controller {
             label.setIcon(null);
         else {
             try {
-                BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/front.png"));
+                BufferedImage sprite = ImageIO.read(new File(model.repoPath + "/graphics/pokemon/" + species.toLowerCase() + "/front.png"));
                 label.setIcon(new ImageIcon(sprite));
             } catch (IOException e) {
                 try { // dumb hack to catch mons that only have anim_front. blame expansion.
-                    BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/pokemon/" + species.toLowerCase() + "/anim_front.png"));
+                    BufferedImage sprite = ImageIO.read(new File(model.repoPath + "/graphics/pokemon/" + species.toLowerCase() + "/anim_front.png"));
                     label.setIcon(new ImageIcon(sprite.getSubimage(0, 0, 64, 64)));
                     frame.pack();
                 } catch (IOException ex) {
@@ -294,7 +294,7 @@ public class Controller {
      */
     private void drawTrainerIcon(String pic, JLabel label) {
         try {
-            BufferedImage sprite = ImageIO.read(new File("C:/fandango/graphics/trainers/front_pics/" + pic.toLowerCase() + ".png"));
+            BufferedImage sprite = ImageIO.read(new File(model.repoPath + "/graphics/trainers/front_pics/" + pic.toLowerCase() + ".png"));
             label.setIcon(new ImageIcon(sprite));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -406,6 +406,34 @@ public class Controller {
         drawTrainerIcon(data.getPic(), view.getTrainerSpriteLabel());
         drawStarterDependentPanels(data.getStarterDependent());
         drawDifficultyTabs(data.getDifficulty());
+
+        view.getSimpleScriptCheckBox().setSelected(data.getHasScript());
+
+        if (data.getHasScript())
+        {
+            view.getIntroTextBox().setEnabled(true);
+            view.getIntroTextBox().setText(data.getIntroText());
+            view.getDefeatTextBox().setEnabled(true);
+            view.getDefeatTextBox().setText(data.getDefeatText());
+            view.getPostBattleTextBox().setEnabled(true);
+            view.getPostBattleTextBox().setText(data.getPostBattleText());
+            setScriptCharsLabel(view.getIntroTextBox(), view.getIntroCharsLabel());
+            setScriptCharsLabel(view.getDefeatTextBox(), view.getDefeatCharsLabel());
+            setScriptCharsLabel(view.getPostBattleTextBox(), view.getPostCharsLabel());
+        }
+        else
+        {
+            view.getIntroTextBox().setEnabled(false);
+            view.getIntroTextBox().setText("");
+            view.getDefeatTextBox().setEnabled(false);
+            view.getDefeatTextBox().setText("");
+            view.getPostBattleTextBox().setEnabled(false);
+            view.getPostBattleTextBox().setText("");
+            view.getIntroCharsLabel().setText("");
+            view.getDefeatCharsLabel().setText("");
+            view.getPostCharsLabel().setText("");
+
+        }
 
         writeMonToView(parties, data.getStarterDependent(), getCurrentMonIndex());
     }
@@ -2757,6 +2785,130 @@ public class Controller {
                 drawDifficultyTabs(view.getDifficultyCheckBox().isSelected());
             }
         });
+
+        view.getSimpleScriptCheckBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean sel = view.getSimpleScriptCheckBox().isSelected();
+                view.getIntroTextBox().setEnabled(sel);
+                view.getDefeatTextBox().setEnabled(sel);
+                view.getPostBattleTextBox().setEnabled(sel);
+                getCurrentTrainer().setHasScript(sel);
+            }
+        });
+
+        view.getIntroTextBox().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                getCurrentTrainer().setIntroText(view.getIntroTextBox().getText());
+                setScriptCharsLabel(view.getIntroTextBox(), view.getIntroCharsLabel());
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+        view.getIntroTextBox().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().setIntroText(view.getIntroTextBox().getText());
+                setScriptCharsLabel(view.getIntroTextBox(), view.getIntroCharsLabel());
+            }
+        });
+
+        view.getDefeatTextBox().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                getCurrentTrainer().setDefeatText(view.getDefeatTextBox().getText());
+                setScriptCharsLabel(view.getDefeatTextBox(), view.getDefeatCharsLabel());
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+        view.getDefeatTextBox().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().setDefeatText(view.getDefeatTextBox().getText());
+                setScriptCharsLabel(view.getDefeatTextBox(), view.getDefeatCharsLabel());
+            }
+        });
+
+        view.getPostBattleTextBox().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                getCurrentTrainer().setPostBattleText(view.getPostBattleTextBox().getText());
+                setScriptCharsLabel(view.getPostBattleTextBox(), view.getPostCharsLabel());
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+        view.getPostBattleTextBox().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                getCurrentTrainer().setPostBattleText(view.getPostBattleTextBox().getText());
+                setScriptCharsLabel(view.getPostBattleTextBox(), view.getPostCharsLabel());
+            }
+        });
+    }
+
+    private void setScriptCharsLabel(JTextArea textBox, JLabel label) {
+        String[] lines = textBox.getText().split("\n");
+        int length = 28;
+        for (String line : lines)
+        {
+            if (line.length() > length) {
+                label.setText("" + line.length());
+                if (line.length() > 36)
+                    label.setForeground(Color.red);
+                else if (line.length() > 30)
+                    label.setForeground(Color.orange);
+                else
+                    label.setForeground(Color.black);
+                length = line.length();
+            }
+        }
+        if (length <= 28)
+            label.setText("");
     }
 
     /**

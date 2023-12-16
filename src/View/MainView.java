@@ -143,6 +143,13 @@ public class MainView {
     private JLabel mon4UnfairSprite;
     private JLabel mon5UnfairSprite;
     private JLabel mon6UnfairSprite;
+    private JCheckBox simpleScriptCheckBox;
+    private JTextArea introTextBox;
+    private JTextArea defeatTextBox;
+    private JTextArea postBattleTextBox;
+    private JLabel introCharsLabel;
+    private JLabel defeatCharsLabel;
+    private JLabel postCharsLabel;
     private ArrayList<StarterDependentPanel> starterDependentPanels = new ArrayList<StarterDependentPanel>
             (Arrays.asList(new StarterDependentPanel(), new StarterDependentPanel(), new StarterDependentPanel()));
 
@@ -528,6 +535,34 @@ public class MainView {
 
     public void setItemBox(JComboBox itemBox) {
         this.itemBox = itemBox;
+    }
+
+    public JLabel getDefeatCharsLabel() {
+        return defeatCharsLabel;
+    }
+
+    public JLabel getPostCharsLabel() {
+        return postCharsLabel;
+    }
+
+    public JLabel getIntroCharsLabel() {
+        return introCharsLabel;
+    }
+
+    public JCheckBox getSimpleScriptCheckBox() {
+        return simpleScriptCheckBox;
+    }
+
+    public JTextArea getIntroTextBox() {
+        return introTextBox;
+    }
+
+    public JTextArea getDefeatTextBox() {
+        return defeatTextBox;
+    }
+
+    public JTextArea getPostBattleTextBox() {
+        return postBattleTextBox;
     }
 
     public JLabel getMon1HardLevel() {

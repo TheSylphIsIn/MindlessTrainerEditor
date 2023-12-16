@@ -1,0 +1,17 @@
+TrainerScript_Kyle::
+	trainerbattle_single TRAINER_KYLE, TrainerScript_Text_KyleIntro,TrainerScript_Text_KyleDefeated
+	msgbox TrainerScript_Text_KylePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+TrainerScript_Text_KyleIntro:
+	.string ""Hey! Got any cool Pokémon?\n"
+	.string "Show me, show me!$"
+
+TrainerScript_Text_KyleDefeated:
+	.string "Aw, it's cooler than mine!$"
+
+TrainerScript_Text_KylePostBattle:
+	.string "I wanna catch a cool Water type, but\n"
+	.string "they always swim away too fast.$"
+
+
