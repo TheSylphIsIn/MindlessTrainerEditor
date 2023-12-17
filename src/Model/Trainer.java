@@ -239,6 +239,9 @@ public class Trainer {
 
                 trainerOutput.write("AI_FLAG_" + flag);
             }
+
+            if (firstVal)
+                trainerOutput.write("0");
             trainerOutput.write(",\n");
 
             // Items
