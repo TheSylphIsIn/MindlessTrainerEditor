@@ -1,5 +1,6 @@
 package View;
 
+import Model.PartySet;
 import Model.Trainer;
 import Model.TrainerMon;
 
@@ -27,6 +28,7 @@ public class CopyDialog extends JDialog {
     private JCheckBox wholeSetCheckBox;
     private JButton selfNormalToHardButton;
     private JButton selfHardToUnfairButton;
+    private JButton starterCopyButton;
     private ArrayList<Trainer> allTrainers;
     private int currentTrainer;
 
@@ -161,6 +163,13 @@ public class CopyDialog extends JDialog {
             }
         });
 
+        srcNormalButton.addActionListener(e -> {resetSrcMonsBoxModel(srcTrainerBox.getSelectedIndex(), srcPartyBox.getSelectedIndex());});
+        srcHardButton.addActionListener(e -> {resetSrcMonsBoxModel(srcTrainerBox.getSelectedIndex(), srcPartyBox.getSelectedIndex());});
+        srcUnfairButton.addActionListener(e -> {resetSrcMonsBoxModel(srcTrainerBox.getSelectedIndex(), srcPartyBox.getSelectedIndex());});
+        destNormalButton.addActionListener(e -> {resetDestMonsBoxModel(destTrainerBox.getSelectedIndex(), destPartyBox.getSelectedIndex());});
+        destHardButton.addActionListener(e -> {resetDestMonsBoxModel(destTrainerBox.getSelectedIndex(), destPartyBox.getSelectedIndex());});
+        destUnfairButton.addActionListener(e -> {resetDestMonsBoxModel(destTrainerBox.getSelectedIndex(), destPartyBox.getSelectedIndex());});
+
         selfNormalToHardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,6 +201,42 @@ public class CopyDialog extends JDialog {
                 onOK();
             }
         });
+
+        if (allTrainers.get(currentTrainer).getStarterDependent())
+        {
+            starterCopyButton.setEnabled(true);
+            starterCopyButton.addActionListener(e -> {
+                for (int i = 0; i < Trainer.NUM_STARTER_SETS * Trainer.NUM_STARTERS; i += 3) {
+                    PartySet leftSet = allTrainers.get(currentTrainer).getParties().get(i);
+                    PartySet middleSet = allTrainers.get(currentTrainer).getParties().get(i + 1);
+                    PartySet rightSet = allTrainers.get(currentTrainer).getParties().get(i + 2);
+
+                    ArrayList<TrainerMon> leftParty;
+                    ArrayList<TrainerMon> middleParty;
+                    ArrayList<TrainerMon> rightParty;
+
+                    if (destUnfairButton.isSelected())
+                    {
+                        leftParty = leftSet.getUnfairParty();
+                        middleParty = middleSet.getUnfairParty();
+                        rightParty = rightSet.getUnfairParty();
+                    } else if (destHardButton.isSelected()) {
+                        leftParty = leftSet.getHardParty();
+                        middleParty = middleSet.getHardParty();
+                        rightParty = rightSet.getHardParty();
+                    } else {
+                        leftParty = leftSet.getNormalParty();
+                        middleParty = middleSet.getNormalParty();
+                        rightParty = rightSet.getNormalParty();
+                    }
+
+                    middleParty.get(destMonBox.getSelectedIndex()).copyFrom(leftParty.get(destMonBox.getSelectedIndex()));
+                    rightParty.get(destMonBox.getSelectedIndex()).copyFrom(leftParty.get(destMonBox.getSelectedIndex()));
+
+                    dispose();
+                }
+            });
+        }
     }
 
     private void setStarterDependentModels() {
@@ -356,9 +401,9 @@ public class CopyDialog extends JDialog {
 
     private void resetDestMonsBoxModel(int trainerIndex, int monIndex) {
         DefaultComboBoxModel model4 = new DefaultComboBoxModel();
-        if (srcNormalButton.isSelected())
+        if (destNormalButton.isSelected())
             model4.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getNormalParty()));
-        else if (srcHardButton.isSelected())
+        else if (destHardButton.isSelected())
             model4.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getHardParty()));
         else
             model4.addAll(getPartyMonsList(allTrainers.get(trainerIndex).getParties().get(monIndex).getUnfairParty()));

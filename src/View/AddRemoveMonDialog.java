@@ -200,13 +200,13 @@ public class AddRemoveMonDialog extends JDialog {
             if (trainer.getStarterDependent()) {
                 for (int i = 0; i < Trainer.NUM_STARTER_SETS * Trainer.NUM_STARTERS; i++) {
                     TrainerMon mon = new TrainerMon();
-                    if (copyFromCheckBox.isSelected())
+                    if (copyHard.isSelected())
                         mon.copyFrom(trainer.getParties().get(i).getHardParty().get(comboBox2.getSelectedIndex()));
                     trainer.getParties().get(i).getHardParty().add(mon);
                 }
             } else {
                 TrainerMon mon = new TrainerMon();
-                if (copyFromCheckBox.isSelected())
+                if (copyHard.isSelected())
                     mon.copyFrom(trainer.getParties().get(0).getHardParty().get(comboBox2.getSelectedIndex()));
                 trainer.getParties().get(0).getHardParty().add(mon);
             }
@@ -216,13 +216,13 @@ public class AddRemoveMonDialog extends JDialog {
             if (trainer.getStarterDependent()) {
                 for (int i = 0; i < Trainer.NUM_STARTER_SETS * Trainer.NUM_STARTERS; i++) {
                     TrainerMon mon = new TrainerMon();
-                    if (copyFromCheckBox.isSelected())
+                    if (copyUnfair.isSelected())
                         mon.copyFrom(trainer.getParties().get(i).getUnfairParty().get(comboBox3.getSelectedIndex()));
                     trainer.getParties().get(i).getUnfairParty().add(mon);
                 }
             } else {
                 TrainerMon mon = new TrainerMon();
-                if (copyFromCheckBox.isSelected())
+                if (copyUnfair.isSelected())
                     mon.copyFrom(trainer.getParties().get(0).getUnfairParty().get(comboBox3.getSelectedIndex()));
                 trainer.getParties().get(0).getUnfairParty().add(mon);
             }
