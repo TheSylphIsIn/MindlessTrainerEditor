@@ -2717,6 +2717,12 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getCurrentTrainer().setTrainerClass((String) view.getTrainerClassBox().getSelectedItem());
+                if (getAllTrainerPics().contains((String) view.getTrainerClassBox().getSelectedItem()))
+                {
+                    view.getTrainerSpriteBox().setSelectedItem((String) view.getTrainerClassBox().getSelectedItem());
+                    getCurrentTrainer().setPic((String) view.getTrainerSpriteBox().getSelectedItem());
+                    drawTrainerIcon((String) view.getTrainerSpriteBox().getSelectedItem(), view.getTrainerSpriteLabel());
+                }
             }
         });
 
