@@ -70,3 +70,41 @@ TrainerScript_Text_WilburPostBattle:
 	.string "beat Rock types.$"
 
 
+TrainerScript_Grant::
+	trainerbattle_single TRAINER_GRANT, TrainerScript_Text_GrantIntro,TrainerScript_Text_GrantDefeated
+	msgbox TrainerScript_Text_GrantPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+TrainerScript_Text_GrantIntro:
+	.string "You've been to Dropper Point?\n"
+	.string "Show me what you got there!$"
+
+TrainerScript_Text_GrantDefeated:
+	.string "I should've known!$"
+
+TrainerScript_Text_GrantPostBattle:
+	.string "My poor Lav is no good against\n"
+	.string "beach Pokemon.$"
+
+
+TrainerScript_Rosalyn::
+	trainerbattle_single TRAINER_ROSALYN, TrainerScript_Text_RosalynIntro,TrainerScript_Text_RosalynDefeated
+	msgbox TrainerScript_Text_RosalynPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+TrainerScript_Text_RosalynIntro:
+	.string "What are you doing?\n"
+	.string "It's dangerous down here!\n"
+	.string "Go back home!$"
+
+TrainerScript_Text_RosalynDefeated:
+	.string "Huh? You're not a\n"
+	.string "Penzelcase kid?$"
+
+TrainerScript_Text_RosalynPostBattle:
+	.string "You're not a kid at all? My bad...\n"
+	.string "Kids from Penzelcase city are\n"
+	.string "always trying to sneak down\n"
+	.string "here to play.$"
+
+

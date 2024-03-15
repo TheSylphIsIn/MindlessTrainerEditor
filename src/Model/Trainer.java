@@ -30,6 +30,15 @@ public class Trainer {
     private String introText;
     private String defeatText;
     private String postBattleText;
+    private int constantId;
+
+    public int getConstantId() {
+        return constantId;
+    }
+
+    public void setConstantId(int constantId) {
+        this.constantId = constantId;
+    }
 
     public Boolean getHasScript() {
         return hasScript;
@@ -86,6 +95,7 @@ public class Trainer {
         this.introText = "";
         this.defeatText = "";
         this.postBattleText = "";
+        this.constantId = 999;
     }
 
     public Trainer(String label) {
@@ -107,11 +117,12 @@ public class Trainer {
         this.introText = "";
         this.defeatText = "";
         this.postBattleText = "";
+        this.constantId = 999;
     }
 
     public Trainer(String id, String name, String label, ArrayList<String> aiFlags, ArrayList<String> items,
                    String trainerClass, String encounterMusic, String pic, Boolean female, Boolean doubleBattle,
-                   Boolean starterDependent, Boolean difficulty, ArrayList<PartySet> parties) {
+                   Boolean starterDependent, Boolean difficulty, ArrayList<PartySet> parties, int constantId) {
         this.id = id;
         this.name = name;
         this.label = label;
@@ -129,6 +140,7 @@ public class Trainer {
         this.introText = "";
         this.defeatText = "";
         this.postBattleText = "";
+        this.constantId = constantId;
     }
 
     public void initFromJson(JSONObject object) {
@@ -166,6 +178,9 @@ public class Trainer {
             partySet.initFromJson((JSONObject) set);
             parties.add(partySet);
         }
+
+        if (object.get("constant_id") != null)
+            constantId = Math.toIntExact((Long) object.get("constant_id"));
     }
 
     public JSONObject writeToJson()
@@ -205,6 +220,7 @@ public class Trainer {
         for (PartySet partySet : parties)
             partiesData.add(partySet.writeToJson());
         object.put("parties", partiesData);
+        object.put("constant_id", constantId);
 
         return object;
     }

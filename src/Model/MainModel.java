@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainModel {
     private ArrayList<Trainer> trainers;
@@ -67,6 +68,13 @@ public class MainModel {
             add.initFromJson((JSONObject) trainer);
             trainers.add(add);
         }
+
+        trainers.sort(new Comparator<Trainer>() {
+            @Override
+            public int compare(Trainer o1, Trainer o2) {
+                return o1.getConstantId() - o2.getConstantId();
+            }
+        });
 
         try {
             reader.close();
@@ -239,17 +247,53 @@ public class MainModel {
             starterOutput.write("};\n\n");
 
             // Opponents constants
+            final int STARTER_INITIAL_VALUE = 700;
             int plainTrainerNum = 1;
-            int starterTrainerNum = 0;
+            int diffTrainerNum = 500;
+            int starterTrainerNum = STARTER_INITIAL_VALUE;
+            int outputNum;
             String firstStarterId = null;
             Boolean firstStarter = true;
 
+            // Sort trainers by constant ID before outputting them.
+            // This ensures that the order of trainers will not change in between uses of the program.
+            // If it did change, it would break Fandango saves.
+            // New trainers will end up at the bottom, and therefore be added to the end of their respective lists.
+            trainers.sort(new Comparator<Trainer>() {
+                @Override
+                public int compare(Trainer o1, Trainer o2) {
+                    return o1.getConstantId() - o2.getConstantId();
+                }
+            });
+
+            opponentsOutput.write("// No-difficulty trainers (mooks) 1 - 499\n");
             for (Trainer trainer : trainers) {
-                if (!trainer.getStarterDependent()) {
-                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + plainTrainerNum + "\n");
+                if (!trainer.getStarterDependent() && !trainer.getDifficulty())
+                {
+                    outputNum = trainer.getConstantId();
+                    if (outputNum == 999)
+                    {
+                        trainer.setConstantId(plainTrainerNum);
+                        outputNum = plainTrainerNum;
+                    }
+                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + outputNum + "\n");
                     plainTrainerNum++;
                 }
             }
+            opponentsOutput.write("\n// Difficulty trainers (mini-bosses / bosses) 500 - 699\n");
+            for (Trainer trainer : trainers) {
+                if (!trainer.getStarterDependent() && trainer.getDifficulty()) {
+                    outputNum = trainer.getConstantId();
+                    if (outputNum == 999)
+                    {
+                        trainer.setConstantId(diffTrainerNum);
+                        outputNum = diffTrainerNum;
+                    }
+                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + outputNum + "\n");
+                    diffTrainerNum++;
+                }
+            }
+            opponentsOutput.write("\n// Starter-dependent trainers 700-860\n");
             for (Trainer trainer : trainers)
             {
                 if (trainer.getStarterDependent())
@@ -258,14 +302,19 @@ public class MainModel {
                         firstStarterId = trainer.getId(); //
                         firstStarter = false;
                     }
-                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + (starterTrainerNum + plainTrainerNum) + "\n");
+                    outputNum = trainer.getConstantId();
+                    if (outputNum == 999) {
+                        trainer.setConstantId(starterTrainerNum);
+                        outputNum = starterTrainerNum;
+                    }
+                    opponentsOutput.write("#define TRAINER_" + trainer.getId() + " " + outputNum + "\n");
                     starterTrainerNum++;
                 }
             }
 
             if (firstStarterId != null) {
                 opponentsOutput.write("\n#define FIRST_STARTER_DEPENDENT_INDEX TRAINER_" + firstStarterId + "\n");
-                opponentsOutput.write("\n#define STARTER_DEPENDENT_PARTIES_COUNT " + starterTrainerNum + "\n\n");
+                opponentsOutput.write("\n#define STARTER_DEPENDENT_PARTIES_COUNT " + (starterTrainerNum - STARTER_INITIAL_VALUE)  + "\n\n");
             }
 
             for (Trainer trainer : trainers) {

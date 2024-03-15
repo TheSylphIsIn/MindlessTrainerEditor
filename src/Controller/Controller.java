@@ -2952,7 +2952,6 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.getStatusLabel().setText("Saving...");
-                model.saveToJson();
                 int[] saveStatus = model.writeModelToFile();
                 if (saveStatus[0] == model.getTrainers().size())
                     view.getStatusLabel().setText("Saved to files!");
@@ -2963,6 +2962,8 @@ public class Controller {
                             " and Trainer " + model.getTrainers().get(saveStatus[1]).getLabel() + " have the same " + errorType + ".");
                     view.getStatusLabel().setForeground(Color.red);
                 }
+
+                model.saveToJson();
                 resetStatus.restart();
             }
         };
